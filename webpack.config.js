@@ -29,7 +29,7 @@ module.exports = {
         test: /\.scss$/,
         exclude: /node_modules/,
         use: [
-          'style-loader', // creates style nodes from JS strings
+          MiniCssExtractPlugin.loader,
           'css-loader',   // translates CSS into CommonJS
           'sass-loader'   // compiles Sass to CSS, using Node Sass by default
         ]
@@ -51,6 +51,7 @@ module.exports = {
   devServer: {
     port: 8000,
     host: '0.0.0.0',
-    hot: true
+    hot: true,
+    historyApiFallback: true
   }
 };
