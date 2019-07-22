@@ -24,7 +24,7 @@ SearchBar.defaultProps = {
   placeholder: '검색어를 입력해보세요.',
   containerClass: 'search-container',
   labelClass: 'search-icon',
-  inputClass: 'search-box'
+  inputClass: 'search-text'
 };
 
 export default SearchBar;

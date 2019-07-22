@@ -11,6 +11,11 @@ body {
     height: 100%;
   }
 
+  a {
+    text-decoration: none;
+    cursor: pointer;
+  }
+
   .btn {
     width: 80px;
     height: 30px;

@@ -1,9 +1,46 @@
 .main {
   padding-top: 50px;
 
+  .title-box {
+    padding: 10px 0;
+    text-align: center;
+
+    .title {
+      font-size: 30px;
+    }
+
+    .sub-title {
+      font-size: 20px;
+    }
+  }
+
   .search {
-    .bar {
-      margin-top: 10px;
+    margin-top: 50px;
+  }
+
+  .diary {
+    margin-top: 150px;
+
+    .diary-icons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+
+      .view-icon {
+        margin-left: 55px;
+        svg {
+          width: 45px;
+          height: 45px;
+        }
+
+        .view-name {
+          margin-top: 10px;
+        }
+      }
+
+      .view-icon:nth-child(1) {
+        margin-left: 0;
+      }
     }
   }
 }
