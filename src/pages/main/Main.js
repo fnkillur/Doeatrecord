@@ -2,6 +2,7 @@ import React from 'react';
 import './Main.scss';
 import Header from './Header';
 import Footer from './Footer';
+import SearchBar from "../../components/SearchBar";
 
 const Main = () => {
   return (
@@ -11,6 +12,11 @@ const Main = () => {
         <section className="search">
           <h1>오늘 맛있는거 먹었다!</h1>
           <input type="text" placeholder="어떤 가게를 방문하셨나요?"/>
+          <div className="bar">
+          <SearchBar
+          
+          />
+          </div>
         </section>
         <section className="result">
         
