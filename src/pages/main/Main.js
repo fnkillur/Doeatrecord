@@ -3,7 +3,8 @@ import './Main.scss';
 import {Link} from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
-import SearchBar from "../../components/SearchBar";
+import SearchBar from '../../components/SearchBar';
+import Map from '../record/Map';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faListOl, faMapMarkedAlt, faChartPie} from '@fortawesome/free-solid-svg-icons'
 
@@ -19,6 +20,9 @@ const Main = () => {
           <SearchBar
             placeholder="어떤 가게를 방문하셨나요?"
           />
+          <div className="search-map">
+            <Map/>
+          </div>
         </section>
         <section className="diary">
           <div className="title-box">
