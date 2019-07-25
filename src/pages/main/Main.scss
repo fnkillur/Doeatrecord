@@ -1,7 +1,9 @@
 .main {
+  margin-top: 20px;
   padding-top: 50px;
 
   .title-box {
+    margin-bottom: 20px;
     padding: 10px 0;
     text-align: center;
 
@@ -11,41 +13,6 @@
 
     .sub-title {
       font-size: 20px;
-    }
-  }
-
-  .search {
-    margin-top: 50px;
-
-    .search-map {
-      margin-top: 20px;
-      height: 200px;
-    }
-  }
-
-  .diary {
-    margin-top: 150px;
-
-    .diary-icons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-
-      .view-icon {
-        margin-left: 55px;
-        svg {
-          width: 45px;
-          height: 45px;
-        }
-
-        .view-name {
-          margin-top: 10px;
-        }
-      }
-
-      .view-icon:nth-child(1) {
-        margin-left: 0;
-      }
     }
   }
 }

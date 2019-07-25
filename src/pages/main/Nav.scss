@@ -1,0 +1,28 @@
+.diary {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+
+  .diary-icons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+
+    .view-icon {
+      margin-left: 55px;
+
+      svg {
+        width: 45px;
+        height: 45px;
+      }
+
+      .view-name {
+        margin-top: 10px;
+      }
+    }
+
+    .view-icon:nth-child(1) {
+      margin-left: 0;
+    }
+  }
+}
