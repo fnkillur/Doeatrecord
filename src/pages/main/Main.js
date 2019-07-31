@@ -10,9 +10,7 @@ const Main = () => {
   
   const [searchText, setSearchText] = useState('');
   
-  const searchStore = searchText => {
-    setSearchText(searchText);
-  };
+  const searchStore = text => setSearchText(text);
   
   return (
     <section className="main">

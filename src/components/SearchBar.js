@@ -9,9 +9,7 @@ const SearchBar = ({placeholder, containerClass, labelClass, inputClass, onKeyEn
   
   const [text, setText] = useState('');
   
-  const onChange = ({target: {value: text}}) => {
-    setText(text);
-  };
+  const onChange = ({target: {value}}) => setText(value);
   
   const onKeyDown = ({keyCode}) => {
     if (keyCode === ENTER) {
@@ -19,13 +17,17 @@ const SearchBar = ({placeholder, containerClass, labelClass, inputClass, onKeyEn
     }
   };
   
+  const onClick = () => onKeyEnter(text);
+  
   return (
     <div className={containerClass}>
-      <div className={labelClass}><FontAwesomeIcon icon={faSearch}/></div>
       <input
         type="text" className={inputClass} placeholder={placeholder}
         value={text} onChange={onChange} onKeyDown={onKeyDown}
       />
+      <div className={labelClass}>
+        <FontAwesomeIcon icon={faSearch} onClick={onClick}/>
+      </div>
     </div>
   );
 };
