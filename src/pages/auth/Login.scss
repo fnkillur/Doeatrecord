@@ -2,6 +2,10 @@
   padding-top: 150px;
   height: 100%;
 
+  .title {
+    font-size: 34px;
+  }
+
   .login-form .field {
     margin-top: 10px;
 
@@ -22,6 +26,14 @@
 
     .btn-login {
       margin-right: 10px;
+    }
+
+    .btn-kakao-login {
+      width: 222px;
+      height: 49px;
+      cursor: pointer;
+      border: none;
+      background: url("/public/assets/btn_kakao_login.png");
     }
   }
 }

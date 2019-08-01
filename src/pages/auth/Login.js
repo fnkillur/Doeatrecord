@@ -8,12 +8,10 @@ const Login = () => {
     password: ''
   });
   
-  const updateField = e => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
-  };
+  const updateField = e => setForm({
+    ...form,
+    [e.target.name]: e.target.value
+  });
   
   const goToMain = e => {
     e.preventDefault();
@@ -23,7 +21,9 @@ const Login = () => {
   return (
     <section className="login">
       <header>
-        <h1>Do Eat, Do Record!</h1>
+        <span className="title">
+          <strong>Do Eat, Record!</strong>
+        </span>
         <p>기록을 위해서는 로그인이 필요해요!</p>
       </header>
       <main>
@@ -35,9 +35,7 @@ const Login = () => {
             <input type="password" name="password" onChange={updateField} value={form.password} placeholder="********"/>
           </div>
           <div className="field">
-            <button type="submit" id="btnLogin" className="btn btn-login" onClick={goToMain}>로그인</button>
-            <button type="button" id="btnSignUp" className="btn btn-sign-up" onClick={() => alert("아직 구현 중입니다 ㅜㅜ")}>회원가입
-            </button>
+            <button type="submit" id="btnKakao" className="btn-kakao-login" onClick={goToMain}/>
           </div>
         </form>
       </main>
