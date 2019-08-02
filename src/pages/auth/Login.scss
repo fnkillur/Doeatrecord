@@ -5,35 +5,4 @@
   .title {
     font-size: 34px;
   }
-
-  .login-form .field {
-    margin-top: 10px;
-
-    input[type="text"],
-    input[type="password"] {
-      width: 200px;
-      height: auto;
-      padding: .8em .5em;
-      line-height: normal;
-      font-family: inherit;
-      border: 1px solid #999;
-      border-radius: 5px;
-      outline-style: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-    }
-
-    .btn-login {
-      margin-right: 10px;
-    }
-
-    .btn-kakao-login {
-      width: 222px;
-      height: 49px;
-      cursor: pointer;
-      border: none;
-      background: url("/public/assets/btn_kakao_login.png");
-    }
-  }
 }

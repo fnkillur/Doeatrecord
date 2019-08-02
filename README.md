@@ -1,9 +1,15 @@
 # Do Eat, Record!
+> React App about food record
 
-#### How to Start
-`npm install` 
+## Getting Started
+```sh
+$ cd /PROJECT/PATH
+$ npm install 
+```
 
-`npm start` 
+## Development
+```sh
+$ npm start
 
-#### Tech
-`react` `apollo-client` `GraphQL`
+- Open [localhost:8000](http://localhost:8000)
+``` 
