@@ -1,38 +1,30 @@
-import React, {useContext, useState} from 'react';
-import './Main.scss';
-import UserContext from '../../contexts/UserContext';
-import Header from './Header';
-import Footer from './Footer';
-import SearchBar from '../../components/SearchBar';
-import Map from '../record/Map';
-import Nav from './Nav';
+import React, {Fragment, useContext} from "react";
+import {Route, Switch} from "react-router-dom";
+import UserContext from "../../contexts/UserContext";
+import Header from "./Header";
+import Record from "../record/Record";
+import Diary from "../diary/Diary";
+import Footer from "./Footer";
 
-const Main = () => {
+
+const Main = ({history, match}) => {
+  const {user: {token}} = useContext(UserContext);
   
-  const {user} = useContext(UserContext);
-  
-  const [searchText, setSearchText] = useState('');
-  
-  const searchStore = text => setSearchText(text);
+  if (!token) {
+    alert("로그인 해주세요!");
+    history.push("/");
+  }
+  console.log(match);
   
   return (
-    <section className="main">
+    <Fragment>
       <Header/>
-      <main>
-        <section className="title-box">
-          <span className="title">
-            <strong>{user.nickname}, 오늘 맛있는거 먹었다!</strong>
-          </span>
-        </section>
-        <SearchBar
-          placeholder="어떤 가게를 방문하셨나요?"
-          onKeyEnter={searchStore}
-        />
-        {searchText && <Map searchText={searchText}/>}
-        {!searchText && <Nav/>}
-      </main>
+      <Switch>
+        <Route path="/main/record" component={Record}/>
+        <Route path="/main/diary" component={Diary}/>
+      </Switch>
       <Footer/>
-    </section>
+    </Fragment>
   );
 };
 

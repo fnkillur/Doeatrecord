@@ -1,5 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Router from './App';
+import "core-js/stable";
+import React from "react";
+import ReactDOM from "react-dom";
+import Router from "./App";
 
-ReactDOM.render(<Router/>, document.getElementById('root'));
+ReactDOM.render(<Router/>, document.getElementById("root"));

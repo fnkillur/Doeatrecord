@@ -1,13 +1,13 @@
-import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
-import './Map.scss';
+import React, {useEffect} from "react";
+import PropTypes from "prop-types";
+import "./Map.scss";
 
 let map, allPlaces;
 
 const Map = ({searchText}) => {
   
   useEffect(() => {
-    const container = document.getElementById('map');
+    const container = document.getElementById("map");
     map = new kakao.maps.Map(container, {
       center: new kakao.maps.LatLng(33.450701, 126.570667),
       level: 3
@@ -22,7 +22,7 @@ const Map = ({searchText}) => {
         position: new kakao.maps.LatLng(place.y, place.x)
       });
       
-      kakao.maps.event.addListener(marker, 'click', function () {
+      kakao.maps.event.addListener(marker, "click", function () {
         infoWindow.setContent(`<div style="padding:5px;font-size:12px;">${place.place_name}</div>`);
         infoWindow.open(map, marker);
       });
