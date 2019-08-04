@@ -3,11 +3,11 @@ import "./Record.scss"
 import SearchBar from "../../components/SearchBar";
 import Map from "./Map";
 
-const Record = ({match}) => {
+const Record = () => {
   
   const [searchText, setSearchText] = useState("");
   const searchStore = text => setSearchText(text);
-  console.log(match);
+  
   return (
     <main className="record">
       <section className="title-box">

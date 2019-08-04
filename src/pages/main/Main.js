@@ -1,27 +1,25 @@
-import React, {Fragment, useContext} from "react";
+import React, {Fragment} from "react";
 import {Route, Switch} from "react-router-dom";
-import UserContext from "../../contexts/UserContext";
+import {getMe} from "../../_common/utils";
 import Header from "./Header";
 import Record from "../record/Record";
 import Diary from "../diary/Diary";
 import Footer from "./Footer";
 
-
-const Main = ({history, match}) => {
-  const {user: {token}} = useContext(UserContext);
+const Main = ({history}) => {
   
+  const {token} = getMe();
   if (!token) {
     alert("로그인 해주세요!");
-    history.push("/");
+    history.push("/login");
   }
-  console.log(match);
   
   return (
     <Fragment>
       <Header/>
       <Switch>
-        <Route path="/main/record" component={Record}/>
-        <Route path="/main/diary" component={Diary}/>
+        <Route path="/record" component={Record}/>
+        <Route path="/diary" component={Diary}/>
       </Switch>
       <Footer/>
     </Fragment>

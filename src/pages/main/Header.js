@@ -1,22 +1,22 @@
-import React, {useContext} from "react";
+import React from "react";
 import "./Header.scss";
-import UserContext from "../../contexts/UserContext";
+import {getMe} from "../../_common/utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faWalking} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
 
 const Header = () => {
-  const {user: {nickname}} = useContext(UserContext);
+  const {nickname} = getMe();
   
   return (
     <header className="header">
       <div className="">
-        <Link to="/main/record">
+        <Link to="/record">
           <FontAwesomeIcon icon={faEdit}/>
           <strong>Do Eat, Record!</strong>
         </Link>
       </div>
-      {nickname}, 반갑습니다.
+      <p><strong>{nickname}</strong>님, 반갑습니다.</p>
       <div className="view-icon">
         <Link to="/me">
           <FontAwesomeIcon icon={faWalking}/>

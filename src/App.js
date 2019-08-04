@@ -1,27 +1,19 @@
-import React, {useState} from "react";
+import React from "react";
 import "./App.scss";
-import {BrowserRouter as Router, Route, Redirect} from "react-router-dom";
-import {hot} from "react-hot-loader";
-import {UserProvider} from "./contexts/UserContext";
+import {BrowserRouter as Router, Redirect, Route} from "react-router-dom";
 import Login from "./pages/auth/Login";
+import Me from "./pages/auth/Me";
 import Main from "./pages/main/Main";
+import {hot} from "react-hot-loader";
 
-const App = () => {
-  const [user, setUser] = useState({
-    id: null,
-    nickname: null,
-    token: null
-  });
-  
-  return (
-    <UserProvider value={{user, setUser}}>
-      <Router>
-        <Route exact path="/" component={() => <Redirect to="/login"/>}/>
-        <Route path="/login" component={Login}/>
-        <Route path="/main" component={Main}/>
-      </Router>
-    </UserProvider>
-  );
-};
+const App = () => (
+  <Router>
+    <Route exact path="/" component={() => <Redirect to="/login"/>}/>
+    <Route path="/login" component={Login}/>
+    <Route path="/me" component={Me}/>
+    <Route path="/record" component={Main}/>
+    <Route path="/diary" component={Main}/>
+  </Router>
+);
 
 export default hot(module)(App);
