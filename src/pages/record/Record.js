@@ -11,15 +11,17 @@ const Record = () => {
   return (
     <main className="record">
       <section className="title-box">
-          <span className="title">
-            <strong>오늘 맛있는거 먹었다!</strong>
-          </span>
+        <span className="title">
+          <strong>오늘 맛있는거 먹었다!</strong>
+        </span>
       </section>
       <SearchBar
         placeholder="어떤 가게를 방문하셨나요?"
         onKeyEnter={searchStore}
       />
-      {searchText && <Map searchText={searchText}/>}
+      <section className="map-box">
+        <Map searchText={searchText}/>
+      </section>
     </main>
   );
 };

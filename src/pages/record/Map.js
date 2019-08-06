@@ -1,35 +1,43 @@
-import React, {useEffect} from "react";
+import React, {useRef, useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import "./Map.scss";
 
-let map, allPlaces;
+const places = new kakao.maps.services.Places();
 
 const Map = ({searchText}) => {
+  const mapEl = useRef(null);
+  const [map, setMap] = useState({});
   
   useEffect(() => {
-    const container = document.getElementById("map");
-    map = new kakao.maps.Map(container, {
+    setMap(new kakao.maps.Map(mapEl.current, {
       center: new kakao.maps.LatLng(33.450701, 126.570667),
       level: 3
-    });
-  }, []);
+    }));
+  }, [mapEl.current]);
   
   useEffect(() => {
     const displayMarker = place => {
-      let infoWindow = new kakao.maps.InfoWindow({zIndex: 1});
+      
+      const infoWindow = new kakao.maps.InfoWindow({
+        zIndex: 1,
+        removable: true,
+        content: `
+          <div style="padding:2px;font-size:12px;">${place.place_name}</div>
+          <button type="button" class="btn">기록하기</button>
+        `
+      });
+      
       const marker = new kakao.maps.Marker({
         map,
         position: new kakao.maps.LatLng(place.y, place.x)
       });
       
       kakao.maps.event.addListener(marker, "click", function () {
-        infoWindow.setContent(`<div style="padding:5px;font-size:12px;">${place.place_name}</div>`);
         infoWindow.open(map, marker);
       });
     };
     
-    allPlaces = new kakao.maps.services.Places();
-    allPlaces.keywordSearch(searchText, (searchPlaces, status) => {
+    places.keywordSearch(searchText, (searchPlaces, status) => {
       if (status === kakao.maps.services.Status.OK) {
         
         let bounds = new kakao.maps.LatLngBounds();
@@ -44,7 +52,7 @@ const Map = ({searchText}) => {
     });
   }, [searchText]);
   
-  return <div id="map" className="map"/>;
+  return <div id="map" className="map" ref={mapEl}/>;
 };
 
 Map.prototype = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route, Switch} from "react-router-dom";
 import List from "./List";
-import Map from "../record/Map";
+import Map from "./Map";
 import Stats from "./Stats";
 
 const Diary = () => (

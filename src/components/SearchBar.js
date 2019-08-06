@@ -10,13 +10,7 @@ const SearchBar = ({placeholder, containerClass, labelClass, inputClass, onKeyEn
   const [text, setText] = useState('');
   
   const onChange = ({target: {value}}) => setText(value);
-  
-  const onKeyDown = ({keyCode}) => {
-    if (keyCode === ENTER) {
-      onKeyEnter(text);
-    }
-  };
-  
+  const onKeyDown = ({keyCode}) => keyCode === ENTER && onKeyEnter(text);
   const onClick = () => onKeyEnter(text);
   
   return (
