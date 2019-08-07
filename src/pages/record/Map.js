@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState, useMemo} from "react";
 import PropTypes from "prop-types";
 import "./Map.scss";
 
@@ -7,29 +7,31 @@ const places = new kakao.maps.services.Places();
 const Map = ({searchText}) => {
   const mapEl = useRef(null);
   const [map, setMap] = useState({});
+  const [manager, setDrawingManager] = useState({});
+  // const drawingManager = useMemo(() => new kakao.maps.drawing.DrawingManager({map}), [map]);
   const [info, setInfo] = useState({overlays: [], markers: [], length: 0});
+  const isMapLoaded = useMemo(() => Object.keys(map).length, [map]);
   
+  // Map, Drawing Load
   useEffect(() => {
     setMap(new kakao.maps.Map(mapEl.current, {
       center: new kakao.maps.LatLng(33.450701, 126.570667),
       level: 3
     }));
-  
-    Object.keys(map).length && kakao.maps.event.addListener(map, "click", function () {
-      console.log('event');
-      const {length, overlays} = info;
-      length && overlays.forEach(overlay => overlay.setMap(null));
-    });
+    isMapLoaded && setDrawingManager(new kakao.maps.drawing.DrawingManager({map}));
   }, [mapEl.current]);
   
-  //TODO: Hook 에서 event 등록 로직 구현
+  // Add click event in Map
   useEffect(() => {
-    Object.keys(map).length && kakao.maps.event.addListener(map, "click", function () {
-      const {length, overlays} = info;
-      length && overlays.forEach(overlay => overlay.setMap(null));
+    isMapLoaded && kakao.maps.event.addListener(map, "click", function () {
+      console.log(manager);
+      manager.getOverlays().map(overlay => {
+        console.log(overlay);
+      });
     });
   }, [map]);
   
+  // Search by keyword
   useEffect(() => {
     places.keywordSearch(searchText, (searchPlaces, status) => {
       if (status === kakao.maps.services.Status.OK) {
