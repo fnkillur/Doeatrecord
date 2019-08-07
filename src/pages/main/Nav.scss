@@ -1,23 +1,28 @@
 .nav {
   position: absolute;
-  bottom: 100px;
+  bottom: 50px;
   width: 100%;
 
+  .title-box .sub-title {
+    font-size: 20px;
+  }
+
   .nav-icons {
-    margin-top: 20px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
 
     .view-icon {
-      margin-left: 40px;
+      margin-left: 50px;
 
       svg {
-        width: 45px;
-        height: 45px;
+        width: 35px;
+        height: 35px;
       }
 
       .view-name {
-        margin-top: 10px;
+        margin-top: 5px;
+        font-size: 14px;
       }
     }
 

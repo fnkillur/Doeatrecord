@@ -13,6 +13,16 @@
     }
   }
   .map-box {
-    height: 300px;
+    margin-top: 20px;
+    height: 450px;
+    @media screen and (max-height: 736px) {
+      height: 380px;
+    }
+    @media screen and (max-height: 667px) {
+      height: 320px;
+    }
+    @media screen and (max-height: 568px) {
+      height: 220px;
+    }
   }
 }
