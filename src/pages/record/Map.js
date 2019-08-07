@@ -14,7 +14,21 @@ const Map = ({searchText}) => {
       center: new kakao.maps.LatLng(33.450701, 126.570667),
       level: 3
     }));
+  
+    Object.keys(map).length && kakao.maps.event.addListener(map, "click", function () {
+      console.log('event');
+      const {length, overlays} = info;
+      length && overlays.forEach(overlay => overlay.setMap(null));
+    });
   }, [mapEl.current]);
+  
+  //TODO: Hook 에서 event 등록 로직 구현
+  useEffect(() => {
+    Object.keys(map).length && kakao.maps.event.addListener(map, "click", function () {
+      const {length, overlays} = info;
+      length && overlays.forEach(overlay => overlay.setMap(null));
+    });
+  }, [map]);
   
   useEffect(() => {
     places.keywordSearch(searchText, (searchPlaces, status) => {
@@ -24,7 +38,6 @@ const Map = ({searchText}) => {
         
         const {overlays, markers, length} = info;
         if (length) {
-          console.log(overlays);
           overlays.forEach(overlay => overlay.setMap(null));
           markers.forEach(marker => marker.setMap(null));
         }
@@ -43,7 +56,7 @@ const Map = ({searchText}) => {
                     <div class="ellipsis">${road_address_name || address_name}</div>
                     <div class="jibun ellipsis">${phone}</div>
                     <div><a href="${place_url}" target="_blank" class="link">카카오맵 링크</a></div>
-                    <div class="button-box"><button type="button" class="btn btn-record" onclick="">기록하기</button></div>
+                    <div class="button-box"><button type="button" class="btn btn-record" onclick="">여기 먹었닷!</button></div>
                   </div>
                 </div>
               </div>
@@ -73,7 +86,7 @@ const Map = ({searchText}) => {
           return acc;
         }, {overlays: [], markers: [], length: 0}));
         
-        map.setBounds(bounds, 300, 50, 0, 50);
+        map.setBounds(bounds, 500, 50, 0, 50);
       }
     });
   }, [searchText]);
