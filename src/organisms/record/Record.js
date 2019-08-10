@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import "./Record.scss"
 import SearchBar from "../../components/SearchBar";
-import Map from "./Map";
+import Map from "../../components/Map";
 
 const Record = () => {
   

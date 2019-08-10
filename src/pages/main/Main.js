@@ -1,10 +1,11 @@
 import React, {Fragment} from "react";
 import {Route, Switch} from "react-router-dom";
+import "./Main.scss";
 import {getMe} from "../../_common/utils";
 import Header from "./Header";
-import Record from "../record/Record";
-import Diary from "../diary/Diary";
-import Me from "../auth/Me";
+import Record from "../../organisms/record/Record";
+import Diary from "../../organisms/diary/Diary";
+import Me from "../../organisms/auth/Me";
 import Nav from "./Nav";
 import Footer from "./Footer";
 

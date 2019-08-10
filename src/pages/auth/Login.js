@@ -1,12 +1,15 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import "./Login.scss";
 import {KAKAO_API_KEY, KAKAO_GET_USER_API} from "../../_common/const";
 import Kakao from "kakaojs";
 
+Kakao.init(KAKAO_API_KEY);
+
 const Login = ({history}) => {
   
+  const btnEl = useRef(null);
+  
   useEffect(() => {
-    Kakao.init(KAKAO_API_KEY);
     Kakao.Auth.createLoginButton({
       container: "#kakao-login-container",
       success({access_token: token}) {
@@ -31,7 +34,7 @@ const Login = ({history}) => {
         alert("카카오 로그인이 안돼요!!!");
       }
     });
-  }, []);
+  }, [btnEl.current]);
   
   return (
     <main className="login">
@@ -39,7 +42,7 @@ const Login = ({history}) => {
         <strong>Do Eat, Record!</strong>
       </span>
       <p>기록을 위해서는 로그인이 필요해요!</p>
-      <a id="kakao-login-container"/>
+      <a id="kakao-login-container" ref={btnEl}/>
     </main>
   );
 };
