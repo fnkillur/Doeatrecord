@@ -1,4 +1,4 @@
-# Do Eat, Record!
+# Do Eat, Search!
 > React App about food record
 
 ## Getting Started

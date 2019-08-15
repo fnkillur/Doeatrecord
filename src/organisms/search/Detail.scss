@@ -1,0 +1,50 @@
+.detail {
+  padding: 0 20px;
+
+  & .title {
+    line-height: 50px;
+    margin-top: 0;
+  }
+
+  .field {
+    text-align: left;
+    margin-bottom: 10px;
+
+    svg {
+      width: 20px;
+      margin-right: 10px;
+    }
+
+    &.sub-title {
+      text-align: center;
+    }
+
+    .input {
+      margin-right: 10px;
+      width: 250px;
+      height: auto;
+      padding: .7em .6em;
+      line-height: normal;
+      font-size: 14px;
+      font-family: inherit;
+      border: none;
+      border-radius: 5px;
+      background-color: #E6E6E6;
+      outline-style: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+
+    &.btn-box {
+      margin-top: 20px;
+
+      .btn-record {
+        display: block;
+        margin: 0 auto;
+        width: 120px;
+        font-size: 16px;
+      }
+    }
+  }
+}

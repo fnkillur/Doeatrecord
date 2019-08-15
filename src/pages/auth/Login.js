@@ -21,7 +21,7 @@ const Login = ({history}) => {
               nickname,
               token
             }));
-            history.push("/record");
+            history.push("/search");
           },
           fail(err) {
             console.error(`Get User Info Error!!!  ${JSON.stringify(err)}`);

@@ -10,7 +10,7 @@ const Header = () => {
 	
 	return (
 		<header className="header">
-			<Link to="/record">
+			<Link to="/search">
 				<FontAwesomeIcon icon={faEdit}/>
 				<strong>  Do Eat, Record!</strong>
 			</Link>
