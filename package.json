@@ -11,11 +11,13 @@
     "build": "webpack -w --config ./webpack.config.js"
   },
   "dependencies": {
-    "@apollo/react-hooks": "^3.0.0",
+    "@apollo/react-hooks": "^3.0.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.21",
     "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "@types/react": "^16.9.2",
     "apollo-boost": "^0.4.4",
+    "apollo-client": "^2.6.4",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "core-js": "^3.2.1",
@@ -37,6 +39,7 @@
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
+    "eslint": "^6.1.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.8.0",

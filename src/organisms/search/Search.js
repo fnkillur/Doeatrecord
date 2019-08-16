@@ -1,16 +1,16 @@
 import React from "react";
 import "./Search.scss"
-import {Route, Switch} from "react-router-dom";
+import {Route} from "react-router-dom";
 import queryString from "query-string";
 import SearchBar from "../../components/SearchBar";
 import Map from "../../components/Map";
-import Detail from "./Detail";
+import Record from "./Record";
 
 const Search = ({history, location: {search}}) => {
   
   const {keyword} = queryString.parse(search);
   const searchKeyword = keyword => history.push(`/search?keyword=${keyword}`);
-  const viewDetail = id => history.push(`/search/detail/${id}`);
+  const viewDetail = id => history.push(`/search/record/${id}`);
   
   return (
     <main className="record">
@@ -21,10 +21,8 @@ const Search = ({history, location: {search}}) => {
       </section>
       <SearchBar keyword={keyword} searchKeyword={searchKeyword}/>
       <section className="map-box">
-        <Switch>
-          <Route exact path="/search" render={props => <Map {...props} searchText={keyword} viewDetail={viewDetail}/>}/>
-          <Route exact path="/search/detail/:id" component={Detail}/>
-        </Switch>
+        <Route exact path="/search" render={props => <Map {...props} searchText={keyword} viewDetail={viewDetail}/>}/>
+        <Route path="/search/record/:id" component={Record}/>
       </section>
     </main>
   );

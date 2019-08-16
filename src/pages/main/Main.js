@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-import {Route, Switch} from "react-router-dom";
+import {Route} from "react-router-dom";
 import "./Main.scss";
 import {getMe} from "../../_common/utils";
 import Header from "./Header";
@@ -20,11 +20,9 @@ const Main = ({history}) => {
   return (
     <Fragment>
       <Header/>
-      <Switch>
-        <Route path="/search" component={Search}/>
-        <Route path="/diary" component={Diary}/>
-        <Route path="/me" component={Me}/>
-      </Switch>
+      <Route path="/search" component={Search}/>
+      <Route path="/diary" component={Diary}/>
+      <Route path="/me" component={Me}/>
       <Nav/>
       <Footer/>
     </Fragment>

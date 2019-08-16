@@ -1,37 +1,41 @@
 import React, {useEffect, useRef} from "react";
 import "./Login.scss";
-import {KAKAO_API_KEY, KAKAO_GET_USER_API} from "../../_common/const";
 import Kakao from "kakaojs";
+import {KAKAO_API_KEY, KAKAO_GET_USER_API} from "../../_common/const";
+import {getMe} from "../../_common/utils";
 
 Kakao.init(KAKAO_API_KEY);
 
 const Login = ({history}) => {
   
+  const {token} = getMe();
+  token && history.push('/search');
+  
   const btnEl = useRef(null);
   
   useEffect(() => {
     Kakao.Auth.createLoginButton({
-      container: "#kakao-login-container",
+      container: '#kakao-login-container',
       success({access_token: token}) {
         Kakao.API.request({
           url: KAKAO_GET_USER_API,
           success({id, properties: {nickname}}) {
-            sessionStorage.setItem("me", JSON.stringify({
-              id,
+            sessionStorage.setItem('me', JSON.stringify({
+              id: id.toString(),
               nickname,
               token
             }));
-            history.push("/search");
+            history.push('/search');
           },
           fail(err) {
             console.error(`Get User Info Error!!!  ${JSON.stringify(err)}`);
-            alert("카카오 계정 정보 가져오는데 문제가 있네요 ㅜㅜ");
+            alert('카카오 계정 정보 가져오는데 문제가 있네요 ㅜㅜ');
           }
         });
       },
       fail(errObj) {
         console.error(JSON.stringify(errObj));
-        alert("카카오 로그인이 안돼요!!!");
+        alert('카카오 로그인이 안돼요!!!');
       }
     });
   }, [btnEl.current]);

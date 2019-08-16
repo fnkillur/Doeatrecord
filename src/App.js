@@ -8,7 +8,7 @@ import Login from "./pages/auth/Login";
 import Main from "./pages/main/Main";
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000'
+  uri: 'http://localhost:4000/graphql'
 });
 
 const App = () => (
