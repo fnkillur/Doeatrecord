@@ -9,7 +9,7 @@ Kakao.init(KAKAO_API_KEY);
 const Login = ({history}) => {
   
   const {token} = getMe();
-  token && history.push('/search');
+  token && history.push('/main/search');
   
   const btnEl = useRef(null);
   
@@ -25,7 +25,7 @@ const Login = ({history}) => {
               nickname,
               token
             }));
-            history.push('/search');
+            history.push('/main/search');
           },
           fail(err) {
             console.error(`Get User Info Error!!!  ${JSON.stringify(err)}`);

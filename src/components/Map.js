@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useContext} from "react";
+import React, {useContext, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import "./Map.scss";
 import {SearchContext} from "../contexts/SearchContext";
@@ -7,6 +7,7 @@ const places = new kakao.maps.services.Places();
 
 const Map = ({searchText, viewDetail}) => {
   const mapEl = useRef(null);
+  const markers = useRef([]);
   const {setPlace} = useContext(SearchContext);
   
   useEffect(() => {
@@ -17,14 +18,14 @@ const Map = ({searchText, viewDetail}) => {
   }, [mapEl.current]);
   
   useEffect(() => {
-    searchText && places.keywordSearch(searchText, (searchPlaces, status) => {
+    const search = () => places.keywordSearch(searchText, (searchPlaces, status) => {
       
       if (status === kakao.maps.services.Status.OK) {
         let bounds = new kakao.maps.LatLngBounds();
         
-        searchPlaces.map(place => {
+        const {map} = window;
+        markers.current = searchPlaces.reduce((markers, place) => {
           const {y, x, id} = place;
-          const {map} = window;
           
           const marker = new kakao.maps.Marker({
             map,
@@ -37,11 +38,26 @@ const Map = ({searchText, viewDetail}) => {
           });
           
           bounds.extend(new kakao.maps.LatLng(y, x));
-        });
+          
+          markers.push(marker);
+          return markers;
+        }, []);
         
         map.setBounds(bounds, 500, 50, 0, 50);
       }
     });
+    
+    const initMap = () => {
+      const {map} = window;
+      markers.current = markers.current.map(marker => {
+        marker.setMap(null);
+        return null;
+      });
+      map.setLevel(3);
+      map.setCenter(new kakao.maps.LatLng(33.450701, 126.570667));
+    };
+    
+    searchText ? search() : initMap();
   }, [searchText]);
   
   return <div id="map" className="map" ref={mapEl}/>;

@@ -11,19 +11,19 @@ const Nav = () => (
     </div>
     <div className="nav-icons">
       <div className="view-icon">
-        <Link to="/diary/list">
+        <Link to="/main/diary/list">
           <FontAwesomeIcon icon={faListOl}/>
           <div className="view-name">목록으로 보기</div>
         </Link>
       </div>
       <div className="view-icon">
-        <Link to="/diary/map">
+        <Link to="/main/diary/map">
           <FontAwesomeIcon icon={faMapMarkedAlt}/>
           <div className="view-name">지도로 보기</div>
         </Link>
       </div>
       <div className="view-icon">
-        <Link to="/diary/stats">
+        <Link to="/main/diary/stats">
           <FontAwesomeIcon icon={faChartPie}/>
           <div className="view-name">통계로 보기</div>
         </Link>

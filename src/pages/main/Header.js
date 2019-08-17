@@ -10,11 +10,11 @@ const Header = () => {
 	
 	return (
 		<header className="header">
-			<Link to="/search">
+			<Link to="/main/search">
 				<FontAwesomeIcon icon={faEdit}/>
 				<strong>  Do Eat, Record!</strong>
 			</Link>
-			<Link to="/me">
+			<Link to="/main/me">
 				<strong>{nickname}</strong>
 			</Link>
 		</header>

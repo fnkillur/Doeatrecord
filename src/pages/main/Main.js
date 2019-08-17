@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-import {Route} from "react-router-dom";
+import {Route, Redirect} from "react-router-dom";
 import "./Main.scss";
 import {getMe} from "../../_common/utils";
 import Header from "./Header";
@@ -9,7 +9,7 @@ import Me from "../../organisms/auth/Me";
 import Nav from "./Nav";
 import Footer from "./Footer";
 
-const Main = ({history}) => {
+const Main = ({history, match: {url}}) => {
   
   const {token} = getMe();
   if (!token) {
@@ -20,9 +20,10 @@ const Main = ({history}) => {
   return (
     <Fragment>
       <Header/>
-      <Route path="/search" component={Search}/>
-      <Route path="/diary" component={Diary}/>
-      <Route path="/me" component={Me}/>
+      <Route exact path={`${url}`} render={() => <Redirect to={`${url}/search`}/>}/>
+      <Route path={`${url}/search`} component={Search}/>
+      <Route path={`${url}/diary`} component={Diary}/>
+      <Route path={`${url}/me`} component={Me}/>
       <Nav/>
       <Footer/>
     </Fragment>

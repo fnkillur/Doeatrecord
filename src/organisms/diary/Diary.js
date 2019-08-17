@@ -4,11 +4,11 @@ import List from "./List";
 import Map from "./Map";
 import Stats from "./Stats";
 
-const Diary = () => (
+const Diary = ({match: {url}}) => (
   <Fragment>
-    <Route path="/diary/list" component={List}/>
-    <Route path="/diary/map" component={Map}/>
-    <Route path="/diary/stats" component={Stats}/>
+    <Route path={`${url}/list`} component={List}/>
+    <Route path={`${url}/map`} component={Map}/>
+    <Route path={`${url}/stats`} component={Stats}/>
   </Fragment>
 );
 
