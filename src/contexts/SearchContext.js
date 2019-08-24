@@ -1,13 +1,19 @@
-import React, {createContext, useState} from "react";
+import React, {createContext, useReducer} from "react";
+import SearchReducer from "../reducers/SearchReducer";
 
 const SearchContext = createContext({});
 const {Provider} = SearchContext;
 
+const initState = {
+  searchList: [],
+  selectedPlace: {}
+};
+
 const SearchProvider = ({children}) => {
-  const [place, setPlace] = useState({});
+  const [state, dispatch] = useReducer(SearchReducer, initState);
   
   return (
-    <Provider value={{place, setPlace}}>
+    <Provider value={{state, dispatch}}>
       {children}
     </Provider>
   );

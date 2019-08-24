@@ -1,14 +1,15 @@
 import React, {useContext, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import "./Map.scss";
 import {SearchContext} from "../contexts/SearchContext";
+import {SET_SEARCH_LIST} from "../reducers/SearchReducer";
+import "./Map.scss";
 
 const places = new kakao.maps.services.Places();
 
 const Map = ({searchText, viewDetail}) => {
   const mapEl = useRef(null);
   const markers = useRef([]);
-  const {setPlace} = useContext(SearchContext);
+  const {dispatch} = useContext(SearchContext);
   
   useEffect(() => {
     window.map = new kakao.maps.Map(mapEl.current, {
@@ -19,32 +20,33 @@ const Map = ({searchText, viewDetail}) => {
   
   useEffect(() => {
     const search = () => places.keywordSearch(searchText, (searchPlaces, status) => {
-      
-      if (status === kakao.maps.services.Status.OK) {
-        let bounds = new kakao.maps.LatLngBounds();
-        
-        const {map} = window;
-        markers.current = searchPlaces.reduce((markers, place) => {
-          const {y, x, id} = place;
-          
-          const marker = new kakao.maps.Marker({
-            map,
-            position: new kakao.maps.LatLng(y, x)
-          });
-          
-          kakao.maps.event.addListener(marker, "click", function () {
-            setPlace(place);
-            viewDetail(id);
-          });
-          
-          bounds.extend(new kakao.maps.LatLng(y, x));
-          
-          markers.push(marker);
-          return markers;
-        }, []);
-        
-        map.setBounds(bounds, 500, 50, 0, 50);
+      if (status !== kakao.maps.services.Status.OK) {
+        return;
       }
+  
+      dispatch([SET_SEARCH_LIST, searchPlaces]);
+      
+      let bounds = new kakao.maps.LatLngBounds();
+  
+      const {map} = window;
+      markers.current = searchPlaces.reduce((markers, place) => {
+        const {y, x, id} = place;
+    
+        const marker = new kakao.maps.Marker({
+          map,
+          position: new kakao.maps.LatLng(y, x)
+        });
+    
+        kakao.maps.event.addListener(marker, "click", function () {
+        });
+    
+        bounds.extend(new kakao.maps.LatLng(y, x));
+    
+        markers.push(marker);
+        return markers;
+      }, []);
+  
+      map.setBounds(bounds, 500, 50, 0, 50);
     });
     
     const initMap = () => {

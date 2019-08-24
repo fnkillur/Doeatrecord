@@ -1,10 +1,10 @@
 import React from "react";
-import "./Search.scss"
 import {Route} from "react-router-dom";
 import queryString from "query-string";
 import SearchBar from "../../components/SearchBar";
 import Map from "../../components/Map";
 import Record from "./Record";
+import "./Search.scss"
 
 const Search = ({history, location: {search}, match: {url}}) => {
   

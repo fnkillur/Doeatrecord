@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import './SearchBar.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faSearch} from '@fortawesome/free-solid-svg-icons'
+import {faSearch, faTimes} from '@fortawesome/free-solid-svg-icons'
 import {ENTER} from '../_common/const';
 
 const SearchBar = ({keyword, searchKeyword}) => {
@@ -24,6 +24,7 @@ const SearchBar = ({keyword, searchKeyword}) => {
       />
       <div className="search-icon">
         <FontAwesomeIcon icon={faSearch} onClick={() => searchKeyword(text)}/>
+        <FontAwesomeIcon icon={faTimes} onClick={() => searchKeyword('')}/>
       </div>
     </div>
   );

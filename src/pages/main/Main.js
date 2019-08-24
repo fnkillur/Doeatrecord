@@ -1,6 +1,6 @@
-import React, {Fragment} from "react";
-import {Route, Redirect} from "react-router-dom";
-import "./Main.scss";
+import React, {Fragment, useContext} from "react";
+import {Redirect, Route} from "react-router-dom";
+import {SearchContext} from "../../contexts/SearchContext";
 import {getMe} from "../../_common/utils";
 import Header from "./Header";
 import Search from "../../organisms/search/Search";
@@ -8,6 +8,8 @@ import Diary from "../../organisms/diary/Diary";
 import Me from "../../organisms/auth/Me";
 import Nav from "./Nav";
 import Footer from "./Footer";
+import SwipeBar from "../../components/SwipeBar";
+import "./Main.scss";
 
 const Main = ({history, match: {url}}) => {
   
@@ -17,6 +19,8 @@ const Main = ({history, match: {url}}) => {
     history.push('/login');
   }
   
+  const {state: {searchList}} = useContext(SearchContext);
+  
   return (
     <Fragment>
       <Header/>
@@ -24,7 +28,9 @@ const Main = ({history, match: {url}}) => {
       <Route path={`${url}/search`} component={Search}/>
       <Route path={`${url}/diary`} component={Diary}/>
       <Route path={`${url}/me`} component={Me}/>
-      <Nav/>
+      {
+        searchList.length ? <SwipeBar/> : <Nav/>
+      }
       <Footer/>
     </Fragment>
   );

@@ -1,6 +1,5 @@
 import React, {useEffect, useRef} from "react";
 import "./Login.scss";
-import Kakao from "kakaojs";
 import {KAKAO_API_KEY, KAKAO_GET_USER_API} from "../../_common/const";
 import {getMe} from "../../_common/utils";
 
@@ -8,8 +7,8 @@ Kakao.init(KAKAO_API_KEY);
 
 const Login = ({history}) => {
   
-  const {token} = getMe();
-  token && history.push('/main/search');
+  const me = getMe();
+  me && history.push('/main/search');
   
   const btnEl = useRef(null);
   
