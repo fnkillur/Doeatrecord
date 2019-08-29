@@ -1,4 +1,36 @@
 .store-card {
-  display: flex;
-  padding: 0 10px;
+  position: relative;
+  float: left;
+
+  .card-title {
+    text-overflow: ellipsis;
+  }
+
+  .card-inner {
+    display: flex;
+    padding: 0 10px;
+    text-align: left;
+
+    .card-summary {
+      width: 270px;
+
+      .description {
+        margin-top: 5px;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .card-btn {
+      display: flex;
+      align-items: flex-end;
+      margin-left: 10px;
+
+      .btn-view-detail {
+        display: block;
+        margin: 0 auto;
+        width: 95px;
+        font-size: 14px;
+      }
+    }
+  }
 }

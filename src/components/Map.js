@@ -1,12 +1,13 @@
 import React, {useContext, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import {SearchContext} from "../contexts/SearchContext";
-import {SET_SEARCH_LIST} from "../reducers/SearchReducer";
+import {SELECT_PLACE, SET_SEARCH_LIST} from "../reducers/SearchReducer";
 import "./Map.scss";
 
 const places = new kakao.maps.services.Places();
 
-const Map = ({searchText, viewDetail}) => {
+const Map = ({searchText}) => {
+  
   const mapEl = useRef(null);
   const markers = useRef([]);
   const {dispatch} = useContext(SearchContext);
@@ -19,11 +20,14 @@ const Map = ({searchText, viewDetail}) => {
   }, [mapEl.current]);
   
   useEffect(() => {
+    //TODO: 새로고침 시 핀들이 사라짐
+    //TODO: 하단 스와이프 시 해당 가게의 핀으로 포커스 로직 추가
     const search = () => places.keywordSearch(searchText, (searchPlaces, status) => {
+      
       if (status !== kakao.maps.services.Status.OK) {
         return;
       }
-  
+      
       dispatch([SET_SEARCH_LIST, searchPlaces]);
       
       let bounds = new kakao.maps.LatLngBounds();
@@ -31,13 +35,14 @@ const Map = ({searchText, viewDetail}) => {
       const {map} = window;
       markers.current = searchPlaces.reduce((markers, place) => {
         const {y, x, id} = place;
-    
+        
         const marker = new kakao.maps.Marker({
           map,
           position: new kakao.maps.LatLng(y, x)
         });
     
         kakao.maps.event.addListener(marker, "click", function () {
+          dispatch([SELECT_PLACE, id]);
         });
     
         bounds.extend(new kakao.maps.LatLng(y, x));

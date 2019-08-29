@@ -21,6 +21,8 @@ const Main = ({history, match: {url}}) => {
   
   const {state: {searchList}} = useContext(SearchContext);
   
+  const viewDetail = id => history.push(`/main/search/record/${id}`);
+  
   return (
     <Fragment>
       <Header/>
@@ -29,7 +31,7 @@ const Main = ({history, match: {url}}) => {
       <Route path={`${url}/diary`} component={Diary}/>
       <Route path={`${url}/me`} component={Me}/>
       {
-        searchList.length ? <SwipeBar/> : <Nav/>
+        searchList.length ? <SwipeBar viewDetail={viewDetail}/> : <Nav/>
       }
       <Footer/>
     </Fragment>
