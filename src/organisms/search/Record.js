@@ -23,7 +23,6 @@ const CREATE_RECORD = gql`
 const Record = () => {
 	
 	const {state: {list, selectedIndex}} = useContext(SearchListContext);
-	console.log(list[selectedIndex]);
 	const {place_name, address_name, road_address_name, phone, place_url, id: placeId, category_name: category, x, y} = list[selectedIndex];
 	
 	const [menus, setMenus] = useState('');
@@ -48,8 +47,6 @@ const Record = () => {
 					}
 				}
 			});
-			setPlace({});
-			console.log(data.createRecord);
 		};
 		isRecord && record();
 	}, [isRecord]);
