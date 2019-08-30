@@ -10,6 +10,7 @@ const Search = ({history, location: {search}, match: {url}}) => {
   
   const {keyword} = queryString.parse(search);
   const searchKeyword = keyword => history.push(`${url}?keyword=${keyword}`);
+  const cleanKeyword = () => history.push(url);
   
   return (
     <main className="record">
@@ -18,7 +19,7 @@ const Search = ({history, location: {search}, match: {url}}) => {
           <strong>오늘 맛있는거 먹었다!</strong>
         </span>
       </section>
-      <SearchBar keyword={keyword} searchKeyword={searchKeyword}/>
+      <SearchBar keyword={keyword} searchKeyword={searchKeyword} cleanKeyword={cleanKeyword}/>
       <section className="map-box">
         <Route exact path={url} render={props => <Map {...props} searchText={keyword}/>}/>
         <Route path={`${url}/record/:id`} component={Record}/>

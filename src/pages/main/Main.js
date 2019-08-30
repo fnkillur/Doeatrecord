@@ -1,6 +1,6 @@
 import React, {Fragment, useContext} from "react";
 import {Redirect, Route} from "react-router-dom";
-import {SearchContext} from "../../contexts/SearchContext";
+import {SearchListContext} from "../../contexts/SearchListContext";
 import {getMe} from "../../_common/utils";
 import Header from "./Header";
 import Search from "../../organisms/search/Search";
@@ -19,7 +19,7 @@ const Main = ({history, match: {url}}) => {
     history.push('/login');
   }
   
-  const {state: {searchList}} = useContext(SearchContext);
+  const {state: {isShowList}} = useContext(SearchListContext);
   
   const viewDetail = id => history.push(`/main/search/record/${id}`);
   
@@ -31,7 +31,7 @@ const Main = ({history, match: {url}}) => {
       <Route path={`${url}/diary`} component={Diary}/>
       <Route path={`${url}/me`} component={Me}/>
       {
-        searchList.length ? <SwipeBar viewDetail={viewDetail}/> : <Nav/>
+        isShowList ? <SwipeBar viewDetail={viewDetail}/> : <Nav/>
       }
       <Footer/>
     </Fragment>

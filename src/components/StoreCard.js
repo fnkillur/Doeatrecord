@@ -1,4 +1,6 @@
 import React from "react";
+import {faLink, faMapMarkerAlt, faPhoneAlt, faUtensils} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import "./StoreCard.scss";
 
 const StoreCard = ({store, viewDetail}) => {
@@ -10,16 +12,16 @@ const StoreCard = ({store, viewDetail}) => {
 			<div className="card-inner">
 				<section className="card-summary">
 					<div className="description">
-						{category_name}
+						<FontAwesomeIcon icon={faUtensils}/>{category_name}
 					</div>
 					<div className="description">
-						{phone}
+						<FontAwesomeIcon icon={faPhoneAlt}/>{phone || '전화번호 없음'}
 					</div>
 					<div className="description">
-						{road_address_name || address_name}
+						<FontAwesomeIcon icon={faMapMarkerAlt}/>{road_address_name || address_name}
 					</div>
 					<div className="description">
-						<a href={place_url}>카카오맵 링크</a>
+						<FontAwesomeIcon icon={faLink}/><a href={place_url}>카카오맵 링크</a>
 					</div>
 				</section>
 				<section className="card-btn">

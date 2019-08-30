@@ -1,20 +1,20 @@
 import React, {useContext, useRef} from "react";
 import ReactSwipe from "react-swipe";
-import {SELECT_PLACE} from "../reducers/SearchReducer";
-import {SearchContext} from "../contexts/SearchContext";
+import {SearchListContext} from "../contexts/SearchListContext";
 import StoreCard from "./StoreCard";
 import "./SwipeBar.scss";
+import {SELECT_PLACE} from "../reducers/SearchListReducer";
 
 const SwipeBar = ({viewDetail}) => {
   
   const swipeEl = useRef(null);
-  const {state: {searchList}, dispatch} = useContext(SearchContext);
+  const {state: {list, selectedIndex}, dispatch} = useContext(SearchListContext);
   const options = {
+    startSlide: selectedIndex,
     continuous: false,
-    //TODO: 스와이프 시 포커스 된 가게 정보 전달 후 지도에서 해당 핀으로 포커스
-    // callback(i) {
-    //   dispatch([SELECT_PLACE, searchList[i].id]);
-    // }
+    transitionEnd(index) {
+      dispatch([SELECT_PLACE, index]);
+    }
   };
   
   return (
@@ -24,7 +24,7 @@ const SwipeBar = ({viewDetail}) => {
         ref={swipeEl}
       >
         {
-          searchList.map(store => <StoreCard key={store.id} store={store} viewDetail={viewDetail}/>)
+          list.map(store => <StoreCard key={store.id} store={store} viewDetail={viewDetail}/>)
         }
       </ReactSwipe>
     </div>

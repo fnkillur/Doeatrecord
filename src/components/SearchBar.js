@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch, faTimes} from '@fortawesome/free-solid-svg-icons'
 import {ENTER} from '../_common/const';
 
-const SearchBar = ({keyword, searchKeyword}) => {
+const SearchBar = ({keyword, searchKeyword, cleanKeyword}) => {
   
   const [text, setText] = useState('');
   
@@ -24,7 +24,7 @@ const SearchBar = ({keyword, searchKeyword}) => {
       />
       <div className="search-icon">
         <FontAwesomeIcon icon={faSearch} onClick={() => searchKeyword(text)}/>
-        <FontAwesomeIcon icon={faTimes} onClick={() => searchKeyword('')}/>
+        <FontAwesomeIcon icon={faTimes} onClick={cleanKeyword}/>
       </div>
     </div>
   );

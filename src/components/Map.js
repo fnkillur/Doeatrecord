@@ -1,78 +1,87 @@
 import React, {useContext, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import {SearchContext} from "../contexts/SearchContext";
-import {SELECT_PLACE, SET_SEARCH_LIST} from "../reducers/SearchReducer";
+import {SearchListContext} from "../contexts/SearchListContext";
+import {HIDE_SEARCH_LIST, SELECT_PLACE, SET_SEARCH_LIST} from "../reducers/SearchListReducer";
 import "./Map.scss";
 
+let map;
 const places = new kakao.maps.services.Places();
 
 const Map = ({searchText}) => {
-  
-  const mapEl = useRef(null);
-  const markers = useRef([]);
-  const {dispatch} = useContext(SearchContext);
-  
-  useEffect(() => {
-    window.map = new kakao.maps.Map(mapEl.current, {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
-      level: 3
-    });
-  }, [mapEl.current]);
-  
-  useEffect(() => {
-    //TODO: 새로고침 시 핀들이 사라짐
-    //TODO: 하단 스와이프 시 해당 가게의 핀으로 포커스 로직 추가
-    const search = () => places.keywordSearch(searchText, (searchPlaces, status) => {
-      
-      if (status !== kakao.maps.services.Status.OK) {
-        return;
-      }
-      
-      dispatch([SET_SEARCH_LIST, searchPlaces]);
-      
-      let bounds = new kakao.maps.LatLngBounds();
-  
-      const {map} = window;
-      markers.current = searchPlaces.reduce((markers, place) => {
-        const {y, x, id} = place;
-        
-        const marker = new kakao.maps.Marker({
-          map,
-          position: new kakao.maps.LatLng(y, x)
-        });
-    
-        kakao.maps.event.addListener(marker, "click", function () {
-          dispatch([SELECT_PLACE, id]);
-        });
-    
-        bounds.extend(new kakao.maps.LatLng(y, x));
-    
-        markers.push(marker);
-        return markers;
-      }, []);
-  
-      map.setBounds(bounds, 500, 50, 0, 50);
-    });
-    
-    const initMap = () => {
-      const {map} = window;
-      markers.current = markers.current.map(marker => {
-        marker.setMap(null);
-        return null;
-      });
-      map.setLevel(3);
-      map.setCenter(new kakao.maps.LatLng(33.450701, 126.570667));
-    };
-    
-    searchText ? search() : initMap();
-  }, [searchText]);
-  
-  return <div id="map" className="map" ref={mapEl}/>;
+	
+	const markers = useRef([]);
+	const {state: {list, selectedIndex, isShowList}, dispatch} = useContext(SearchListContext);
+	
+	useEffect(() => {
+		map = new kakao.maps.Map(document.getElementById('map'), {
+			center: new kakao.maps.LatLng(33.450701, 126.570667),
+			level: 3
+		});
+		
+		return () => dispatch([HIDE_SEARCH_LIST]);
+	}, []);
+	
+	useEffect(() => {
+		const search = () => places.keywordSearch(searchText, (searchPlaces, status) => {
+			
+			if (status !== kakao.maps.services.Status.OK) {
+				return;
+			}
+			
+			let bounds = new kakao.maps.LatLngBounds();
+			
+			markers.current = searchPlaces.reduce((markers, place, index) => {
+				
+				const {y, x} = place;
+				const position = new kakao.maps.LatLng(y, x);
+				
+				const marker = new kakao.maps.Marker({map, position});
+				
+				kakao.maps.event.addListener(marker, "click", function () {
+					map.setCenter(position);
+					dispatch([SELECT_PLACE, index]);
+				});
+				
+				bounds.extend(new kakao.maps.LatLng(y, x));
+				
+				markers.push(marker);
+				return markers;
+			}, []);
+			
+			map.setBounds(bounds, 500, 50, 0, 50);
+			
+			dispatch([SET_SEARCH_LIST, searchPlaces]);
+		});
+		
+		const initMap = () => {
+			markers.current.map(marker => {
+				marker.setMap(null);
+			});
+			markers.current = [];
+			
+			map.setLevel(3);
+			map.setCenter(new kakao.maps.LatLng(33.450701, 126.570667));
+			
+			dispatch([HIDE_SEARCH_LIST]);
+		};
+		
+		searchText ? search() : initMap();
+	}, [searchText]);
+	
+	useEffect(() => {
+		if (!isShowList) {
+			return;
+		}
+		
+		const {y, x} = list[selectedIndex];
+		map.setCenter(new kakao.maps.LatLng(y, x));
+	}, [selectedIndex]);
+	
+	return <div id="map" className="map"/>;
 };
 
 Map.prototype = {
-  searchText: PropTypes.string,
-  viewDetail: PropTypes.func
+	searchText: PropTypes.string
 };
 
 export default Map;

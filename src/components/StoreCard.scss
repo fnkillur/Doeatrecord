@@ -12,11 +12,17 @@
     text-align: left;
 
     .card-summary {
-      width: 270px;
+      width: 250px;
 
       .description {
         margin-top: 5px;
+        overflow: hidden;
+        white-space: nowrap;
         text-overflow: ellipsis;
+        svg {
+          width: 20px;
+          margin-right: 10px;
+        }
       }
     }
 
