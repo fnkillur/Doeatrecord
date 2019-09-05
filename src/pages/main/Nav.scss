@@ -1,28 +1,27 @@
 .nav {
-  position: absolute;
-  bottom: 40px;
-  width: 100%;
+  margin-top: 20px;
 
-  .title-box .sub-title {
-    font-size: 20px;
+  .title {
+    text-align: center;
   }
 
-  .nav-icons {
-    margin-top: 10px;
+  .icon-list {
+    width: 60%;
+    margin: 10px auto;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    padding: 5px;
 
     .view-icon {
-      margin-left: 50px;
+      margin-left: 10px;
 
       svg {
-        width: 35px;
-        height: 35px;
+        width: 30px;
+        height: 30px;
       }
 
       .view-name {
-        margin-top: 5px;
-        font-size: 14px;
+        font-size: 10px;
       }
     }
 
@@ -30,4 +29,5 @@
       margin-left: 0;
     }
   }
+
 }

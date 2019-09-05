@@ -1,14 +1,16 @@
 .store-card {
   position: relative;
   float: left;
+  background-color: #E6E6E6;
+  padding: 20px;
 
-  .card-title {
+  .title {
     text-overflow: ellipsis;
+    font-size: 15px;
   }
 
   .card-inner {
     display: flex;
-    padding: 0 10px;
     text-align: left;
 
     .card-summary {
@@ -34,7 +36,7 @@
       .btn-view-detail {
         display: block;
         margin: 0 auto;
-        width: 95px;
+        width: 110px;
         font-size: 14px;
       }
     }

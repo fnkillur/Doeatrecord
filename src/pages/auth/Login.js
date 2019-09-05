@@ -1,7 +1,8 @@
 import React, {useEffect, useRef} from "react";
-import "./Login.scss";
+import Emoji from "react-emoji-render";
 import {KAKAO_API_KEY, KAKAO_GET_USER_API} from "../../_common/const";
 import {getMe} from "../../_common/utils";
+import "./Login.scss";
 
 Kakao.init(KAKAO_API_KEY);
 
@@ -44,7 +45,7 @@ const Login = ({history}) => {
       <span className="title">
         <strong>Do Eat, Record!</strong>
       </span>
-      <p>기록을 위해서는 로그인이 필요해요!</p>
+      <p>기록을 위해서는 로그인이 필요해요<Emoji text=":)"/></p>
       <a id="kakao-login-container" ref={btnEl}/>
     </main>
   );

@@ -8,7 +8,7 @@ const StoreCard = ({store, viewDetail}) => {
 	
 	return (
 		<article className="store-card">
-			<section className="card-title"><h3>{place_name}</h3></section>
+			<span className="title"><strong>{place_name}</strong></span>
 			<div className="card-inner">
 				<section className="card-summary">
 					<div className="description">

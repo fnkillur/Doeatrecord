@@ -37,11 +37,11 @@ const List = () => {
 	const {records} = data;
 	
 	return (
-		<main>
+		<>
 			{
 				records.map(({_id, ...rest}) => <ListItem key={_id} record={{_id, ...rest}}/>)
 			}
-		</main>
+		</>
 	);
 };
 
