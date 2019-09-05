@@ -1,0 +1,30 @@
+.list-item {
+  padding: 5px;
+  margin: 5px;
+  background-color: #E6E6E6;
+
+  .card-title {
+    text-overflow: ellipsis;
+  }
+
+  .card-inner {
+    display: flex;
+    text-align: left;
+
+    .card-summary {
+      width: 250px;
+
+      .description {
+        margin-top: 5px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        svg {
+          width: 20px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}

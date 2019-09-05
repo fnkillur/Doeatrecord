@@ -1,6 +1,10 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import "./Record.scss";
 import {gql} from "apollo-boost";
+import {DatePicker} from "antd";
+import "antd/dist/antd.css";
+import locale from "antd/es/date-picker/locale/ko_KR";
+import moment from "moment";
 import {useMutation} from "@apollo/react-hooks";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCreditCard, faLink, faListOl, faMapMarkerAlt, faPhoneAlt} from "@fortawesome/free-solid-svg-icons";
@@ -12,21 +16,24 @@ const CREATE_RECORD = gql`
     createRecord(input: $input) {
       userId
       placeId
+      placeName
       category
-      money
+      visitedDate
       menus
+      money
       created
     }
   }
 `;
 
-const Record = () => {
+const Record = ({history}) => {
 	
 	const {state: {list, selectedIndex}} = useContext(SearchListContext);
 	const {place_name, address_name, road_address_name, phone, place_url, id: placeId, category_name: category, x, y} = list[selectedIndex];
 	
 	const [menus, setMenus] = useState('');
 	const [money, setMoney] = useState('');
+	const [visitedDate, setVisitedDate] = useState(moment().format('YYYY-MM-DD'));
 	
 	const [isRecord, setIsRecord] = useState(false);
 	const [createRecord] = useMutation(CREATE_RECORD);
@@ -34,19 +41,22 @@ const Record = () => {
 	useEffect(() => {
 		const record = async () => {
 			const {id: userId} = getMe();
-			const {data} = await createRecord({
+			await createRecord({
 				variables: {
 					input: {
 						userId,
 						placeId,
+						placeName: place_name,
 						category,
 						x,
 						y,
+						menus: menus.split(','),
 						money,
-						menus: menus.split(',')
+						visitedDate
 					}
 				}
 			});
+			history.push('/main/diary/list');
 		};
 		isRecord && record();
 	}, [isRecord]);
@@ -71,12 +81,13 @@ const Record = () => {
 			<div className="field">
 				<FontAwesomeIcon icon={faLink}/><a href={place_url}>카카오맵 링크</a>
 			</div>
-			<div className="field sub-title">
-				<span><strong>오늘 여기서 ...</strong></span>
+			<div className="field">
+				서기 <DatePicker locale={locale} value={moment(visitedDate)}
+				               onChange={(_, dateString) => setVisitedDate(dateString)}/> 에 여기서
 			</div>
 			<div className="field">
 				<FontAwesomeIcon icon={faListOl}/>
-				<input type="text" className="input menu" placeholder="특히 이런걸 먹었고"
+				<input type="text" className="input menu" placeholder="이런 메뉴를 먹었고"
 				       ref={menuEl}
 				       value={menus} onChange={({target: {value}}) => setMenus(value)}/>
 			</div>
