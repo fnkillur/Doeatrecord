@@ -1,0 +1,42 @@
+.store {
+  position: relative;
+  float: left;
+  width: 100%;
+  background-color: #E6E6E6;
+  padding: 20px;
+
+  .store-desc {
+    margin-top: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+
+    &.store-header {
+      .store-title {
+        text-overflow: ellipsis;
+        font-size: 18px;
+      }
+
+      .store-category {
+        margin-left: 10px;
+        font-size: 13px;
+      }
+    }
+
+    &.store-swipe-card {
+      display: flex;
+      justify-content: space-between;
+
+      .btn-detail {
+        display: block;
+        width: 110px;
+        font-size: 14px;
+      }
+    }
+
+    &.store-list-item {
+
+    }
+  }
+}

@@ -1,9 +1,7 @@
 import React from "react";
-import {Route} from "react-router-dom";
 import queryString from "query-string";
 import SearchBar from "../../components/SearchBar";
 import Map from "../../components/Map";
-import Record from "./Record";
 import "./Search.scss"
 
 const Search = ({history, location: {search}, match: {url}}) => {
@@ -13,16 +11,19 @@ const Search = ({history, location: {search}, match: {url}}) => {
   const cleanKeyword = () => history.push(url);
   
   return (
-    <main className="record">
+    <main className="search">
       <section className="title-box">
         <span className="title">
           <strong>오늘 맛있는거 먹었다!</strong>
         </span>
       </section>
-      <SearchBar keyword={keyword} searchKeyword={searchKeyword} cleanKeyword={cleanKeyword}/>
+      <SearchBar
+        keyword={keyword}
+        searchKeyword={searchKeyword}
+        cleanKeyword={cleanKeyword}
+      />
       <section className="map-box">
-        <Route exact path={url} render={props => <Map {...props} searchText={keyword}/>}/>
-        <Route path={`${url}/record/:id`} component={Record}/>
+        <Map searchText={keyword}/>
       </section>
     </main>
   );

@@ -4,11 +4,12 @@ import {SearchListContext} from "../../contexts/SearchListContext";
 import {getMe} from "../../_common/utils";
 import Header from "./Header";
 import Search from "../../organisms/search/Search";
+import Record from "../../organisms/record/Record";
 import Diary from "../../organisms/diary/Diary";
 import Me from "../../organisms/auth/Me";
 import Nav from "./Nav";
 import Footer from "./Footer";
-import SwipeBar from "../../components/SwipeBar";
+import SwipeBar from "../../organisms/search/SwipeBar";
 import "./Main.scss";
 
 const Main = ({history, match: {url}}) => {
@@ -21,13 +22,14 @@ const Main = ({history, match: {url}}) => {
   
   const {state: {isShowList}} = useContext(SearchListContext);
   
-  const viewDetail = id => history.push(`/main/search/record/${id}`);
+  const viewDetail = id => history.push(`/main/record/${id}`);
   
   return (
     <Fragment>
       <Header/>
       <Route exact path={`${url}`} render={() => <Redirect to={`${url}/search`}/>}/>
       <Route path={`${url}/search`} component={Search}/>
+      <Route path={`${url}/record/:id`} component={Record}/>
       <Route path={`${url}/diary`} component={Diary}/>
       <Route path={`${url}/me`} component={Me}/>
       {

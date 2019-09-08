@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import PropTypes from 'prop-types';
 import './SearchBar.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -13,14 +13,25 @@ const SearchBar = ({keyword, searchKeyword, cleanKeyword}) => {
     setText(keyword || '');
   }, [keyword]);
   
+  const inputEl = useRef(null);
+  
+  const onKeyDown = ({keyCode}) => {
+    if (keyCode === ENTER) {
+      inputEl.current.blur();
+      searchKeyword(text);
+    }
+  };
+  
   return (
     <div className="search-container">
       <input
-        type="text" className="search-text"
+        ref={inputEl}
+        type="text"
+        className="search-text"
         placeholder={"어떤 가게를 방문하셨나요?"}
         value={text}
         onChange={({target: {value}}) => setText(value)}
-        onKeyDown={({keyCode}) => keyCode === ENTER && searchKeyword(text)}
+        onKeyDown={onKeyDown}
       />
       <div className="search-icon">
         <FontAwesomeIcon icon={faSearch} onClick={() => searchKeyword(text)}/>

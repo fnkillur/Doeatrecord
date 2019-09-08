@@ -1,9 +1,9 @@
 import React, {useContext, useRef} from "react";
 import ReactSwipe from "react-swipe";
-import {SearchListContext} from "../contexts/SearchListContext";
-import StoreCard from "./StoreCard";
+import {SearchListContext} from "../../contexts/SearchListContext";
+import {SELECT_PLACE} from "../../reducers/SearchListReducer";
+import Store from "../../components/Store";
 import "./SwipeBar.scss";
-import {SELECT_PLACE} from "../reducers/SearchListReducer";
 
 const SwipeBar = ({viewDetail}) => {
   
@@ -19,12 +19,9 @@ const SwipeBar = ({viewDetail}) => {
   
   return (
     <div className="swipe-bar">
-      <ReactSwipe
-        swipeOptions={options}
-        ref={swipeEl}
-      >
+      <ReactSwipe swipeOptions={options} ref={swipeEl}>
         {
-          list.map(store => <StoreCard key={store.id} store={store} viewDetail={viewDetail}/>)
+          list.map(store => <Store key={store.id} store={store} viewDetail={viewDetail}/>)
         }
       </ReactSwipe>
     </div>
