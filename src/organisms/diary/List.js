@@ -3,7 +3,7 @@ import {gql} from "apollo-boost";
 import {useQuery} from "@apollo/react-hooks";
 import {getMe} from "../../_common/utils";
 import Error from "../../components/Error";
-import ListItem from "../../components/ListItem";
+import Place from "../../components/Place";
 
 const GET_RECORDS = gql`
   query Records($userId: String!) {
@@ -39,7 +39,7 @@ const List = () => {
 	return (
 		<>
 			{
-				records.map(({_id, ...rest}) => <ListItem key={_id} record={{_id, ...rest}}/>)
+				records.map(({_id, ...rest}) => <Place key={_id} store={{_id, ...rest}}/>)
 			}
 		</>
 	);

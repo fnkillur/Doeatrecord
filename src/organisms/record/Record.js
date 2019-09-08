@@ -8,7 +8,7 @@ import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import {SearchListContext} from "../../contexts/SearchListContext";
 import {getMe, isNumber} from "../../_common/utils";
-import Store from "../../components/Store";
+import Place from "../../components/Place";
 import "./Record.scss";
 
 const CREATE_RECORD = gql`
@@ -33,7 +33,7 @@ const Record = ({history}) => {
   
   const {state: {list, selectedIndex}} = useContext(SearchListContext);
   const store = list[selectedIndex] || JSON.parse(sessionStorage.getItem("store"));
-  const {id: placeId, place_name: placeName, category_name: category, address_name: address, x, y} = store;
+  const {placeId, placeName, category, address, x, y} = store;
   
   const [menus, setMenus] = useState('');
   const [money, setMoney] = useState('');
@@ -70,9 +70,9 @@ const Record = ({history}) => {
   
   return (
     <main className="record">
-      <div className="field comment">여기서...</div>
+      <div className="field comment">여기서</div>
       <div className="field field-store">
-        <Store store={store}/>
+        <Place store={store}/>
       </div>
       <div className="field field-input comment">이렇게 먹었다!</div>
       <div className="field">

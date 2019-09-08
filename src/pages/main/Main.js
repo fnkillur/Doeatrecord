@@ -9,7 +9,7 @@ import Diary from "../../organisms/diary/Diary";
 import Me from "../../organisms/auth/Me";
 import Nav from "./Nav";
 import Footer from "./Footer";
-import SwipeBar from "../../organisms/search/SwipeBar";
+import SearchList from "../../organisms/search/SearchList";
 import "./Main.scss";
 
 const Main = ({history, match: {url}}) => {
@@ -22,18 +22,18 @@ const Main = ({history, match: {url}}) => {
   
   const {state: {isShowList}} = useContext(SearchListContext);
   
-  const viewDetail = id => history.push(`/main/record/${id}`);
+  const viewDetail = placeId => history.push(`/main/record/${placeId}`);
   
   return (
     <Fragment>
       <Header/>
       <Route exact path={`${url}`} render={() => <Redirect to={`${url}/search`}/>}/>
       <Route path={`${url}/search`} component={Search}/>
-      <Route path={`${url}/record/:id`} component={Record}/>
+      <Route path={`${url}/record/:placeId`} component={Record}/>
       <Route path={`${url}/diary`} component={Diary}/>
       <Route path={`${url}/me`} component={Me}/>
       {
-        isShowList ? <SwipeBar viewDetail={viewDetail}/> : <Nav/>
+        isShowList ? <SearchList viewDetail={viewDetail}/> : <Nav/>
       }
       <Footer/>
     </Fragment>

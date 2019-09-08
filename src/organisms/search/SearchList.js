@@ -2,10 +2,10 @@ import React, {useContext, useRef} from "react";
 import ReactSwipe from "react-swipe";
 import {SearchListContext} from "../../contexts/SearchListContext";
 import {SELECT_PLACE} from "../../reducers/SearchListReducer";
-import Store from "../../components/Store";
-import "./SwipeBar.scss";
+import Place from "../../components/Place";
+import "./SearchList.scss";
 
-const SwipeBar = ({viewDetail}) => {
+const SearchList = ({viewDetail}) => {
   
   const swipeEl = useRef(null);
   const {state: {list, selectedIndex}, dispatch} = useContext(SearchListContext);
@@ -18,14 +18,14 @@ const SwipeBar = ({viewDetail}) => {
   };
   
   return (
-    <div className="swipe-bar">
+    <div className="search-list">
       <ReactSwipe swipeOptions={options} ref={swipeEl}>
         {
-          list.map(store => <Store key={store.id} store={store} viewDetail={viewDetail}/>)
+          list.map(({placeId, ...rest}) => <Place key={placeId} store={{placeId, ...rest}} viewDetail={viewDetail}/>)
         }
       </ReactSwipe>
     </div>
   );
 };
 
-export default SwipeBar;
+export default SearchList;
