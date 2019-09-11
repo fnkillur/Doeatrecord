@@ -1,44 +1,57 @@
 .place {
-  position: relative;
-  float: left;
   width: 100%;
-  background-color: #E6E6E6;
-  padding: 10px;
+  background-color: #011627;
   margin-bottom: 10px;
+  color: #F2F2F2;
 
-  .place-desc {
-    margin-top: 5px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    text-align: left;
-
-    &.place-header {
-      .place-title {
-        text-overflow: ellipsis;
-        font-size: 18px;
-      }
-
-      .place-category {
-        margin-left: 10px;
-        font-size: 13px;
-      }
-    }
-
-    &.place-swipe-card {
-      display: flex;
-      justify-content: space-between;
-
-      .btn-detail {
-        display: block;
-        width: 110px;
-        font-size: 14px;
-      }
-    }
-
-    svg {
-      margin-right: 10px;
-    }
-
+  &.swipe-card {
+    position: relative;
+    float: left;
+    margin-bottom: 0;
   }
+
+  .place-inner {
+    padding: 10px;
+
+    .place-desc {
+      margin-top: 5px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-align: left;
+
+      &.place-header {
+        .place-title {
+          text-overflow: ellipsis;
+          font-size: 18px;
+        }
+
+        .place-category {
+          margin-left: 10px;
+          font-size: 13px;
+        }
+      }
+
+      &.place-swipe-card {
+        display: flex;
+        justify-content: space-between;
+
+        .btn-detail {
+          display: block;
+          width: 110px;
+          font-size: 14px;
+        }
+      }
+
+      &.place-more-info {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      svg {
+        margin-right: 10px;
+      }
+    }
+  }
+
 }

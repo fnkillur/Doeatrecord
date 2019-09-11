@@ -1,33 +1,33 @@
 .nav {
-  margin-top: 20px;
+  margin-top: 80px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
 
   .title {
     text-align: center;
+    font-size: 30px;
   }
 
   .icon-list {
-    width: 60%;
     margin: 10px auto;
-    display: flex;
-    justify-content: space-around;
-    padding: 5px;
 
-    .view-icon {
-      margin-left: 10px;
+
+    .nav-link {
+      display: flex;
+      margin-top: 30px;
+      font-size: 20px;
 
       svg {
-        width: 30px;
-        height: 30px;
+        width: 40px;
+        height: 40px;
+        margin-right: 20px;
       }
 
-      .view-name {
-        font-size: 10px;
+      .nav-name {
+        height: 40px;
+        line-height: 40px;
       }
-    }
-
-    .view-icon:nth-child(1) {
-      margin-left: 0;
     }
   }
-
 }

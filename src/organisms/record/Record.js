@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import moment from "moment";
 import {gql} from "apollo-boost";
 import {useMutation} from "@apollo/react-hooks";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -57,11 +56,11 @@ const Record = ({history}) => {
             y,
             menus: menus.split(','),
             money,
-            visitedDate: moment(visitedDate).format('YYYY-MM-DD')
+            visitedDate: new Date(visitedDate)
           }
         }
       });
-      history.push('/main/diary/list');
+      history.push('/main/diary/list/0');
     };
     isRecord && record();
   }, [isRecord]);
@@ -79,6 +78,7 @@ const Record = ({history}) => {
         <FontAwesomeIcon icon={faCalendarAlt}/>
         <DayPickerInput
           ref={datePickerEl}
+          className="record-day-picker"
           value={visitedDate}
           onDayChange={selectedDay => {
             setVisitedDate(selectedDay);
