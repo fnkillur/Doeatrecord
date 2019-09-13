@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from "react";
+import React, {useContext} from "react";
 import ReactSwipe from "react-swipe";
 import {SearchListContext} from "../../contexts/SearchListContext";
 import {SELECT_PLACE} from "../../reducers/SearchListReducer";
@@ -7,7 +7,6 @@ import "./SearchList.scss";
 
 const SearchList = ({viewDetail}) => {
   
-  const swipeEl = useRef(null);
   const {state: {list, selectedIndex}, dispatch} = useContext(SearchListContext);
   const options = {
     startSlide: selectedIndex,
@@ -19,7 +18,7 @@ const SearchList = ({viewDetail}) => {
   
   return (
     <div className="search-list">
-      <ReactSwipe swipeOptions={options} ref={swipeEl}>
+      <ReactSwipe swipeOptions={options}>
         {
           list.map(({placeId, ...rest}) => <Place key={placeId} store={{placeId, ...rest}} viewDetail={viewDetail}/>)
         }

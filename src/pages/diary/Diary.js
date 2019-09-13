@@ -6,9 +6,9 @@ import Stats from "./Stats";
 
 const Diary = ({match: {url}}) => (
   <>
-    <Route path={`${url}/list`} component={List}/>
-    <Route path={`${url}/map`} component={Map}/>
-    <Route path={`${url}/stats`} component={Stats}/>
+    <Route path={`${url}/list/:userId`} component={List}/>
+    <Route path={`${url}/map/:userId`} component={Map}/>
+    <Route path={`${url}/stats/:userId`} component={Stats}/>
   </>
 );
 

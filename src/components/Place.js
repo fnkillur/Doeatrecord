@@ -3,6 +3,7 @@ import moment from "moment";
 import classNames from "classnames";
 import {faCalendarAlt, faCreditCard, faListOl} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {convertMoney} from "../_common/utils";
 import "./Place.scss";
 
 const Place = ({store, viewDetail}) => {
@@ -18,7 +19,7 @@ const Place = ({store, viewDetail}) => {
     <article className={classNames("place", {"swipe-card": viewDetail})}>
       <div className="place-inner">
         <section className="place-desc place-header">
-          <span className="place-title"><strong>{placeName}</strong></span>
+          <span className="place-title"><a href={url}><strong>{placeName}</strong></a></span>
           <span className="place-category">{category.slice(category.indexOf('>') + 1)}</span>
         </section>
         <section className="place-desc place-address">
@@ -41,12 +42,12 @@ const Place = ({store, viewDetail}) => {
               </section>
               <section className="place-desc place-more-info">
                 <div>
-                  <FontAwesomeIcon icon={faCreditCard}/>
-                  {money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
-                </div>
-                <div>
                   <FontAwesomeIcon icon={faCalendarAlt}/>
                   {moment(visitedDate).format('M월 D일')}
+                </div>
+                <div>
+                  <FontAwesomeIcon icon={faCreditCard}/>
+                  {convertMoney(money)}원
                 </div>
               </section>
             </>

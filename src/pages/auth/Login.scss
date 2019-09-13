@@ -1,8 +1,17 @@
 .login {
-  padding-top: 150px;
+  padding-top: 100px;
   height: 100%;
 
-  .title {
+  .login-title {
     font-size: 34px;
+    color: rgb(255, 167, 196);
+  }
+
+  .login-notice {
+    font-size: 18px;
+  }
+
+  .app-notice {
+    margin-top: 70px;
   }
 }

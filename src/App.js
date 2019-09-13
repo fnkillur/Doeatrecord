@@ -9,7 +9,7 @@ import Main from "./pages/main/Main";
 import Error from "./components/Error";
 
 const client = new ApolloClient({
-	uri: 'http://192.168.1.104:4000/graphql'
+	uri: 'http://192.168.0.4:4000/graphql'
 });
 
 const App = () => (

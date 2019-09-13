@@ -19,6 +19,7 @@ const CREATE_RECORD = gql`
       category
       address
       visitedDate
+      visitedMonth
       menus
       money
       created
@@ -36,7 +37,7 @@ const Record = ({history}) => {
   
   const [menus, setMenus] = useState('');
   const [money, setMoney] = useState('');
-  const [visitedDate, setVisitedDate] = useState('');
+  const [visited, setVisited] = useState('');
   
   const [isRecord, setIsRecord] = useState(false);
   const [createRecord] = useMutation(CREATE_RECORD);
@@ -44,6 +45,7 @@ const Record = ({history}) => {
   useEffect(() => {
     const record = async () => {
       const {id: userId} = getMe();
+      const visitedDate = new Date(visited);
       await createRecord({
         variables: {
           input: {
@@ -56,7 +58,8 @@ const Record = ({history}) => {
             y,
             menus: menus.split(','),
             money,
-            visitedDate: new Date(visitedDate)
+            visitedDate,
+            visitedMonth: visitedDate.getMonth() + 1
           }
         }
       });
@@ -79,9 +82,9 @@ const Record = ({history}) => {
         <DayPickerInput
           ref={datePickerEl}
           className="record-day-picker"
-          value={visitedDate}
+          value={visited}
           onDayChange={selectedDay => {
-            setVisitedDate(selectedDay);
+            setVisited(selectedDay);
             datePickerEl.current.input.blur();
           }}
           placeholder="날이 좋아서 ..."

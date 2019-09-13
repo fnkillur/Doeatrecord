@@ -29,7 +29,7 @@ const Login = ({history}) => {
           },
           fail(err) {
             console.error(`Get User Info Error!!!  ${JSON.stringify(err)}`);
-            alert('카카오 계정 정보 가져오는데 문제가 있네요 ㅜㅜ');
+            alert('카카오 계정 정보를 가져오는데 문제가 있네요 ㅜㅜ');
           }
         });
       },
@@ -42,11 +42,21 @@ const Login = ({history}) => {
   
   return (
     <main className="login">
-      <span className="title">
+      <span className="login-title">
         <strong>Do Eat, Record!</strong>
       </span>
-      <p>기록을 위해서는 로그인이 필요해요<Emoji text=":)"/></p>
+      <p className="login-notice">기록을 위해서는 로그인이 필요해요<Emoji text=":)"/></p>
       <a id="kakao-login-container" ref={btnEl}/>
+      
+      <p className="app-notice">
+        모바일 브라우저<Emoji text=":iphone:"/>에서 보시는게 가장 편해요!<br/>
+        개인 프로젝트라서 아직 미흡한 부분이 많이 있어요<Emoji text=":sweat_smile:"/><br/><br/>
+        반짝이는 아이디어<Emoji text=":bulb:"/>가 있으시면<br/>
+        카카오톡으로 메세지<Emoji text=":incoming_envelope:"/> 주시면 최대한 반영해드릴게요!<br/>
+        이제 기록하러 가시죠!!
+        <Emoji text=" :rice:"/><Emoji text=":runner:"/><Emoji text=":woman-running:"/><br/><br/><br/>
+        카카오톡 ID: fnkillur
+      </p>
     </main>
   );
 };

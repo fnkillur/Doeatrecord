@@ -17,6 +17,7 @@ body {
   }
 
   main {
+    padding-bottom: 100px;
     // iPhone X
     @media screen and (max-height: 812px) {
       min-height: 560px;
@@ -37,7 +38,7 @@ body {
   a {
     text-decoration: none;
     cursor: pointer;
-    color: rgb(213, 68, 116);
+    color: rgb(255, 167, 196);
   }
 
   .btn {
@@ -48,7 +49,7 @@ body {
     outline: none;
     font-weight: bold;
     color: white;
-    background-color: rgb(213, 68, 116);
+    background-color: rgb(255, 167, 196);
     cursor: pointer;
   }
 }
