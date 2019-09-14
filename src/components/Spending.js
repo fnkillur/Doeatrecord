@@ -30,6 +30,16 @@ const Spending = ({userId}) => {
   
   const {spending: {total, dutch}} = data;
   
+  if (!total) {
+    return (
+      <>
+        이번 달에는 먹은게 없네요... <Emoji text=":tired_face:"/>
+        <br/>
+        밥 먹자!<Emoji text=":hamburger:"/><Emoji text=":pizza:"/><Emoji text=":curry:"/><Emoji text=":ramen:"/><Emoji text=":spaghetti:"/>
+      </>
+    )
+  }
+  
   return (
     <article className="spending">
       <div className="spending-field">

@@ -12,5 +12,20 @@
 
   .footer-search {
     padding: 15px;
+    display: flex;
+
+    .footer-search-type {
+      width: 60px;
+      margin-right: 10px;
+      font-size: 16px;
+      background-color: #011627;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      padding-left: 15px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
   }
 }

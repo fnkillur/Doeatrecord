@@ -19,6 +19,7 @@ const CREATE_RECORD = gql`
       category
       address
       visitedDate
+      visitedYear
       visitedMonth
       menus
       money
@@ -33,7 +34,7 @@ const Record = ({history}) => {
   
   const {state: {list, selectedIndex}} = useContext(SearchListContext);
   const store = list[selectedIndex] || JSON.parse(sessionStorage.getItem("store"));
-  const {placeId, placeName, category, address, x, y} = store;
+  const {placeId, placeName, category, address, url, x, y} = store;
   
   const [menus, setMenus] = useState('');
   const [money, setMoney] = useState('');
@@ -54,11 +55,13 @@ const Record = ({history}) => {
             placeName,
             category,
             address,
+            url,
             x,
             y,
             menus: menus.split(','),
             money,
             visitedDate,
+            visitedYear: visitedDate.getFullYear(),
             visitedMonth: visitedDate.getMonth() + 1
           }
         }

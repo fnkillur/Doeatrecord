@@ -32,8 +32,8 @@ const Main = ({history, match: {url}, location: {pathname, search}}) => {
       <Route path={`${url}/me`} component={Me}/>
       <Footer
         isShow={pathname.includes('diary')}
+        initType={pathname.split('/')[3]}
         keyword={keyword}
-        type={pathname.split('/')[3]}
         searchRecords={searchRecords}
       />
     </Fragment>

@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import './SearchBar.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch, faTimes} from '@fortawesome/free-solid-svg-icons'
 import {ENTER} from '../_common/const';
+import './SearchBar.scss';
 
 const SearchBar = ({keyword, searchKeyword, placeholder}) => {
   
