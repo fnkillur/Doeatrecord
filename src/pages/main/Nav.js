@@ -7,7 +7,7 @@ import {getMe} from "../../_common/utils";
 
 const Nav = ({close}) => {
   
-  const userId = getMe().id;
+  const {userId} = getMe();
   
   return (
     <nav className="nav">

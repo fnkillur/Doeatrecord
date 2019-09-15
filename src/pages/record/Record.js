@@ -45,7 +45,7 @@ const Record = ({history}) => {
   
   useEffect(() => {
     const record = async () => {
-      const {id: userId} = getMe();
+      const {userId} = getMe();
       const visitedDate = new Date(visited);
       await createRecord({
         variables: {

@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
-    "build": "webpack -w --config ./webpack.config.js"
+    "build": "webpack --config ./webpack.config.js --mode production"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.0",

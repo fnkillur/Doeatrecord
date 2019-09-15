@@ -19,13 +19,14 @@ const Login = ({history}) => {
       success({access_token: token}) {
         Kakao.API.request({
           url: KAKAO_GET_USER_API,
-          success({id, properties: {nickname}}) {
+          success({id, properties: {nickname, thumbnail_image}}) {
             sessionStorage.setItem('me', JSON.stringify({
-              id: id.toString(),
+              userId: id.toString(),
               nickname,
-              token
+              token,
+              thumbnail_image
             }));
-            history.push('/main/search');
+            history.push('/register');
           },
           fail(err) {
             console.error(`Get User Info Error!!!  ${JSON.stringify(err)}`);
