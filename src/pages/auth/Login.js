@@ -52,10 +52,10 @@ const Login = ({history}) => {
       <p className="app-notice">
         모바일 브라우저<Emoji text=":iphone:"/>에서 보시는게 가장 편해요!<br/>
         개인 프로젝트라서 아직 미흡한 부분이 많이 있어요<Emoji text=":sweat_smile:"/><br/><br/>
-        반짝이는 아이디어<Emoji text=":bulb:"/>가 있으시면<br/>
+        불편하신 부분이 있으시면<br/>
         카카오톡으로 메세지<Emoji text=":incoming_envelope:"/> 주세요!<br/>
         최대한 반영해드릴게요!<br/>
-        이제 기록하러 가시죠!!
+        
         <Emoji text=" :rice:"/><Emoji text=":runner:"/><Emoji text=":woman-running:"/><br/><br/><br/>
         카카오톡 ID: fnkillur
       </p>

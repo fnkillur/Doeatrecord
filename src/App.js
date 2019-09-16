@@ -10,7 +10,7 @@ import Main from "./pages/main/Main";
 import Error from "./components/Error";
 
 const client = new ApolloClient({
-	uri: 'http://api.doeatrecord.com:4000/graphql'
+	uri: 'http://api.doeatrecord.com/graphql'
 });
 
 const App = () => (
