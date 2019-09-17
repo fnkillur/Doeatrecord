@@ -28,7 +28,7 @@ const CREATE_RECORD = gql`
   }
 `;
 
-const Record = ({history}) => {
+const Record = () => {
   
   const datePickerEl = useRef(null);
   
@@ -66,7 +66,7 @@ const Record = ({history}) => {
           }
         }
       });
-      history.push('/main/diary/list/0');
+      location.href = `/main/diary/list/${userId}`;
     };
     isRecord && record();
   }, [isRecord]);
