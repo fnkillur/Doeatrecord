@@ -12,12 +12,12 @@ import "./Main.scss";
 
 const Main = ({history, match: {url}, location: {pathname, search}}) => {
   
-  const {token, userId} = getMe();
-  
-  if (!token) {
-    alert('로그인 해주세요!');
-    history.push('/login');
+  const me = getMe();
+  if (!me) {
+    location.href = '/login';
   }
+  
+  const {userId} = me;
   
   const searchRecords = (type, keyword) => history.push(`/main/diary/${type}/${userId}${keyword ? `?keyword=${keyword}` : ''}`);
   const {keyword} = queryString.parse(search);
