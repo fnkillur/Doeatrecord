@@ -11,6 +11,7 @@ import Error from "./components/Error";
 
 const client = new ApolloClient({
 	uri: 'http://api.doeatrecord.com/graphql'
+	// uri: 'http://localhost:4000/graphql'
 });
 
 const App = () => (
