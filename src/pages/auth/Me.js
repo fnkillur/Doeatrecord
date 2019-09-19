@@ -55,8 +55,8 @@ const Me = ({location: {search}, history}) => {
             error && <>사용자 목록을 가져오는데 실패했어요.<Emoji text=":cry:"/></>
           }
           {
-            !loading && !error && data.users.map(({useId, coupleId, nickname, thumbnail}) => (
-              <div className="profile-info">
+            !loading && !error && data && data.users.map(({userId, coupleId, nickname, thumbnail}) => (
+              <div key={userId} className="profile-info">
                 <img src={thumbnail} className="profile-thumbnail-img" alt="썸네일"/>
                 <div className="profile-nickname"><strong>{nickname}</strong></div>
               </div>
