@@ -15,7 +15,17 @@
     }
 
     .profile-nickname {
+      width: 100px;
+      text-align: left;
       margin-left: 10px;
+    }
+
+    .profile-btn-couple {
+      margin-left: 5px;
+      .btn {
+        margin-right: 5px;
+        font-size: 14px;
+      }
     }
   }
 
