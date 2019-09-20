@@ -26,6 +26,7 @@ const Login = ({history}) => {
               token,
               thumbnail_image
             }));
+            alert(thumbnail_image);
             history.push('/register');
           },
           fail(err) {
