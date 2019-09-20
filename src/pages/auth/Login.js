@@ -24,9 +24,8 @@ const Login = ({history}) => {
               userId: id.toString(),
               nickname,
               token,
-              thumbnail_image
+              thumbnail: thumbnail_image || ''
             }));
-            alert(thumbnail_image);
             history.push('/register');
           },
           fail(err) {

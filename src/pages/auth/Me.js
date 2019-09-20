@@ -76,7 +76,13 @@ const Me = ({location: {search}, history}) => {
 									?
 									data.users.map(({userId, coupleId, nickname, thumbnail}) => (
 										<div key={userId} className="profile-info">
-											<img src={thumbnail} className="profile-thumbnail-img" alt="썸네일"/>
+											{
+												thumbnail
+													?
+													<img src={thumbnail} className="profile-thumbnail-img" alt="썸네일"/>
+													:
+													<div className="profile-thumbnail-img">프사</div>
+											}
 											<div className="profile-nickname"><strong>{nickname}</strong></div>
 											<div className="profile-btn-couple">
 												{

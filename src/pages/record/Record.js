@@ -113,6 +113,8 @@ const Record = () => {
           onChange={handleMoney}
         />
       </div>
+      <div className="field">
+      </div>
       <div className="field btn-box">
         <button type="button" className="btn btn-record" onClick={() => setIsRecord(true)}>
           기록하자!
