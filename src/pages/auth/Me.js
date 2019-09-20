@@ -27,7 +27,7 @@ const REQUEST_COUPLE = gql`
 
 const Me = ({location: {search}, history}) => {
 	
-	const {userId: me, nickname, thumbnail_image} = getMe();
+	const {userId: me, nickname, thumbnail} = getMe();
 	
 	const {keyword} = queryString.parse(search);
 	const searchKeyword = keyword => history.push(`/main/me${keyword ? `?keyword=${keyword}` : ''}`);
@@ -52,7 +52,7 @@ const Me = ({location: {search}, history}) => {
 	return (
 		<main className="me">
 			<section className="profile-info">
-				<img src={thumbnail_image} className="profile-thumbnail-img"/>
+				<img src={thumbnail} className="profile-thumbnail-img"/>
 				<div className="profile-nickname"><strong>{nickname}</strong>님,</div>
 				환영합니다.<Emoji text=":bow:"/>
 			</section>
@@ -76,13 +76,7 @@ const Me = ({location: {search}, history}) => {
 									?
 									data.users.map(({userId, coupleId, nickname, thumbnail}) => (
 										<div key={userId} className="profile-info">
-											{
-												thumbnail
-													?
-													<img src={thumbnail} className="profile-thumbnail-img" alt="썸네일"/>
-													:
-													<div className="profile-thumbnail-img">프사</div>
-											}
+											<img src={thumbnail} className="profile-thumbnail-img" alt="썸네일"/>
 											<div className="profile-nickname"><strong>{nickname}</strong></div>
 											<div className="profile-btn-couple">
 												{

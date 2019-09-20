@@ -36,9 +36,11 @@ const Record = () => {
   const store = list[selectedIndex] || JSON.parse(sessionStorage.getItem("store"));
   const {placeId, placeName, category, address, url, x, y} = store;
   
+  const [visited, setVisited] = useState('');
   const [menus, setMenus] = useState('');
   const [money, setMoney] = useState('');
-  const [visited, setVisited] = useState('');
+  const [isNotDutch, setIsNotDutch] = useState(false);
+  
   
   const [isRecord, setIsRecord] = useState(false);
   const [createRecord] = useMutation(CREATE_RECORD);
@@ -114,6 +116,8 @@ const Record = () => {
         />
       </div>
       <div className="field">
+        이건 누군가 쐈다! 더치페이 노노
+        <input type="checkbox" className="input-not-dutch" value={isNotDutch} onChange={() => setIsNotDutch(!isNotDutch)}/>
       </div>
       <div className="field btn-box">
         <button type="button" className="btn btn-record" onClick={() => setIsRecord(true)}>
