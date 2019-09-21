@@ -41,7 +41,6 @@ const Record = () => {
   const [money, setMoney] = useState('');
   const [isNotDutch, setIsNotDutch] = useState(false);
   
-  
   const [isRecord, setIsRecord] = useState(false);
   const [createRecord] = useMutation(CREATE_RECORD);
   
