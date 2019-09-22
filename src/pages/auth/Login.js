@@ -21,8 +21,8 @@ const Login = ({history}) => {
           url: KAKAO_GET_USER_API,
           success({id, properties: {nickname, thumbnail_image}}) {
             sessionStorage.setItem('me', JSON.stringify({
-              userId: id.toString(),
-              nickname,
+              myId: id.toString(),
+              myName: nickname,
               token,
               thumbnail: thumbnail_image || ''
             }));

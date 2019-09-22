@@ -22,6 +22,7 @@
 
     .profile-btn-couple {
       margin-left: 5px;
+
       .btn {
         margin-right: 5px;
         font-size: 14px;
@@ -31,6 +32,11 @@
 
   .me-alarm {
     margin-top: 10px;
+
+    .alarm-receive {
+      margin-bottom: 5px;
+      display: flex;
+    }
   }
 
   .me-search-friends {

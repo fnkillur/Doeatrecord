@@ -11,25 +11,25 @@ const CREATE_USER = gql`
 `;
 
 const Register = ({history}) => {
-	
-	const {userId, nickname, thumbnail} = getMe();
-	const [createUser] = useMutation(CREATE_USER);
-	
-	useEffect(() => {
-		createUser({variables: {userId, nickname, thumbnail}})
-			.then(({data: {createUser}}) => createUser && history.push('/main/search'))
-			.catch(err => {
-				console.error(`Create User Info Error!!!  ${JSON.stringify(err)}`);
-				alert('계정 정보를 저장하는데 문제가 있어요 ㅜㅜ');
-				history.push('/login');
-			});
-	}, [userId]);
-	
-	return (
-		<main style={{marginTop: "50px"}}>
-			<ClipLoader size={50} color="white"/>
-		</main>
-	);
+  
+  const {myId, myName, thumbnail} = getMe();
+  const [createUser] = useMutation(CREATE_USER);
+  
+  useEffect(() => {
+    createUser({variables: {userId: myId, nickname: myName, thumbnail}})
+      .then(({data: {createUser}}) => createUser && history.push('/main/search'))
+      .catch(err => {
+        console.error(`Create User Info Error!!!  ${JSON.stringify(err)}`);
+        alert('계정 정보를 저장하는데 문제가 있어요 ㅜㅜ');
+        history.push('/login');
+      });
+  }, [myId]);
+  
+  return (
+    <main style={{marginTop: "50px"}}>
+      <ClipLoader size={50} color="white"/>
+    </main>
+  );
 };
 
 export default Register;

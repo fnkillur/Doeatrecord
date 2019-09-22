@@ -17,9 +17,9 @@ const Main = ({history, match: {url}, location: {pathname, search}}) => {
     location.href = '/login';
   }
   
-  const {userId} = me;
+  const {myId} = me;
   
-  const searchRecords = (type, keyword) => history.push(`/main/diary/${type}/${userId}${keyword ? `?keyword=${keyword}` : ''}`);
+  const searchRecords = (type, keyword) => history.push(`/main/diary/${type}/${myId}${keyword ? `?keyword=${keyword}` : ''}`);
   const {keyword} = queryString.parse(search);
   
   return (

@@ -9,46 +9,52 @@ import FriendList from "../../organisms/auth/FriendList";
 import "./Me.scss";
 import ReceivedAlarms from "../../organisms/auth/ReceivedAlarms";
 
-const REQUEST_COUPLE = gql`
-  mutation RequestCouple($me: String!, $you: String!, $type: String!){
-    requestCouple(me: $me, you: $you, type: $type)
+const REQUEST_MATCHING = gql`
+  mutation RequestMatching($applicantId: String!, $applicantName: String!, $targetId: String!, $targetName: String!, $type: String!){
+    requestMatching(applicantId: $applicantId, applicantName: $applicantName, targetId: $targetId, targetName: $targetName, type: $type)
   }
 `;
 
 const Me = ({location: {search}, history}) => {
   
-  const {userId: me, nickname, thumbnail} = getMe();
+  const {myId, myName, thumbnail} = getMe();
   
   const {keyword} = queryString.parse(search);
   const searchKeyword = keyword => history.push(`/main/me${keyword ? `?keyword=${keyword}` : ''}`);
   
-  const [requestCouple] = useMutation(REQUEST_COUPLE);
-  const [you, setYou] = useState('');
+  const [requestMatching] = useMutation(REQUEST_MATCHING);
+  const [targetId, setTargetId] = useState('');
+  const [targetName, setTargetName] = useState('');
   const [type, setType] = useState('');
   
   useEffect(() => {
     const request = async () => {
-      const result = await requestCouple({
+      const result = await requestMatching({
         variables: {
-          me, you, type
+          applicantId: myId,
+          applicantName: myName,
+          targetId,
+          targetName,
+          type
         }
       });
-      result ? alert(`${type} 요청되었습니다.`) : alert(`${type} 요청에 실패했습니다.`);
+      const typeString = type === 'couple' ? '커플' : '친구';
+      result ? alert(`${typeString} 요청되었습니다.`) : alert(`${typeString} 요청에 실패했습니다.`);
     };
-    you && request();
-  }, [you]);
+    targetId && request();
+  }, [targetId]);
   
   return (
     <main className="me">
       <section className="profile-info">
         <img src={thumbnail} className="profile-thumbnail-img"/>
         <div className="profile-nickname">
-          <strong>{nickname}</strong>님,
+          <strong>{myName}</strong>님,
         </div>
         환영합니다.<Emoji text=":bow:"/>
       </section>
       <section className="me-alarm">
-        <ReceivedAlarms me={me}/>
+        <ReceivedAlarms myId={myId} myName={myName}/>
       </section>
       <section className="me-search-friends">
         <SearchBar
@@ -58,15 +64,12 @@ const Me = ({location: {search}, history}) => {
         />
         <div className="me-search-result">
           <FriendList
-            me={me}
+            myId={myId}
             keyword={keyword}
-            requestCouple={coupleId => {
-              setYou(coupleId);
-              setType('couple');
-            }}
-            requestFriend={friendId => {
-              setYou(friendId);
-              setType('friend');
+            requestMatching={(id, name, type) => {
+              setTargetId(id);
+              setTargetName(name);
+              setType(type);
             }}
             goToFriend={friendId => history.push(`/main/diary/list/${friendId}`)}
           />

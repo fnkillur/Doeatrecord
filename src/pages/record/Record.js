@@ -46,12 +46,12 @@ const Record = () => {
   
   useEffect(() => {
     const record = async () => {
-      const {userId} = getMe();
+      const {myId} = getMe();
       const visitedDate = new Date(visited);
       await createRecord({
         variables: {
           input: {
-            userId,
+            userId: myId,
             placeId,
             placeName,
             category,
@@ -67,7 +67,7 @@ const Record = () => {
           }
         }
       });
-      location.href = `/main/diary/list/${userId}`;
+      location.href = `/main/diary/list/${myId}`;
     };
     isRecord && record();
   }, [isRecord]);

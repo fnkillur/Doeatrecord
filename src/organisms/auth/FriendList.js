@@ -16,7 +16,7 @@ const GET_USERS = gql`
   }
 `;
 
-const FriendList = ({me, keyword, requestCouple, requestFriend, goToFriend}) => {
+const FriendList = ({myId, keyword, requestMatching, goToFriend}) => {
   
   const {loading, error, data} = useQuery(GET_USERS, {variables: {keyword}});
   
@@ -35,13 +35,13 @@ const FriendList = ({me, keyword, requestCouple, requestFriend, goToFriend}) => 
             <div className="profile-btn-couple">
               {
                 !coupleId && (
-                  <button type="button" className="btn" onClick={() => requestCouple(userId)}>
+                  <button type="button" className="btn" onClick={() => requestMatching(userId, nickname, 'couple')}>
                     커플요청
                   </button>
                 )
               }
               {
-                friends.includes(me)
+                friends.includes(myId)
                   ?
                   (
                     <button type="button" className="btn" onClick={() => goToFriend(userId)}>
@@ -50,7 +50,7 @@ const FriendList = ({me, keyword, requestCouple, requestFriend, goToFriend}) => 
                   )
                   :
                   (
-                    <button type="button" className="btn" onClick={() => requestFriend(userId)}>
+                    <button type="button" className="btn" onClick={() => requestMatching(userId, nickname, 'friend')}>
                       친구요청
                     </button>
                   )
