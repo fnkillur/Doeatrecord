@@ -8,6 +8,7 @@ import SearchBar from "../../components/SearchBar";
 import FriendList from "../../organisms/auth/FriendList";
 import "./Me.scss";
 import ReceivedAlarms from "../../organisms/auth/ReceivedAlarms";
+import RequestedAlarms from "../../organisms/auth/RequestedAlarms";
 
 const REQUEST_MATCHING = gql`
   mutation RequestMatching($applicantId: String!, $applicantName: String!, $targetId: String!, $targetName: String!, $type: String!){
@@ -53,8 +54,10 @@ const Me = ({location: {search}, history}) => {
         </div>
         환영합니다.<Emoji text=":bow:"/>
       </section>
+      <hr className="section-divider"/>
       <section className="me-alarm">
-        <ReceivedAlarms myId={myId} myName={myName}/>
+        <ReceivedAlarms myId={myId}/>
+        <RequestedAlarms myId={myId}/>
       </section>
       <section className="me-search-friends">
         <SearchBar
