@@ -36,7 +36,7 @@ const ReceivedAlarms = ({myId}) => {
   useEffect(() => {
     const decide = async () => {
       const result = await decideAlarm({variables: decideInfo});
-      result ? alert('알람이 처리되었습니다.') : alert('알람이 처리되지 않았습니다.');
+      result ? alert('요청이 처리되었습니다.') : alert('요청이 처리되지 않았습니다.');
       setDecideInfo({...initDecideInfo});
       setAlarms(alarms.filter(({_id}) => _id !== decideInfo._id));
     };

@@ -43,19 +43,23 @@ const FriendList = ({myId, isCouple, keyword, requestMatching, goToFriend}) => {
                 )
               }
               {
-                friends.includes(myId)
+                coupleId === myId
                   ?
-                  (
-                    <button type="button" className="btn" onClick={() => goToFriend(userId)}>
-                      구경가기
-                    </button>
-                  )
+                  null
                   :
-                  (
-                    <button type="button" className="btn" onClick={() => requestMatching(userId, nickname, 'friend')}>
-                      친구요청
-                    </button>
-                  )
+                  friends.includes(myId)
+                    ?
+                    (
+                      <button type="button" className="btn" onClick={() => goToFriend(userId)}>
+                        구경가기
+                      </button>
+                    )
+                    :
+                    (
+                      <button type="button" className="btn" onClick={() => requestMatching(userId, nickname, 'friend')}>
+                        친구요청
+                      </button>
+                    )
               }
             </div>
           </div>
