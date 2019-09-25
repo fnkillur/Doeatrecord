@@ -30,6 +30,19 @@
     }
   }
 
+  .me-couple-info {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    height: 26px;
+    line-height: 26px;
+
+    .profile-couple-emoji {
+      margin-left: 5px;
+      margin-right: 3px;
+    }
+  }
+
   .section-divider {
     border: solid 1px #373c49;
   }
@@ -54,9 +67,11 @@
           line-height: 26px;
           font-size: 14px;
         }
+
         .btn-ok {
           background-color: #011627;
         }
+
         .btn-no {
           width: 60px;
         }

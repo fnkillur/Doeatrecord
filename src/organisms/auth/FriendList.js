@@ -16,7 +16,7 @@ const GET_USERS = gql`
   }
 `;
 
-const FriendList = ({myId, keyword, requestMatching, goToFriend}) => {
+const FriendList = ({myId, isCouple, keyword, requestMatching, goToFriend}) => {
   
   const {loading, error, data} = useQuery(GET_USERS, {variables: {keyword}});
   
@@ -30,11 +30,13 @@ const FriendList = ({myId, keyword, requestMatching, goToFriend}) => {
       {
         users.map(({userId, nickname, thumbnail, coupleId, friends}) => (
           <div key={userId} className="profile-info">
-            <img src={thumbnail} className="profile-thumbnail-img" alt="썸네일"/>
+            {
+              thumbnail && <img src={thumbnail} className="profile-thumbnail-img" alt=""/>
+            }
             <div className="profile-nickname"><strong>{nickname}</strong></div>
             <div className="profile-btn-couple">
               {
-                !coupleId && (
+                !isCouple && !coupleId && (
                   <button type="button" className="btn" onClick={() => requestMatching(userId, nickname, 'couple')}>
                     커플요청
                   </button>
