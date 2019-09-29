@@ -24,6 +24,7 @@ const CREATE_RECORD = gql`
       menus
       money
       created
+      isDutch
     }
   }
 `;
@@ -39,7 +40,7 @@ const Record = () => {
   const [visited, setVisited] = useState('');
   const [menus, setMenus] = useState('');
   const [money, setMoney] = useState('');
-  const [isNotDutch, setIsNotDutch] = useState(false);
+  const [isDutch, setIsDutch] = useState(true);
   
   const [isRecord, setIsRecord] = useState(false);
   const [createRecord] = useMutation(CREATE_RECORD);
@@ -63,7 +64,8 @@ const Record = () => {
             money,
             visitedDate,
             visitedYear: visitedDate.getFullYear(),
-            visitedMonth: visitedDate.getMonth() + 1
+            visitedMonth: visitedDate.getMonth() + 1,
+            isDutch
           }
         }
       });
@@ -115,8 +117,8 @@ const Record = () => {
         />
       </div>
       <div className="field">
-        이건 누군가 쐈다! 더치페이 노노
-        <input type="checkbox" className="input-not-dutch" value={isNotDutch} onChange={() => setIsNotDutch(!isNotDutch)}/>
+        더치페이 대상인가요?
+        <input type="checkbox" className="input-not-dutch" checked={isDutch} onChange={() => setIsDutch(!isDutch)}/>
       </div>
       <div className="field btn-box">
         <button type="button" className="btn btn-record" onClick={() => setIsRecord(true)}>
