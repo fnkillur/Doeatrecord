@@ -1,28 +1,60 @@
-import React, {useContext, useEffect, useRef} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {SearchListContext} from "../contexts/SearchListContext";
-import {HIDE_SEARCH_LIST, SELECT_PLACE, SET_SEARCH_LIST} from "../reducers/SearchListReducer";
+import {CLEAR_PLACE_LIST, HIDE_SEARCH_LIST, SELECT_PLACE, SET_SEARCH_LIST} from "../reducers/SearchListReducer";
 import "./Map.scss";
 
 let map;
 const places = new kakao.maps.services.Places();
 
-const Map = ({searchText}) => {
+const Map = ({searchText, isSearched, setIsSearched}) => {
   
   const markers = useRef([]);
   const {state: {list, selectedIndex, isShowList}, dispatch} = useContext(SearchListContext);
+  const [mapInfo, setMapInfo] = useState({location: '', bounds: ''});
   
   useEffect(() => {
     map = new kakao.maps.Map(document.getElementById('map'), {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      center: new kakao.maps.LatLng(37.288701, 127.051681),
       level: 3
+    });
+    
+    setMapInfo({
+      location: map.getCenter(),
+      bounds: map.getBounds()
+    });
+    
+    kakao.maps.event.addListener(map, 'dragend', function () {
+      setMapInfo({
+        location: map.getCenter(),
+        bounds: map.getBounds()
+      });
+    });
+    
+    kakao.maps.event.addListener(map, 'zoom_changed', function () {
+      setMapInfo({
+        location: map.getCenter(),
+        bounds: map.getBounds()
+      });
     });
     
     return () => dispatch([HIDE_SEARCH_LIST]);
   }, []);
   
   useEffect(() => {
+    
+    markers.current.map(marker => {
+      marker.setMap(null);
+    });
+    markers.current = [];
+    
+    const {location, bounds} = mapInfo;
+    
     const search = () => places.keywordSearch(searchText, (searchPlaces, status) => {
+      
+      setIsSearched(true);
+      
+      !searchPlaces.length && dispatch([CLEAR_PLACE_LIST]);
       
       if (status !== kakao.maps.services.Status.OK) {
         return;
@@ -42,13 +74,13 @@ const Map = ({searchText}) => {
           dispatch([SELECT_PLACE, index]);
         });
         
-        bounds.extend(new kakao.maps.LatLng(y, x));
+        bounds.extend(position);
         
         markers.push(marker);
         return markers;
       }, []);
       
-      map.setBounds(bounds, 500, 50, 0, 50);
+      map.setBounds(bounds);
       
       dispatch([SET_SEARCH_LIST, searchPlaces.map(place => {
         const {id, place_name, category_name, road_address_name, address_name, place_url, x, y} = place;
@@ -63,22 +95,20 @@ const Map = ({searchText}) => {
           y
         };
       })]);
+    }, {
+      location,
+      bounds
     });
     
     const initMap = () => {
-      markers.current.map(marker => {
-        marker.setMap(null);
-      });
-      markers.current = [];
-      
       map.setLevel(3);
-      map.setCenter(new kakao.maps.LatLng(33.450701, 126.570667));
+      map.setCenter(new kakao.maps.LatLng(37.288701, 127.051681));
       
       dispatch([HIDE_SEARCH_LIST]);
     };
     
     searchText ? search() : initMap();
-  }, [searchText]);
+  }, [searchText, isSearched]);
   
   useEffect(() => {
     if (!isShowList) {
