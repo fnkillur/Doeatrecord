@@ -6,8 +6,7 @@ const {Provider} = SearchListContext;
 
 const initState = {
 	list: [],
-	selectedIndex: undefined,
-	isShowList: false
+	selectedIndex: -1
 };
 
 const SearchListProvider = ({children}) => {

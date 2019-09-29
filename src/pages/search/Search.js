@@ -16,7 +16,6 @@ const Search = ({history, location: {search}, match: {url}}) => {
     history.push(`${url}${keyword ? `?keyword=${keyword}` : ''}`);
   };
   
-  const {state: {isShowList}} = useContext(SearchListContext);
   const viewDetail = placeId => history.push(`/main/record/${placeId}`);
   
   return (
@@ -33,9 +32,7 @@ const Search = ({history, location: {search}, match: {url}}) => {
       />
       <section className="map-box">
         <Map searchText={keyword} isSearched={isSearched} setIsSearched={setIsSearched}/>
-        {
-          isShowList && <SearchList viewDetail={viewDetail}/>
-        }
+        <SearchList viewDetail={viewDetail}/>
       </section>
     </main>
   );
