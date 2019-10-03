@@ -32,7 +32,8 @@ const Record = () => {
   
   const datePickerEl = useRef(null);
   
-  const {placeId, placeName, category, address, url, x, y} = JSON.parse(sessionStorage.getItem("place"));
+  const place = JSON.parse(sessionStorage.getItem("place"));
+  const {placeId, placeName, category, address, url, x, y} = place;
   
   const [visited, setVisited] = useState('');
   const [menus, setMenus] = useState('');
