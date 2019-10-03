@@ -6,8 +6,6 @@ import Emoji from "react-emoji-render";
 import Error from "./Error";
 import "./Spending.scss";
 
-const now = new Date();
-
 const GET_SPENDING = gql`
   query Spending($userId: String!, $now: Date) {
     spending(userId: $userId, now: $now) {
@@ -17,7 +15,7 @@ const GET_SPENDING = gql`
   }
 `;
 
-const Spending = ({userId}) => {
+const Spending = ({userId, now}) => {
   
   const {loading, error, data} = useQuery(GET_SPENDING, {
     variables: {

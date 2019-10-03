@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import moment from "moment";
 import Spending from "../../components/Spending";
 import {faCaretLeft, faCaretRight} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -6,16 +7,21 @@ import "./Stats.scss";
 
 const Stats = ({match: {params: {userId}}}) => {
   
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [date, setDate] = useState(moment());
+  
+  const changeDate = isLeft => {
+    const temp = moment(date);
+    setDate(isLeft ? temp.subtract(1, 'month') : temp.add(1, 'month'));
+  };
   
   return (
     <main className="stats">
       <section className="stats-header">
-        <FontAwesomeIcon icon={faCaretLeft} onClick={() => setMonth(month - 1)}/>
-        <strong>{month}월</strong>
-        <FontAwesomeIcon icon={faCaretRight} onClick={() => setMonth(month + 1)}/>
+        <FontAwesomeIcon icon={faCaretLeft} onClick={() => changeDate(true)}/>
+        <strong>{date.month() + 1}월</strong>
+        <FontAwesomeIcon icon={faCaretRight} onClick={() => changeDate(false)}/>
       </section>
-      <Spending userId={userId}/>
+      <Spending userId={userId} now={date}/>
     </main>
   );
 };

@@ -1,11 +1,10 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {gql} from "apollo-boost";
 import {useMutation} from "@apollo/react-hooks";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendarAlt, faCreditCard, faListOl} from "@fortawesome/free-solid-svg-icons";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
-import {SearchListContext} from "../../contexts/SearchListContext";
 import {getMe, isNumber} from "../../_common/utils";
 import Place from "../../components/Place";
 import "./Record.scss";
@@ -33,9 +32,7 @@ const Record = () => {
   
   const datePickerEl = useRef(null);
   
-  const {state: {list, selectedIndex}} = useContext(SearchListContext);
-  const store = list[selectedIndex] || JSON.parse(sessionStorage.getItem("store"));
-  const {placeId, placeName, category, address, url, x, y} = store;
+  const {placeId, placeName, category, address, url, x, y} = JSON.parse(sessionStorage.getItem("place"));
   
   const [visited, setVisited] = useState('');
   const [menus, setMenus] = useState('');
@@ -80,7 +77,7 @@ const Record = () => {
     <main className="record">
       <div className="field comment">여기서</div>
       <div className="field field-store">
-        <Place store={store}/>
+        <Place place={place}/>
       </div>
       <div className="field field-input comment">이렇게 먹었다!</div>
       <div className="field">

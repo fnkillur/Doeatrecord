@@ -1,16 +1,12 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import PropTypes from "prop-types";
-import {SearchListContext} from "../contexts/SearchListContext";
-import {CLEAR_PLACE_LIST, SELECT_PLACE, SET_SEARCH_LIST} from "../reducers/SearchListReducer";
+import React, {useEffect, useState} from "react";
+import {CLEAR_PLACE_LIST, SELECT_PLACE, SET_SEARCH_LIST, TOGGLE_SEARCHED} from "../reducers/SearchListReducer";
 import "./Map.scss";
 
 let map;
 const places = new kakao.maps.services.Places();
 
-const Map = ({searchText, isSearched, setIsSearched}) => {
+const Map = ({keyword, list, selectedIndex, isSearched, dispatch}) => {
   
-  const markers = useRef([]);
-  const {state: {list, selectedIndex}, dispatch} = useContext(SearchListContext);
   const [mapInfo, setMapInfo] = useState({location: '', bounds: ''});
   
   useEffect(() => {
@@ -38,76 +34,47 @@ const Map = ({searchText, isSearched, setIsSearched}) => {
   
   useEffect(() => {
     
-    markers.current.map(marker => marker.setMap(null));
-    markers.current = [];
+    if (isSearched) {
+      return;
+    }
+    
+    list.map(({marker}) => marker.setMap(null));
+    dispatch([CLEAR_PLACE_LIST]);
     
     const searchCallback = (searchPlaces, status) => {
       
-      setIsSearched(true);
-      
-      !searchPlaces.length && dispatch([CLEAR_PLACE_LIST]);
+      dispatch([TOGGLE_SEARCHED, true]);
       
       if (status !== kakao.maps.services.Status.OK) {
         return;
       }
       
-      let bounds = new kakao.maps.LatLngBounds();
-      
-      markers.current = searchPlaces.reduce((markers, {y, x}, index) => {
+      const searchList = searchPlaces.map((
+        {id, place_name, category_name, road_address_name, address_name, place_url, x, y}
+      ) => {
         const position = new kakao.maps.LatLng(y, x);
-        
         const marker = new kakao.maps.Marker({map, position});
-        kakao.maps.event.addListener(marker, "click", () => {
-          map.setCenter(position);
-          dispatch([SELECT_PLACE, index]);
-        });
+        kakao.maps.event.addListener(marker, "click", () => dispatch([SELECT_PLACE, index]));
         
-        bounds.extend(position);
-        markers.push(marker);
-        
-        return markers;
-      }, []);
-      
-      map.setBounds(bounds);
-      
-      const searchList = searchPlaces
-        .map((
-          {
-            id,
-            place_name,
-            category_name,
-            road_address_name,
-            address_name,
-            place_url,
-            x,
-            y
-          }
-        ) => (
-          {
-            placeId: id,
-            placeName: place_name,
-            category: category_name,
-            address: road_address_name || address_name,
-            url: place_url,
-            x,
-            y
-          }));
+        return {
+          placeId: id,
+          placeName: place_name,
+          category: category_name,
+          address: road_address_name || address_name,
+          url: place_url,
+          x, y,
+          marker
+        };
+      });
       
       dispatch([SET_SEARCH_LIST, searchList]);
     };
     
-    const initMap = () => {
-      map.setLevel(4);
-      map.setCenter(new kakao.maps.LatLng(37.288701, 127.051681));
-      
-      dispatch([CLEAR_PLACE_LIST]);
-    };
+    const hasOption = keyword.indexOf(' ') === -1;
     
-    const {location, bounds} = mapInfo;
+    keyword && places.keywordSearch(keyword, searchCallback, hasOption && mapInfo);
     
-    searchText ? places.keywordSearch(searchText, searchCallback, searchText.indexOf(' ') === -1 && {location, bounds}) : initMap();
-    
-  }, [searchText, isSearched]);
+  }, [keyword, isSearched]);
   
   useEffect(() => {
     if (selectedIndex < 0) {
@@ -115,16 +82,11 @@ const Map = ({searchText, isSearched, setIsSearched}) => {
     }
     
     const {y, x} = list[selectedIndex];
-    map.setLevel(4);
     map.setCenter(new kakao.maps.LatLng(y, x));
     
   }, [selectedIndex]);
   
   return <div id="map" className="map"/>;
-};
-
-Map.prototype = {
-  searchText: PropTypes.string
 };
 
 export default Map;

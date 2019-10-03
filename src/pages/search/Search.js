@@ -1,18 +1,26 @@
-import React, {useContext, useState} from "react";
+import React, {useReducer} from "react";
 import queryString from "query-string";
+import SearchListReducer, {TOGGLE_SEARCHED} from "../../reducers/SearchListReducer";
 import SearchBar from "../../components/SearchBar";
 import Map from "../../components/Map";
-import {SearchListContext} from "../../contexts/SearchListContext";
 import SearchList from "../../organisms/search/SearchList";
 import "./Search.scss"
 
+const initState = {
+  list: [],
+  selectedIndex: -1,
+  isSearched: false
+};
+
 const Search = ({history, location: {search}, match: {url}}) => {
   
-  const [isSearched, setIsSearched] = useState(false);
+  const {keyword = ''} = queryString.parse(search);
   
-  const {keyword} = queryString.parse(search);
+  const [state, dispatch] = useReducer(SearchListReducer, initState);
+  const {list, selectedIndex, isSearched} = state;
+  
   const searchKeyword = keyword => {
-    setIsSearched(false);
+    dispatch([TOGGLE_SEARCHED, false]);
     history.push(`${url}${keyword ? `?keyword=${keyword}` : ''}`);
   };
   
@@ -31,8 +39,19 @@ const Search = ({history, location: {search}, match: {url}}) => {
         placeholder="어떤 가게를 방문하셨나요?"
       />
       <section className="map-box">
-        <Map searchText={keyword} isSearched={isSearched} setIsSearched={setIsSearched}/>
-        <SearchList viewDetail={viewDetail}/>
+        <Map
+          keyword={keyword}
+          list={list}
+          selectedIndex={selectedIndex}
+          isSearched={isSearched}
+          dispatch={dispatch}
+        />
+        <SearchList
+          viewDetail={viewDetail}
+          list={list}
+          selectedIndex={selectedIndex}
+          dispatch={dispatch}
+        />
       </section>
     </main>
   );

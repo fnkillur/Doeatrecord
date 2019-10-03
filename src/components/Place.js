@@ -6,12 +6,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {convertMoney} from "../_common/utils";
 import "./Place.scss";
 
-const Place = ({store, viewDetail}) => {
+const Place = ({place, viewDetail}) => {
   
-  const {placeId, placeName, category, address, url, visitedDate, menus = [], money} = store;
+  const {placeId, placeName, category, address, url, x, y, visitedDate, menus = [], money} = place;
   
   const record = () => {
-    sessionStorage.setItem("store", JSON.stringify(store));
+    sessionStorage.setItem("place", JSON.stringify({
+      placeId, placeName, category, address, url, x, y
+    }));
     viewDetail(placeId);
   };
   

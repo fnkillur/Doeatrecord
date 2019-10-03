@@ -78,7 +78,7 @@ const List = ({match: {params: {userId}}, location: {search}}) => {
                   </div>
                 ) : ''
               }
-              <Place store={{_id, ...rest}}/>
+              <Place place={{_id, ...rest}}/>
             </div>
           ))
         }
