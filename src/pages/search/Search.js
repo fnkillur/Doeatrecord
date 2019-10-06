@@ -1,30 +1,73 @@
-import React, {useReducer} from "react";
+import React, {useEffect, useState} from "react";
 import queryString from "query-string";
-import SearchListReducer, {TOGGLE_SEARCHED} from "../../reducers/SearchListReducer";
 import SearchBar from "../../components/SearchBar";
 import Map from "../../components/Map";
 import SearchList from "../../organisms/search/SearchList";
 import "./Search.scss"
 
-const initState = {
-  list: [],
-  selectedIndex: -1,
-  isSearched: false
-};
-
 const Search = ({history, location: {search}, match: {url}}) => {
   
   const {keyword = ''} = queryString.parse(search);
   
-  const [state, dispatch] = useReducer(SearchListReducer, initState);
-  const {list, selectedIndex, isSearched} = state;
+  const [list, setList] = useState([]);
+  const [isSearched, setIsSearched] = useState(false);
+  const [selectedIndex, setIndex] = useState(0);
   
   const searchKeyword = keyword => {
-    dispatch([TOGGLE_SEARCHED, false]);
+    setIsSearched(false);
     history.push(`${url}${keyword ? `?keyword=${keyword}` : ''}`);
   };
   
   const viewDetail = placeId => history.push(`/main/record/${placeId}`);
+  
+  useEffect(() => {
+    
+    if (keyword && isSearched) {
+      return;
+    }
+    
+    const searchCallback = (searchPlaces, status) => {
+      
+      if (status !== kakao.maps.services.Status.OK) {
+        return;
+      }
+      
+      setList(searchPlaces.map(
+        ({
+           id,
+           place_name,
+           category_name,
+           road_address_name,
+           address_name,
+           place_url,
+           x,
+           y
+         }) => ({
+          placeId: id,
+          placeName: place_name,
+          category: category_name,
+          address: road_address_name || address_name,
+          url: place_url,
+          x,
+          y
+        })
+      ));
+      setIsSearched(true);
+    };
+    
+    const hasOption = keyword.indexOf(' ') === -1;
+    
+    if (keyword) {
+      places.keywordSearch(keyword, searchCallback, hasOption && {
+        location: map.getCenter(),
+        bounds: map.getBounds()
+      });
+    } else {
+      setList([]);
+      setIndex(0);
+    }
+    
+  }, [keyword, isSearched]);
   
   return (
     <main className="search">
@@ -40,17 +83,15 @@ const Search = ({history, location: {search}, match: {url}}) => {
       />
       <section className="map-box">
         <Map
-          keyword={keyword}
           list={list}
           selectedIndex={selectedIndex}
-          isSearched={isSearched}
-          dispatch={dispatch}
+          setIndex={setIndex}
         />
         <SearchList
           viewDetail={viewDetail}
           list={list}
           selectedIndex={selectedIndex}
-          dispatch={dispatch}
+          setIndex={setIndex}
         />
       </section>
     </main>

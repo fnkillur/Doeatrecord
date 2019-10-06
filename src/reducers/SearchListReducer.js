@@ -10,6 +10,7 @@ export default (state, [type, payload]) => {
         ...state,
         list: payload,
         selectedIndex: 0,
+        isSearched: true
       };
     case SELECT_PLACE:
       return {
@@ -20,7 +21,8 @@ export default (state, [type, payload]) => {
       return {
         ...state,
         list: [],
-        selectedIndex: -1
+        selectedIndex: -1,
+        isSearched: false
       };
     case TOGGLE_SEARCHED:
       return {

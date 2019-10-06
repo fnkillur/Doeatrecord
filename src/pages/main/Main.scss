@@ -6,7 +6,7 @@ body {
   text-align: center;
   font-size: 16px;
   color: #fff;
-  background-color: #282c35;;
+  background-color: #282c35;
   overflow: scroll;
 
   #root {
@@ -39,6 +39,29 @@ body {
     text-decoration: none;
     cursor: pointer;
     color: rgb(255, 167, 196);
+  }
+
+  .map-box {
+    position: relative;
+    margin-top: 10px;
+    height: 500px;
+    overflow: hidden;
+
+    // iPhone X
+    @media screen and (max-height: 812px) {
+      height: 470px;
+    }
+    // iPhone 7, 8 Plus
+    @media screen and (max-height: 736px) {
+      height: 450px;
+    }
+    // iPhone 7, 8
+    @media screen and (max-height: 667px) {
+      height: 400px;
+    }
+    @media screen and (max-height: 568px) {
+      height: 220px;
+    }
   }
 
   .btn {

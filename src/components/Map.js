@@ -1,88 +1,56 @@
 import React, {useEffect, useState} from "react";
-import {CLEAR_PLACE_LIST, SELECT_PLACE, SET_SEARCH_LIST, TOGGLE_SEARCHED} from "../reducers/SearchListReducer";
 import "./Map.scss";
 
-let map;
-const places = new kakao.maps.services.Places();
-
-const Map = ({keyword, list, selectedIndex, isSearched, dispatch}) => {
+const Map = ({list, selectedIndex = -1, setIndex, isRanking = false}) => {
   
-  const [mapInfo, setMapInfo] = useState({location: '', bounds: ''});
+  const [markers, setMarkers] = useState([]);
   
   useEffect(() => {
     map = new kakao.maps.Map(document.getElementById('map'), {
       center: new kakao.maps.LatLng(37.288701, 127.051681),
-      level: 4
+      level: 5
     });
-    
-    setMapInfo({
-      location: map.getCenter(),
-      bounds: map.getBounds()
-    });
-    
-    kakao.maps.event.addListener(map, 'dragend', () => setMapInfo({
-      location: map.getCenter(),
-      bounds: map.getBounds()
-    }));
-    kakao.maps.event.addListener(map, 'zoom_changed', () => setMapInfo({
-      location: map.getCenter(),
-      bounds: map.getBounds()
-    }));
-    
-    return () => dispatch([CLEAR_PLACE_LIST]);
   }, []);
   
   useEffect(() => {
+    markers.map(({marker, overlay}) => {
+      marker.setMap(null);
+      overlay.setMap(null);
+    });
     
-    if (isSearched) {
-      return;
-    }
-    
-    list.map(({marker}) => marker.setMap(null));
-    dispatch([CLEAR_PLACE_LIST]);
-    
-    const searchCallback = (searchPlaces, status) => {
-      
-      dispatch([TOGGLE_SEARCHED, true]);
-      
-      if (status !== kakao.maps.services.Status.OK) {
-        return;
-      }
-      
-      const searchList = searchPlaces.map((
-        {id, place_name, category_name, road_address_name, address_name, place_url, x, y}
-      ) => {
-        const position = new kakao.maps.LatLng(y, x);
-        const marker = new kakao.maps.Marker({map, position});
-        kakao.maps.event.addListener(marker, "click", () => dispatch([SELECT_PLACE, index]));
-        
-        return {
-          placeId: id,
-          placeName: place_name,
-          category: category_name,
-          address: road_address_name || address_name,
-          url: place_url,
-          x, y,
-          marker
-        };
+    const temp = list.map(({placeName, count, url, y, x}, index) => {
+      const position = new kakao.maps.LatLng(y, x);
+      const marker = new kakao.maps.Marker({map, position});
+      const content = `
+        <div class="ranking-overlay">
+          <div class="ranking-overlay-field"><a href="${url}">${placeName}</a></div>
+          <div class="ranking-overlay-field">${count}회 방문</div>
+        </div>
+      `;
+      const overlay = new kakao.maps.CustomOverlay({content, position});
+      kakao.maps.event.addListener(marker, "click", () => {
+        setIndex(index);
       });
       
-      dispatch([SET_SEARCH_LIST, searchList]);
-    };
+      return {marker, overlay};
+    });
     
-    const hasOption = keyword.indexOf(' ') === -1;
+    setMarkers(temp);
     
-    keyword && places.keywordSearch(keyword, searchCallback, hasOption && mapInfo);
-    
-  }, [keyword, isSearched]);
+  }, [list]);
   
   useEffect(() => {
-    if (selectedIndex < 0) {
+    if (!list.length || selectedIndex < 0) {
       return;
     }
     
     const {y, x} = list[selectedIndex];
     map.setCenter(new kakao.maps.LatLng(y, x));
+    
+    if (isRanking) {
+      markers.map(({overlay}) => overlay.setMap(null));
+      markers[selectedIndex].overlay.setMap(map);
+    }
     
   }, [selectedIndex]);
   

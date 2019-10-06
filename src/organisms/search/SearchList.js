@@ -1,16 +1,15 @@
 import React from "react";
 import ReactSwipe from "react-swipe";
-import {SELECT_PLACE} from "../../reducers/SearchListReducer";
 import Place from "../../components/Place";
 import "./SearchList.scss";
 
-const SearchList = ({viewDetail, list, selectedIndex, dispatch}) => {
+const SearchList = ({viewDetail, list, selectedIndex, setIndex}) => {
   
   const options = {
     startSlide: selectedIndex,
     continuous: false,
     transitionEnd(index) {
-      dispatch([SELECT_PLACE, index]);
+      setIndex(index);
     }
   };
   
