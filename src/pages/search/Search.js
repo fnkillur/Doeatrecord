@@ -53,7 +53,6 @@ const Search = ({history, location: {search}, match: {url}}) => {
         })
       ));
       setIndex(0);
-      setIsSearched(true);
     };
     
     const hasOption = keyword.indexOf(' ') === -1;
@@ -67,6 +66,8 @@ const Search = ({history, location: {search}, match: {url}}) => {
       setList([]);
       setIndex(-1);
     }
+  
+    setIsSearched(true);
     
   }, [keyword, isSearched]);
   
