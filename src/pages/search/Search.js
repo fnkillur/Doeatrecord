@@ -11,7 +11,7 @@ const Search = ({history, location: {search}, match: {url}}) => {
   
   const [list, setList] = useState([]);
   const [isSearched, setIsSearched] = useState(false);
-  const [selectedIndex, setIndex] = useState(0);
+  const [selectedIndex, setIndex] = useState(-1);
   
   const searchKeyword = keyword => {
     setIsSearched(false);
@@ -52,6 +52,7 @@ const Search = ({history, location: {search}, match: {url}}) => {
           y
         })
       ));
+      setIndex(0);
       setIsSearched(true);
     };
     
@@ -64,7 +65,7 @@ const Search = ({history, location: {search}, match: {url}}) => {
       });
     } else {
       setList([]);
-      setIndex(0);
+      setIndex(-1);
     }
     
   }, [keyword, isSearched]);
