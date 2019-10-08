@@ -73,11 +73,6 @@ const Search = ({history, location: {search}, match: {url}}) => {
   
   return (
     <main className="search">
-      <section className="search-title-box">
-        <span className="search-title">
-          <strong>오늘 맛있는거 먹었다!</strong>
-        </span>
-      </section>
       <SearchBar
         keyword={keyword}
         searchKeyword={searchKeyword}

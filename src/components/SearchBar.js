@@ -34,7 +34,6 @@ const SearchBar = ({keyword, searchKeyword, placeholder}) => {
         onKeyDown={onKeyDown}
       />
       <div className="search-icon">
-        <FontAwesomeIcon icon={faSearch} onClick={() => searchKeyword(text)}/>
         <FontAwesomeIcon icon={faTimes} onClick={() => searchKeyword('')}/>
       </div>
     </div>

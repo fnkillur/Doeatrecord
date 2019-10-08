@@ -11,7 +11,6 @@ const Nav = ({close}) => {
   
   return (
     <nav className="nav">
-      <span className="title"><strong>그동안 얼마나 먹은거야...?</strong></span>
       <section className="icon-list">
         <Link to={`/main/diary/list/${myId}`} onClick={close}>
           <div className="nav-link">
