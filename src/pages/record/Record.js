@@ -91,7 +91,7 @@ const Record = () => {
             setVisited(selectedDay);
             datePickerEl.current.input.blur();
           }}
-          placeholder="날이 좋아서 ..."
+          placeholder="방문한 날짜를 선택해보세요."
         />
       </div>
       <div className="field">
@@ -99,7 +99,7 @@ const Record = () => {
         <input
           type="text"
           className="input menu"
-          placeholder="이런 메뉴를 ... 츄릅 (예시: 삼겹살, 비빔냉면)"
+          placeholder="먹었던 음식을 입력해보세요. (예시. 삼겹살, 콜라)"
           value={menus}
           onChange={({target: {value}}) => setMenus(value)}
         />
@@ -107,9 +107,9 @@ const Record = () => {
       <div className="field">
         <FontAwesomeIcon icon={faCreditCard}/>
         <input
-          type="text"
+          type="tel"
           className="input money"
-          placeholder="돈은 이만큼 ... 헤헤"
+          placeholder="사용한 돈을 숫자로 입력해보세요."
           value={money}
           onChange={handleMoney}
         />
