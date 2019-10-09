@@ -12,11 +12,6 @@ const SearchBar = ({keyword, searchKeyword, placeholder}) => {
   
   const inputEl = useRef(null);
   
-  const onChange = ({target: {value}}) => {
-    setText(value);
-    !value && searchKeyword('');
-  };
-  
   const onKeyDown = ({keyCode}) => {
     if (keyCode === ENTER) {
       inputEl.current.blur();
@@ -32,7 +27,7 @@ const SearchBar = ({keyword, searchKeyword, placeholder}) => {
         className="search-text"
         placeholder={placeholder}
         value={text}
-        onChange={onChange}
+        onChange={({target: {value}}) => setText(value)}
         onKeyDown={onKeyDown}
       />
     </div>
