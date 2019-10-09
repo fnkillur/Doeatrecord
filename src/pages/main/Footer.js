@@ -39,7 +39,6 @@ const Footer = ({isShow, initType, keyword, searchRecords}) => {
           </section>
         )
       }
-      Copyright © Teo dor. All rights reserved.
     </footer>
   );
 };

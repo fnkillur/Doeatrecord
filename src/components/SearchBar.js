@@ -1,7 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import PropTypes from 'prop-types';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faSearch, faTimes} from '@fortawesome/free-solid-svg-icons'
 import {ENTER} from '../_common/const';
 import './SearchBar.scss';
 
@@ -15,6 +12,11 @@ const SearchBar = ({keyword, searchKeyword, placeholder}) => {
   
   const inputEl = useRef(null);
   
+  const onChange = ({target: {value}}) => {
+    setText(value);
+    !value && searchKeyword('');
+  };
+  
   const onKeyDown = ({keyCode}) => {
     if (keyCode === ENTER) {
       inputEl.current.blur();
@@ -26,22 +28,15 @@ const SearchBar = ({keyword, searchKeyword, placeholder}) => {
     <div className="search-container">
       <input
         ref={inputEl}
-        type="text"
+        type="search"
         className="search-text"
         placeholder={placeholder}
         value={text}
-        onChange={({target: {value}}) => setText(value)}
+        onChange={onChange}
         onKeyDown={onKeyDown}
       />
-      <div className="search-icon">
-        <FontAwesomeIcon icon={faTimes} onClick={() => searchKeyword('')}/>
-      </div>
     </div>
   );
-};
-
-SearchBar.propTypes = {
-  searchKeyword: PropTypes.func
 };
 
 export default SearchBar;
