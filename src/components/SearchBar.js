@@ -2,8 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {ENTER} from '../_common/const';
 import './SearchBar.scss';
 
-const SearchBar = ({keyword, searchKeyword, placeholder}) => {
-  
+const SearchBar = ({keyword, searchKeyword, placeholder, isDiary = false}) => {
   const [text, setText] = useState('');
   
   useEffect(() => {
@@ -20,17 +19,16 @@ const SearchBar = ({keyword, searchKeyword, placeholder}) => {
   };
   
   return (
-    <div className="search-container">
-      <input
-        ref={inputEl}
-        type="search"
-        className="search-text"
-        placeholder={placeholder}
-        value={text}
-        onChange={({target: {value}}) => setText(value)}
-        onKeyDown={onKeyDown}
-      />
-    </div>
+    <input
+      ref={inputEl}
+      type="search"
+      className="search-text"
+      placeholder={placeholder}
+      value={text}
+      onChange={({target: {value}}) => setText(value)}
+      onKeyDown={onKeyDown}
+      style={{backgroundColor: isDiary ? "#373c49" : "#282c35"}}
+    />
   );
 };
 
