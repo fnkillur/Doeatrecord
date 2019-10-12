@@ -10,21 +10,8 @@ import Place from "../../components/Place";
 import "./Record.scss";
 
 const CREATE_RECORD = gql`
-  mutation CreateRecord($input: NewRecord!) {
-    createRecord(input: $input) {
-      userId
-      placeId
-      placeName
-      category
-      address
-      visitedDate
-      visitedYear
-      visitedMonth
-      menus
-      money
-      created
-      isDutch
-    }
+  mutation ($input: NewRecord!) {
+    createRecord(input: $input)
   }
 `;
 
@@ -33,12 +20,20 @@ const Record = () => {
   const datePickerEl = useRef(null);
   
   const place = JSON.parse(sessionStorage.getItem("place"));
-  const {placeId, placeName, category, address, url, x, y} = place;
+  const {
+    placeId, placeName, category, address, url, x, y,
+    _id,
+    isModify,
+    menus: modifyMenus,
+    visitedDate: modifyVisitedDate,
+    money: modifyMoney,
+    isDutch: modifyIsDutch
+  } = place;
   
-  const [visited, setVisited] = useState(new Date());
-  const [menus, setMenus] = useState('');
-  const [money, setMoney] = useState('');
-  const [isDutch, setIsDutch] = useState(true);
+  const [visited, setVisited] = useState(modifyVisitedDate ? new Date(modifyVisitedDate) : new Date());
+  const [menus, setMenus] = useState(modifyMenus ? modifyMenus.join(', ') : '');
+  const [money, setMoney] = useState(modifyMoney || '');
+  const [isDutch, setIsDutch] = useState(modifyIsDutch === undefined ? true : modifyIsDutch);
   
   const [isRecord, setIsRecord] = useState(false);
   const [createRecord] = useMutation(CREATE_RECORD);
@@ -47,9 +42,10 @@ const Record = () => {
     const record = async () => {
       const {myId} = getMe();
       const visitedDate = new Date(visited);
-      await createRecord({
+      const result = await createRecord({
         variables: {
           input: {
+            _id,
             userId: myId,
             placeId,
             placeName,
@@ -67,7 +63,7 @@ const Record = () => {
           }
         }
       });
-      location.href = `/main/diary/list/${myId}`;
+      result ? location.href = `/main/diary/list/${myId}` : alert('기록하는데 문제가 있습니다.');
     };
     isRecord && record();
   }, [isRecord]);
@@ -85,7 +81,6 @@ const Record = () => {
         <FontAwesomeIcon icon={faCalendarAlt}/>
         <DayPickerInput
           ref={datePickerEl}
-          className="record-day-picker"
           value={visited}
           onDayChange={selectedDay => {
             setVisited(selectedDay);
@@ -99,7 +94,7 @@ const Record = () => {
         <input
           type="text"
           className="input menu"
-          placeholder="먹었던 음식을 입력해보세요. (예시. 삼겹살, 콜라)"
+          placeholder="먹었던 음식을 입력해보세요. (쉼표로 구분)"
           value={menus}
           onChange={({target: {value}}) => setMenus(value)}
         />
@@ -120,7 +115,7 @@ const Record = () => {
       </div>
       <div className="field btn-box">
         <button type="button" className="btn btn-record" onClick={() => setIsRecord(true)}>
-          기록하자!
+          {isModify ? '수정하기' : '기록하기'}
         </button>
       </div>
     </main>

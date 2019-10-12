@@ -8,11 +8,17 @@ import "./Place.scss";
 
 const Place = ({place, viewDetail}) => {
   
-  const {placeId, placeName, category, address, url, x, y, visitedDate, menus = [], money} = place;
+  const {isModify, placeId, placeName, category, address, url, x, y, visitedDate, menus = [], money} = place;
   
   const record = () => {
     sessionStorage.setItem("place", JSON.stringify({
-      placeId, placeName, category, address, url, x, y
+      placeId,
+      placeName,
+      category,
+      address,
+      url,
+      x,
+      y
     }));
     viewDetail(placeId);
   };
@@ -24,7 +30,7 @@ const Place = ({place, viewDetail}) => {
           <span className="place-title"><a href={url}><strong>{placeName}</strong></a></span>
           <span className="place-category">{category.slice(category.indexOf('>') + 1)}</span>
         </section>
-        <section className="place-desc place-address">
+        <section className="place-desc">
           {address}
         </section>
         {
@@ -36,7 +42,7 @@ const Place = ({place, viewDetail}) => {
           )
         }
         {
-          visitedDate && (
+          !isModify && visitedDate && (
             <>
               <section className="place-desc">
                 <FontAwesomeIcon icon={faListOl}/>

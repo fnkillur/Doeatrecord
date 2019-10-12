@@ -15,10 +15,10 @@ const client = new ApolloClient({
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'no-cache',
-    },
+    }
   },
-  // uri: 'http://api.doeatrecord.com/graphql'
-  uri: 'http://localhost:4000/graphql'
+  uri: 'http://api.doeatrecord.com/graphql'
+  // uri: 'http://localhost:4000/graphql'
 });
 
 const App = () => (
