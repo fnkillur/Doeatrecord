@@ -27,12 +27,14 @@ const ReceivedAlarms = ({myId}) => {
   
   const {loading, error, data} = useQuery(GET_RECEIVED_ALARMS, {variables: {targetId: myId}});
   const [alarms, setAlarms] = useState([]);
+  
   useEffect(() => {
     data && setAlarms(data.receivedAlarms);
   }, [data]);
   
   const [decideAlarm] = useMutation(DECIDE_ALARM);
   const [decideInfo, setDecideInfo] = useState(initDecideInfo);
+  
   useEffect(() => {
     const decide = async () => {
       const result = await decideAlarm({variables: decideInfo});

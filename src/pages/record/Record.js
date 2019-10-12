@@ -35,7 +35,7 @@ const Record = () => {
   const place = JSON.parse(sessionStorage.getItem("place"));
   const {placeId, placeName, category, address, url, x, y} = place;
   
-  const [visited, setVisited] = useState('');
+  const [visited, setVisited] = useState(new Date());
   const [menus, setMenus] = useState('');
   const [money, setMoney] = useState('');
   const [isDutch, setIsDutch] = useState(true);
