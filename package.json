@@ -1,7 +1,7 @@
 {
-  "name": "do-eat-do-record",
+  "name": "Doeatrecord",
   "version": "1.0.0",
-  "description": "Do Eat, Do Record!",
+  "description": "Do Eat, Record!",
   "main": "index.js",
   "repository": "https://github.com/guinness1024/do-eat-do-record.git",
   "author": "teo.dor",
