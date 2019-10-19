@@ -6,7 +6,7 @@
     padding: 0 20px;
 
     .btn-auto-login-clear {
-      width: 120px;
+      width: 140px;
       font-size: 12px;
     }
   }
@@ -64,7 +64,7 @@
     .alarm-receive {
       margin-bottom: 5px;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       height: 26px;
       line-height: 26px;
 
@@ -84,7 +84,7 @@
         }
 
         .btn-no {
-          width: 90px;
+          width: 70px;
         }
       }
     }
