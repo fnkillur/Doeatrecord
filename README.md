@@ -1,5 +1,7 @@
-# Do Eat, Search!
+# Do Eat, Record!
 > React App about food record
+
+## http://doeatrecord.com/
 
 ## Getting Started
 ```sh

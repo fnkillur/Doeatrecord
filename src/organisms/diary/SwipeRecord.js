@@ -3,6 +3,7 @@ import Swipeout from "rc-swipeout";
 import Place from "../../components/Place";
 import {useMutation} from "@apollo/react-hooks";
 import {gql} from "apollo-boost";
+import {toast} from "react-toastify";
 
 const DELETE_RECORD = gql`
   mutation ($_id: ID!) {
@@ -18,7 +19,7 @@ const SwipeRecord = ({_id, placeId, place, refetch, goToModify}) => {
   useEffect(() => {
     const doDelete = async () => {
       const result = await deleteRecord({variables: {_id: deletingId}});
-      result ? refetch() : alert('삭제에 실패했습니다.');
+      result ? refetch() : toast.error('삭제에 실패했습니다.');
     };
     deletingId && doDelete();
   }, [deletingId]);

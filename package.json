@@ -37,7 +37,9 @@
     "react-router-dom": "^5.0.1",
     "react-select": "^3.0.4",
     "react-spinners": "^0.6.1",
-    "react-swipe": "^6.0.4"
+    "react-swipe": "^6.0.4",
+    "react-switch": "^5.0.1",
+    "react-toastify": "^5.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",

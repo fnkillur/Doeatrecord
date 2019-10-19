@@ -1,5 +1,16 @@
 .me {
 
+  .auto-login-clear {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px;
+
+    .btn-auto-login-clear {
+      width: 120px;
+      font-size: 12px;
+    }
+  }
+
   .profile-info {
     display: flex;
     height: 50px;

@@ -11,6 +11,17 @@
     font-size: 18px;
   }
 
+  .auto-login {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .auto-login-title {
+      margin-right: 10px;
+    }
+  }
+
   .app-notice {
     margin-top: 70px;
   }

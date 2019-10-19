@@ -5,6 +5,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendarAlt, faCreditCard, faListOl} from "@fortawesome/free-solid-svg-icons";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
+import {toast} from "react-toastify";
+import Switch from "react-switch";
 import {getMe, isNumber} from "../../_common/utils";
 import Place from "../../components/Place";
 import "./Record.scss";
@@ -63,7 +65,7 @@ const Record = () => {
           }
         }
       });
-      result ? location.href = `/main/diary/list/${myId}` : alert('기록하는데 문제가 있습니다.');
+      result ? location.href = `/main/diary/list/${myId}` : toast.error('기록하는데 문제가 있습니다.');
     };
     isRecord && record();
   }, [isRecord]);
@@ -110,8 +112,8 @@ const Record = () => {
         />
       </div>
       <div className="field">
-        더치페이 대상인가요?
-        <input type="checkbox" className="input-not-dutch" checked={isDutch} onChange={() => setIsDutch(!isDutch)}/>
+        <div className="field-dutch">더치페이 대상인가요?</div>
+        <Switch checked={isDutch} onChange={checked => setIsDutch(checked)} onColor="#FFA7C4"/>
       </div>
       <div className="field btn-box">
         <button type="button" className="btn btn-record" onClick={() => setIsRecord(true)}>

@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import {gql} from "apollo-boost";
 import {useMutation} from "@apollo/react-hooks";
 import {ClipLoader} from "react-spinners";
+import {toast} from "react-toastify";
 import {getMe} from "../../_common/utils";
 
 const CREATE_USER = gql`
@@ -20,7 +21,7 @@ const Register = ({history}) => {
       .then(({data: {createUser}}) => createUser && history.push('/main/search'))
       .catch(err => {
         console.error(`Create User Info Error!!!  ${JSON.stringify(err)}`);
-        alert('계정 정보를 저장하는데 문제가 있어요 ㅜㅜ');
+        toast.error('계정 정보를 저장하는데 문제가 있습니다.');
         history.push('/login');
       });
   }, [myId]);
