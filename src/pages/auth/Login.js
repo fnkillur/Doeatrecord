@@ -30,7 +30,7 @@ const Login = ({history}) => {
             });
             localStorage.setItem('me', me);
             sessionStorage.setItem('me', me);
-            history.push('/register');
+            history.push('/main/search');
           },
           fail(err) {
             console.error(`Get User Info Error!!!  ${JSON.stringify(err)}`);

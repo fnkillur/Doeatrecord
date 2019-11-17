@@ -6,7 +6,7 @@ import {toast} from "react-toastify";
 import {getMe} from "../../_common/utils";
 
 const CREATE_USER = gql`
-  mutation CreateUser($userId: String!, $nickname: String!, $thumbnail: String!) {
+  mutation CreateUser($userId: String!, $nickname: String!, $thumbnail: String) {
     createUser(userId: $userId, nickname: $nickname, thumbnail: $thumbnail)
   }
 `;
