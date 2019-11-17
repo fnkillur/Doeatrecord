@@ -6,18 +6,18 @@ import {toast} from "react-toastify";
 import {getMe} from "../../_common/utils";
 
 const CREATE_USER = gql`
-  mutation CreateUser($userId: String!, $nickname: String!, $thumbnail: String) {
-    createUser(userId: $userId, nickname: $nickname, thumbnail: $thumbnail)
+  mutation CreateUser($userId: String!, $nickname: String!) {
+    createUser(userId: $userId, nickname: $nickname)
   }
 `;
 
 const Register = ({history}) => {
   
-  const {myId, myName, thumbnail} = getMe();
+  const {myId, myName} = getMe();
   const [createUser] = useMutation(CREATE_USER);
   
   useEffect(() => {
-    createUser({variables: {userId: myId, nickname: myName, thumbnail}})
+    createUser({variables: {userId: myId, nickname: myName}})
       .then(({data: {createUser}}) => createUser && history.push('/main/search'))
       .catch(err => {
         console.error(`Create User Info Error!!!  ${JSON.stringify(err)}`);

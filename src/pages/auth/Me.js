@@ -41,7 +41,7 @@ const REQUEST_MATCHING = gql`
 
 const Me = ({location: {search}, history}) => {
   
-  const {myId, myName, thumbnail} = getMe();
+  const {myId, myName} = getMe();
   
   const {loading, error, data} = useQuery(GET_MY_INFO, {variables: {myId}});
   
@@ -89,23 +89,16 @@ const Me = ({location: {search}, history}) => {
         )
       }
       <section className="profile-info">
-        <img src={thumbnail} className="profile-thumbnail-img"/>
-        <div className="profile-nickname">
-          <strong>{myName}</strong>님,
-        </div>
-        환영합니다.<Emoji text=":bow:"/>
+        <div className="profile-nickname"><strong>{myName}</strong>님,</div>환영합니다.<Emoji text=":bow:"/>
       </section>
       {
-        loading
-          ?
+        loading ?
           <ClipLoader size={50} color="white"/>
           :
-          error
-            ?
+          error ?
             error.toString()
             :
-            data
-              ?
+            data ?
               <>
                 {
                   data.myLover && (

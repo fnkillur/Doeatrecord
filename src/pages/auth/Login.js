@@ -21,12 +21,11 @@ const Login = ({history}) => {
       success({access_token: token}) {
         Kakao.API.request({
           url: KAKAO_GET_USER_API,
-          success({id, properties: {nickname, thumbnail_image}}) {
+          success({id, properties: {nickname}}) {
             const me = JSON.stringify({
               myId: id.toString(),
               myName: nickname,
-              token,
-              thumbnail: thumbnail_image || ''
+              token
             });
             localStorage.setItem('me', me);
             sessionStorage.setItem('me', me);
