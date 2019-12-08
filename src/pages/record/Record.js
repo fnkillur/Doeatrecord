@@ -5,7 +5,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendarAlt, faCreditCard, faListOl} from "@fortawesome/free-solid-svg-icons";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
-import {toast} from "react-toastify";
 import Switch from "react-switch";
 import {getMe, isNumber} from "../../_common/utils";
 import Place from "../../components/Place";
@@ -65,7 +64,7 @@ const Record = () => {
           }
         }
       });
-      result ? location.href = `/main/diary/list/${myId}` : toast.error('기록하는데 문제가 있습니다.');
+      result ? location.href = `/main/diary/list/${myId}` : alert('기록하는데 문제가 있습니다.');
     };
     isRecord && record();
   }, [isRecord]);

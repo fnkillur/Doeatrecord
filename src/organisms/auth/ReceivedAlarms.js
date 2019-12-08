@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useMutation} from "@apollo/react-hooks";
 import {gql} from "apollo-boost";
-import {toast} from "react-toastify";
 
 const DECIDE_ALARM = gql`
   mutation ($_id: ID!, $result: String!, $type: String!, $myId: String!, $applicantId: String!) {
@@ -21,7 +20,7 @@ const ReceivedAlarms = ({myId, receivedAlarms}) => {
   useEffect(() => {
     const decide = async () => {
       const result = await decideAlarm({variables: decideInfo});
-      result ? toast.success('요청이 처리되었습니다.') : toast.error('요청이 처리되지 않았습니다.');
+      alert(result ? '요청이 처리되었습니다.' : '요청이 처리되지 않았습니다.');
       setDecideInfo({...initDecideInfo});
       setAlarms(alarms.filter(({_id}) => _id !== decideInfo._id));
     };

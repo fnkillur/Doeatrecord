@@ -4,7 +4,6 @@ import {useMutation, useQuery} from "@apollo/react-hooks";
 import Emoji from "react-emoji-render";
 import queryString from "query-string";
 import {ClipLoader} from "react-spinners";
-import {toast} from "react-toastify";
 import {getMe, isAutoLogin} from "../../_common/utils";
 import ReceivedAlarms from "../../organisms/auth/ReceivedAlarms";
 import RequestedAlarms from "../../organisms/auth/RequestedAlarms";
@@ -65,7 +64,7 @@ const Me = ({location: {search}, history}) => {
         }
       });
       const typeString = type === 'couple' ? '커플' : '친구';
-      result ? toast.success(`${typeString} 요청되었습니다.`) : toast.error(`${typeString} 요청에 실패했습니다.`);
+      result ? alert(`${typeString} 요청되었습니다.`) : alert(`${typeString} 요청에 실패했습니다.`);
     };
     targetId && request();
   }, [targetId]);
@@ -83,13 +82,13 @@ const Me = ({location: {search}, history}) => {
         isAutoLogin && (
           <section className="auto-login-clear">
             <button type="button" className="btn btn-auto-login-clear" onClick={clearAutoLogin}>
-              기기 자동로그인 해제
+              자동로그인 해제
             </button>
           </section>
         )
       }
       <section className="profile-info">
-        <div className="profile-nickname"><strong>{myName}</strong>님,</div>환영합니다.<Emoji text=":bow:"/>
+        <div className="profile-nickname"><strong>{myName}</strong>님,</div>환영합니다.
       </section>
       {
         loading ?
@@ -127,14 +126,14 @@ const Me = ({location: {search}, history}) => {
                   <div className="me-search-result">
                     <FriendList
                       myId={myId}
-                      isCouple={data.myLover}
+                      myLover={data.myLover}
                       keyword={keyword}
                       requestMatching={(id, name, type) => {
                         setTargetId(id);
                         setTargetName(name);
                         setType(type);
                       }}
-                      goToFriend={friendId => history.push(`/main/diary/map/${friendId}`)}
+                      requestedList={data.requestedAlarms}
                     />
                   </div>
                 </section>

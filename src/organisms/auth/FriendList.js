@@ -9,14 +9,13 @@ const GET_USERS = gql`
     users(keyword: $keyword) {
       userId
       nickname
-      thumbnail
       coupleId
       friends
     }
   }
 `;
 
-const FriendList = ({myId, isCouple, keyword, requestMatching, goToFriend}) => {
+const FriendList = ({myId, myLover, keyword, requestMatching, requestedList}) => {
   
   const {loading, error, data} = useQuery(GET_USERS, {variables: {keyword}});
   
@@ -24,46 +23,49 @@ const FriendList = ({myId, isCouple, keyword, requestMatching, goToFriend}) => {
   if (error) return <>사용자 목록을 가져오는데 실패했어요.<Emoji text=":cry:"/></>;
   
   const {users} = data;
+  const iAmSolo = !myLover;
   
   return (
     <>
       {
-        users.map(({userId, nickname, thumbnail, coupleId, friends}) => (
-          <div key={userId} className="profile-info">
-            {
-              thumbnail && <img src={thumbnail} className="profile-thumbnail-img" alt=""/>
-            }
-            <div className="profile-nickname"><strong>{nickname}</strong></div>
-            <div className="profile-btn-couple">
+        users.map(({userId, nickname, coupleId, friends}) => {
+          const isMyLover = userId === myLover;
+          const isRequested = requestedList.findIndex(matching => matching.targetId === userId) !== -1;
+          const heOrSheIsSoloToo = !coupleId;
+          const isNotMyFriend = !friends.includes(myId);
+          
+          return (
+            <div key={userId} className="profile-info">
+              <div className="profile-nickname"><strong>{nickname}</strong></div>
               {
-                !isCouple && !coupleId && (
-                  <button type="button" className="btn" onClick={() => requestMatching(userId, nickname, 'couple')}>
-                    커플요청
-                  </button>
-                )
-              }
-              {
-                coupleId === myId
-                  ?
-                  null
+                isMyLover ?
+                  <Emoji text=":profile-couple-emoji:"/>
                   :
-                  friends.includes(myId)
-                    ?
-                    (
-                      <button type="button" className="btn" onClick={() => goToFriend(userId)}>
-                        구경가기
-                      </button>
-                    )
+                  isRequested ?
+                    <div>{type === 'couple' ? '커플' : '친구 '}요청 처리 대기 중</div>
                     :
-                    (
-                      <button type="button" className="btn" onClick={() => requestMatching(userId, nickname, 'friend')}>
-                        친구요청
-                      </button>
-                    )
+                    <div className="profile-btn-couple">
+                      {
+                        iAmSolo && heOrSheIsSoloToo && (
+                          <button type="button" className="btn"
+                                  onClick={() => requestMatching(userId, nickname, 'couple')}>
+                            커플요청
+                          </button>
+                        )
+                      }
+                      {
+                        isNotMyFriend && (
+                          <button type="button" className="btn"
+                                  onClick={() => requestMatching(userId, nickname, 'friend')}>
+                            친구요청
+                          </button>
+                        )
+                      }
+                    </div>
               }
             </div>
-          </div>
-        ))
+          );
+        })
       }
     </>
   );
