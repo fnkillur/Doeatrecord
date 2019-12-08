@@ -11,16 +11,28 @@
     }
   }
 
-  .profile-info {
+  .my-profile {
     display: flex;
     height: 50px;
     line-height: 50px;
     padding: 0 20px;
 
     .profile-nickname {
-      width: 100px;
       text-align: left;
-      margin-left: 10px;
+      margin-right: 5px;
+    }
+  }
+
+  .profile-info {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+
+    .profile-nickname {
+      text-align: left;
+      margin-right: 5px;
     }
 
     .profile-btn-couple {
@@ -55,13 +67,11 @@
 
     .alarm-receive {
       margin-bottom: 5px;
-      display: flex;
-      justify-content: space-around;
-      height: 26px;
-      line-height: 26px;
 
       .alarm-btn {
         display: flex;
+        justify-content: center;
+        margin-top: 5px;
 
         .btn {
           width: 70px;

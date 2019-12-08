@@ -12,7 +12,7 @@ import FriendList from "../../organisms/auth/FriendList";
 import "./Me.scss";
 
 const GET_MY_INFO = gql`
-  query ($myId: String!) {
+  query ($myId: String!, $alarm: Boolean) {
     myLover(myId: $myId) {
       nickname
     }
@@ -22,7 +22,7 @@ const GET_MY_INFO = gql`
       applicantName
       type
     }
-    requestedAlarms(applicantId: $myId) {
+    requestedAlarms(applicantId: $myId, alarm: $alarm) {
       _id
       targetId
       targetName
@@ -42,7 +42,7 @@ const Me = ({location: {search}, history}) => {
   
   const {myId, myName} = getMe();
   
-  const {loading, error, data} = useQuery(GET_MY_INFO, {variables: {myId}});
+  const {loading, error, data} = useQuery(GET_MY_INFO, {variables: {myId, alarm: true}});
   
   const {keyword} = queryString.parse(search);
   const searchKeyword = keyword => history.push(`/main/me${keyword ? `?keyword=${keyword}` : ''}`);
@@ -65,6 +65,7 @@ const Me = ({location: {search}, history}) => {
       });
       const typeString = type === 'couple' ? '커플' : '친구';
       result ? alert(`${typeString} 요청되었습니다.`) : alert(`${typeString} 요청에 실패했습니다.`);
+      location.reload();
     };
     targetId && request();
   }, [targetId]);
@@ -87,7 +88,7 @@ const Me = ({location: {search}, history}) => {
           </section>
         )
       }
-      <section className="profile-info">
+      <section className="my-profile">
         <div className="profile-nickname"><strong>{myName}</strong>님,</div>환영합니다.
       </section>
       {
@@ -133,7 +134,6 @@ const Me = ({location: {search}, history}) => {
                         setTargetName(name);
                         setType(type);
                       }}
-                      requestedList={data.requestedAlarms}
                     />
                   </div>
                 </section>

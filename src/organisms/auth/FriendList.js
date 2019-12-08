@@ -5,24 +5,32 @@ import {ClipLoader} from "react-spinners";
 import Emoji from "react-emoji-render";
 
 const GET_USERS = gql`
-  query Users($keyword: String) {
+  query ($keyword: String, $myId: String!, $alarm: Boolean) {
     users(keyword: $keyword) {
       userId
       nickname
       coupleId
       friends
     }
+
+    requestedAlarms(applicantId: $myId, alarm: $alarm) {
+      _id
+      targetId
+      targetName
+      type
+      result
+    }
   }
 `;
 
-const FriendList = ({myId, myLover, keyword, requestMatching, requestedList}) => {
+const FriendList = ({myId, myLover, keyword, requestMatching}) => {
   
-  const {loading, error, data} = useQuery(GET_USERS, {variables: {keyword}});
+  const {loading, error, data} = useQuery(GET_USERS, {variables: {keyword, myId, alarm: false}});
   
   if (loading) return <ClipLoader size={50} color="white"/>;
   if (error) return <>사용자 목록을 가져오는데 실패했어요.<Emoji text=":cry:"/></>;
   
-  const {users} = data;
+  const {users, requestedAlarms} = data;
   const iAmSolo = !myLover;
   
   return (
@@ -30,7 +38,7 @@ const FriendList = ({myId, myLover, keyword, requestMatching, requestedList}) =>
       {
         users.map(({userId, nickname, coupleId, friends}) => {
           const isMyLover = userId === myLover;
-          const isRequested = requestedList.findIndex(matching => matching.targetId === userId) !== -1;
+          const request = requestedAlarms.find(matching => matching.targetId === userId);
           const heOrSheIsSoloToo = !coupleId;
           const isNotMyFriend = !friends.includes(myId);
           
@@ -41,15 +49,15 @@ const FriendList = ({myId, myLover, keyword, requestMatching, requestedList}) =>
                 isMyLover ?
                   <Emoji text=":profile-couple-emoji:"/>
                   :
-                  isRequested ?
-                    <div>{type === 'couple' ? '커플' : '친구 '}요청 처리 대기 중</div>
+                  request ?
+                    <span>{request.type === 'couple' ? '커플' : '친구'} 요청 처리 대기 중 ...</span>
                     :
                     <div className="profile-btn-couple">
                       {
                         iAmSolo && heOrSheIsSoloToo && (
                           <button type="button" className="btn"
                                   onClick={() => requestMatching(userId, nickname, 'couple')}>
-                            커플요청
+                            커플 요청
                           </button>
                         )
                       }
@@ -57,7 +65,7 @@ const FriendList = ({myId, myLover, keyword, requestMatching, requestedList}) =>
                         isNotMyFriend && (
                           <button type="button" className="btn"
                                   onClick={() => requestMatching(userId, nickname, 'friend')}>
-                            친구요청
+                            친구 요청
                           </button>
                         )
                       }
