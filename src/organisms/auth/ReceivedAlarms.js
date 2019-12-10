@@ -44,7 +44,7 @@ const ReceivedAlarms = ({myId, receivedAlarms}) => {
               </button>
               <button
                 type="button"
-                className="btn btn-no"
+                className="btn"
                 onClick={() => setDecideInfo({_id, result: 'reject', type, myId, applicantId})}
               >
                 아닌데
