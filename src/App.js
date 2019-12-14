@@ -11,11 +11,6 @@ window.map = '';
 window.places = new kakao.maps.services.Places();
 
 const client = new ApolloClient({
-  defaultOptions: {
-    watchQuery: {
-      fetchPolicy: 'no-cache',
-    }
-  },
   uri: 'http://api.doeatrecord.com/graphql'
   // uri: 'http://localhost:4000/graphql'
 });

@@ -2,8 +2,8 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChartPie, faListOl, faMapMarkedAlt} from "@fortawesome/free-solid-svg-icons";
-import "./Nav.scss";
 import {getMe} from "../../_common/utils";
+import "./Nav.scss";
 
 const Nav = ({close}) => {
   

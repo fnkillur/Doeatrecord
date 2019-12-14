@@ -1,75 +1,81 @@
 import React, {useEffect, useState} from "react";
 import queryString from "query-string";
 import SearchBar from "../../components/SearchBar";
-import Map from "../../components/Map";
+import KakaoMap from "../../components/KakaoMap";
 import SearchList from "../../organisms/search/SearchList";
 import "./Search.scss"
 
 const Search = ({history, location: {search}, match: {url}}) => {
+  const [page, setPage] = useState(1);
+  const [placeList, setPlaceList] = useState([]);
+  const [markers, setMarkers] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   
   const {keyword = ''} = queryString.parse(search);
   
-  const [list, setList] = useState([]);
-  const [isSearched, setIsSearched] = useState(false);
-  const [selectedIndex, setIndex] = useState(-1);
-  
-  const searchKeyword = keyword => {
-    setIsSearched(false);
-    history.push(`${url}${keyword ? `?keyword=${keyword}` : ''}`);
-  };
-  
+  const searchKeyword = keyword => history.push(`${url}${keyword ? `?keyword=${keyword}&page=${page}` : ''}`);
   const viewDetail = placeId => history.push(`/main/record/${placeId}`);
   
   useEffect(() => {
-    
-    if (keyword && isSearched) {
-      return;
-    }
-    
-    const searchCallback = (searchPlaces, status) => {
-      
-      if (status !== kakao.maps.services.Status.OK) {
-        return;
-      }
-      
-      setList(searchPlaces.map(
-        ({
-           id,
-           place_name,
-           category_name,
-           road_address_name,
-           address_name,
-           place_url,
-           x,
-           y
-         }) => ({
-          placeId: id,
-          placeName: place_name,
-          category: category_name,
-          address: road_address_name || address_name,
-          url: place_url,
-          x,
-          y
-        })
-      ));
-      setIndex(0);
+    // 초기화
+    const removeData = () => {
+      setSelectedIndex(0);
+      setPlaceList([]);
+      setMarkers([]);
     };
     
-    const hasOption = keyword.indexOf(' ') === -1;
-    
-    if (keyword) {
-      places.keywordSearch(keyword, searchCallback, hasOption && {
-        location: map.getCenter(),
-        bounds: map.getBounds()
-      });
-    } else {
-      setList([]);
-      setIndex(-1);
-    }
-  
-    setIsSearched(true);
-    
-  }, [keyword, isSearched]);
+    keyword ?
+      places.keywordSearch(
+        keyword,
+        (results, status) => {
+          if (status !== kakao.maps.services.Status.OK) {
+            return;
+          }
+          
+          let bounds = new kakao.maps.LatLngBounds();
+          let searchedMarkers = [];
+          const searchedPlaces = results.map((place, index) => {
+            const {id, place_name, category_name, road_address_name, address_name, place_url, y, x} = place;
+            const position = new kakao.maps.LatLng(y, x);
+            
+            // 마커 설정
+            const marker = new kakao.maps.Marker({map, position});
+            searchedMarkers.push({marker});
+            kakao.maps.event.addListener(marker, "click", function () {
+              setSelectedIndex(index);
+            });
+            
+            // 장소가 보이도록 지도 반경 확대
+            bounds.extend(position);
+            
+            // 변수명 변경
+            return {
+              placeId: id,
+              placeName: place_name,
+              category: category_name,
+              address: road_address_name || address_name,
+              url: place_url,
+              ...place
+            };
+          });
+          
+          setPlaceList(searchedPlaces);
+          setMarkers(searchedMarkers);
+          setSelectedIndex(0);
+          
+          // 지도 반경 설정
+          map.setBounds(bounds);
+        },
+        {
+          location: map.getCenter(),
+          sort: 'distance',
+          size: 5,
+          page
+        }
+      )
+      :
+      removeData();
+  }, [keyword, page]);
   
   return (
     <main className="search">
@@ -82,16 +88,19 @@ const Search = ({history, location: {search}, match: {url}}) => {
         placeholder="어떤 가게를 방문하셨나요?"
       />
       <section className="map-box">
-        <Map
-          list={list}
+        {
+          keyword && <button className="btn-research" onClick={() => setPage(page + 1)}>다음 목록 검색 ({page} 페이지)</button>
+        }
+        <KakaoMap
+          placeList={placeList}
+          markers={markers}
           selectedIndex={selectedIndex}
-          setIndex={setIndex}
         />
         <SearchList
           viewDetail={viewDetail}
-          list={list}
+          placeList={placeList}
           selectedIndex={selectedIndex}
-          setIndex={setIndex}
+          setIndex={setSelectedIndex}
         />
       </section>
     </main>

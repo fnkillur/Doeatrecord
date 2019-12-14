@@ -32,11 +32,12 @@ const RequestedAlarms = ({requestedAlarms}) => {
     <>
       {
         alarms.map(({_id, targetId, targetName, type, result}, i) => i < 2 && (
-          <div key={_id} className="alarm-receive">
-            <div>{`${targetName}님이 ${type === 'couple' ? '커플' : '친구 '}요청을 ${result === 'rejected' ? '거절' : '수락'}했습니다.`}</div>
-            <div className="alarm-btn">
-              <FontAwesomeIcon icon={faTimes} onClick={() => setOffAlarmId(_id)}/>
+          <div key={_id} className="alarm-content">
+            <div>
+              <strong>{targetName}</strong>{`님이 ${type === 'couple' ? '커플' : '친구 '} 요청을 `}
+              <strong className={result === 'rejected' ? 'alarm-reject' : 'alarm-accept'}>{result === 'rejected' ? '거절' : '수락'}</strong>했습니다.
             </div>
+            <FontAwesomeIcon icon={faTimes} onClick={() => setOffAlarmId(_id)}/>
           </div>
         ))
       }
