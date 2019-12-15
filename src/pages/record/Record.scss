@@ -71,12 +71,23 @@
       appearance: none;
     }
 
+    .star-rating {
+      height: 30px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      background-color: #011627;
+    }
+
     .field-dutch {
       margin-right: 10px;
     }
 
+    &.dutch {
+      margin-top: 40px;
+    }
+
     &.btn-box {
-      margin-top: 20px;
+      margin-top: 30px;
 
       .btn-record {
         display: block;

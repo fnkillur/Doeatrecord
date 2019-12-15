@@ -40,7 +40,7 @@ const SwipeRecord = ({_id, placeId, place, refetch, goToModify}) => {
         right={[
           {
             text: '삭제',
-            onPress: () => (confirm('정말 이 기록을 삭제하시겠습니까?') && setDeletingId(_id)),
+            onPress: () => confirm('정말 이 기록을 삭제하시겠습니까?') && setDeletingId(_id),
             style: {backgroundColor: 'red', color: 'white'},
             className: 'custom-class-2'
           }

@@ -1,14 +1,26 @@
 import React, {useEffect, useRef, useState} from "react";
 import {gql} from "apollo-boost";
-import {useMutation} from "@apollo/react-hooks";
+import {useMutation, useQuery} from "@apollo/react-hooks";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCalendarAlt, faCreditCard, faListOl} from "@fortawesome/free-solid-svg-icons";
+import {faCalendarAlt, faCreditCard, faListOl, faStarHalfAlt} from "@fortawesome/free-solid-svg-icons";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import "react-day-picker/lib/style.css";
 import Switch from "react-switch";
+import Rating from "react-rating"
 import {getMe, isNumber} from "../../_common/utils";
 import Place from "../../components/Place";
+import StarFull from "../../components/StarFull";
+import StarEmpty from "../../components/StarEmpty";
 import "./Record.scss";
+
+const GET_RECORD = gql`
+  query ($userId: String!, $placeId: String!) {
+    record(userId: $userId, placeId: $placeId) {
+      visitedDate
+      score
+    }
+  }
+`;
 
 const CREATE_RECORD = gql`
   mutation ($input: NewRecord!) {
@@ -17,11 +29,9 @@ const CREATE_RECORD = gql`
 `;
 
 const Record = () => {
-  
-  const datePickerEl = useRef(null);
-  
   const place = JSON.parse(sessionStorage.getItem("place"));
   const {
+    userId: writer,
     placeId, placeName, category, address, url, x, y,
     _id,
     isModify,
@@ -30,10 +40,14 @@ const Record = () => {
     money: modifyMoney,
     isDutch: modifyIsDutch
   } = place;
+  const {myId} = getMe();
+  
+  const datePickerEl = useRef(null);
   
   const [visited, setVisited] = useState(modifyVisitedDate ? new Date(modifyVisitedDate) : new Date());
   const [menus, setMenus] = useState(modifyMenus ? modifyMenus.join(', ') : '');
-  const [money, setMoney] = useState(modifyMoney || '');
+  const [money, setMoney] = useState(modifyMoney || 0);
+  const [score, setScore] = useState(0);
   const [isDutch, setIsDutch] = useState(modifyIsDutch === undefined ? true : modifyIsDutch);
   
   const [isRecord, setIsRecord] = useState(false);
@@ -41,13 +55,13 @@ const Record = () => {
   
   useEffect(() => {
     const record = async () => {
-      const {myId} = getMe();
+      
       const visitedDate = new Date(visited);
       const result = await createRecord({
         variables: {
           input: {
             _id,
-            userId: myId,
+            userId: writer || myId,
             placeId,
             placeName,
             category,
@@ -55,8 +69,9 @@ const Record = () => {
             url,
             x,
             y,
-            menus: menus.split(','),
+            menus: menus.split(',').map(menu => menu.trim()),
             money,
+            score,
             visitedDate,
             visitedYear: visitedDate.getFullYear(),
             visitedMonth: visitedDate.getMonth() + 1,
@@ -70,6 +85,17 @@ const Record = () => {
   }, [isRecord]);
   
   const handleMoney = ({target: {value}}) => isNumber(value) && setMoney(value ? parseInt(value, 10) : '');
+  
+  const {loading, error, data} = useQuery(GET_RECORD, {variables: {userId: myId, placeId}});
+  
+  useEffect(() => {
+    data && data.record && setScore(data.record.score || 0);
+    data && data.record && console.log(data.record);
+  }, [data]);
+  
+  if (loading || error) {
+    return null;
+  }
   
   return (
     <main className="record">
@@ -111,6 +137,17 @@ const Record = () => {
         />
       </div>
       <div className="field">
+        <FontAwesomeIcon icon={faStarHalfAlt}/>
+        <Rating
+          className="star-rating"
+          placeholderRating={score}
+          emptySymbol={<StarEmpty/>}
+          placeholderSymbol={<StarFull/>}
+          fullSymbol={<StarFull/>}
+          onChange={value => setScore(value)}
+        />
+      </div>
+      <div className="field dutch">
         <div className="field-dutch">더치페이 대상인가요?</div>
         <Switch checked={isDutch} onChange={checked => setIsDutch(checked)} onColor="#FFA7C4"/>
       </div>

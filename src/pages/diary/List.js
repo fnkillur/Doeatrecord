@@ -16,6 +16,7 @@ const GET_RECORDS = gql`
     records(userId: $userId, keyword: $keyword, cursor: $cursor) {
       records {
         _id
+        userId
         placeId
         placeName
         category
@@ -26,6 +27,7 @@ const GET_RECORDS = gql`
         changedMonth
         menus
         money
+        score
         isDutch
       }
       cursor
@@ -35,7 +37,6 @@ const GET_RECORDS = gql`
 `;
 
 const List = ({match: {params: {userId}}, location: {search}, history}) => {
-  
   const listRef = useRef(null);
   
   const {keyword} = queryString.parse(search);
@@ -80,13 +81,10 @@ const List = ({match: {params: {userId}}, location: {search}, history}) => {
           records.map(({_id, placeId, changedYear, changedMonth, ...rest}) => (
             <div key={_id}>
               {
-                (changedYear || changedMonth)
-                  ?
-                  (
-                    <div className={classNames("list-changed-date", {"list-changed-year": changedYear})}>
-                      <strong>{changedYear ? `${changedYear.substr(2)}년` : ''} {changedMonth}월</strong>
-                    </div>
-                  )
+                (changedYear || changedMonth) ?
+                  <div className={classNames("list-changed-date", {"list-changed-year": changedYear})}>
+                    <strong>{changedYear ? `${changedYear.substr(2)}년` : ''} {changedMonth}월</strong>
+                  </div>
                   :
                   null
               }

@@ -3,13 +3,12 @@ import ReactSwipe from "react-swipe";
 import Place from "../../components/Place";
 import "./SearchList.scss";
 
-const SearchList = ({viewDetail, placeList, selectedIndex, setIndex}) => {
-  
+const SearchList = ({startSlide, setSelectedIndex, placeList, goToRecord}) => {
   const options = {
-    startSlide: selectedIndex,
+    startSlide,
     continuous: false,
     transitionEnd(index) {
-      setIndex(index);
+      setSelectedIndex(index);
     }
   };
   
@@ -17,7 +16,22 @@ const SearchList = ({viewDetail, placeList, selectedIndex, setIndex}) => {
     <div className="search-list">
       <ReactSwipe swipeOptions={options}>
         {
-          placeList.map(({placeId, ...rest}) => <Place key={placeId} place={{placeId, ...rest}} viewDetail={viewDetail}/>)
+          placeList.map(place => {
+            const {placeId} = place;
+            const record = () => {
+              sessionStorage.setItem("place", JSON.stringify({...place}));
+              goToRecord(placeId);
+            };
+            
+            return (
+              <Place
+                key={placeId}
+                place={place}
+                goToRecord={goToRecord}
+                record={record}
+              />
+            )
+          })
         }
       </ReactSwipe>
     </div>

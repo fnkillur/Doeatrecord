@@ -47,7 +47,28 @@
         justify-content: space-between;
       }
 
+      &.score-info {
+        display: flex;
+        height: 20px;
+        border-radius: 5px;
+        background-color: #011627;
+
+        .star-rating {
+          span {
+            height: 20px;
+            line-height: 20px;
+          }
+          svg {
+            width: 22px;
+            height: 22px;
+            margin: 0;
+          }
+        }
+      }
+
       svg {
+        width: 20px;
+        height: 20px;
         margin-right: 10px;
       }
     }

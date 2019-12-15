@@ -55,7 +55,7 @@ const Map = ({match: {params: {userId}}, location: {search: keyword = ''}}) => {
   
   // 이동 이벤트 등록
   useEffect(() => {
-    kakao.maps.event.addListener(map, 'dragend', function () {
+    kakao.maps.event.addListener(map, 'center_changed', function () {
       setIsMoved(true);
     });
   }, [map]);
@@ -69,8 +69,6 @@ const Map = ({match: {params: {userId}}, location: {search: keyword = ''}}) => {
   
   // list 가 갱신되면 marker 도 갱신
   useEffect(() => {
-    let nextBounds = new kakao.maps.LatLngBounds();
-    
     const recordedMarkers = placeList.map(({y, x, ...rest}) => {
       const position = new kakao.maps.LatLng(y, x);
       
@@ -80,9 +78,6 @@ const Map = ({match: {params: {userId}}, location: {search: keyword = ''}}) => {
       // 오버레이 설정
       const content = makeOverlay({...rest});
       const overlay = new kakao.maps.CustomOverlay({content, position});
-      
-      // 지도 반경 설정
-      nextBounds.extend(position);
       
       return {marker, overlay};
     });
@@ -97,9 +92,6 @@ const Map = ({match: {params: {userId}}, location: {search: keyword = ''}}) => {
     
     setMarkers(recordedMarkers);
     setSelectedIndex(0);
-    
-    // 지도 반경 설정
-    map.setBounds(nextBounds);
   }, [placeList]);
   
   if (loading) {

@@ -16,7 +16,6 @@ const GET_SPENDING = gql`
 `;
 
 const Spending = ({userId, now}) => {
-  
   const {loading, error, data} = useQuery(GET_SPENDING, {
     variables: {
       userId, now

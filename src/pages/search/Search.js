@@ -13,8 +13,7 @@ const Search = ({history, location: {search}, match: {url}}) => {
   
   const {keyword = ''} = queryString.parse(search);
   
-  const searchKeyword = keyword => history.push(`${url}${keyword ? `?keyword=${keyword}&page=${page}` : ''}`);
-  const viewDetail = placeId => history.push(`/main/record/${placeId}`);
+  const searchKeyword = keyword => history.push(`${url}${keyword ? `?keyword=${keyword}` : ''}`);
   
   useEffect(() => {
     // 초기화
@@ -24,57 +23,58 @@ const Search = ({history, location: {search}, match: {url}}) => {
       setMarkers([]);
     };
     
-    keyword ?
-      places.keywordSearch(
-        keyword,
-        (results, status) => {
-          if (status !== kakao.maps.services.Status.OK) {
-            return;
-          }
-          
-          let bounds = new kakao.maps.LatLngBounds();
-          let searchedMarkers = [];
-          const searchedPlaces = results.map((place, index) => {
-            const {id, place_name, category_name, road_address_name, address_name, place_url, y, x} = place;
-            const position = new kakao.maps.LatLng(y, x);
-            
-            // 마커 설정
-            const marker = new kakao.maps.Marker({map, position});
-            searchedMarkers.push({marker});
-            kakao.maps.event.addListener(marker, "click", function () {
-              setSelectedIndex(index);
+    try {
+      keyword ?
+        places.keywordSearch(
+          keyword,
+          results => {
+            let searchedMarkers = [];
+            const searchedPlaces = results.map((place) => {
+              const {id, place_name, category_name, road_address_name, address_name, place_url, y, x} = place;
+              // 중복이면 추가하지 않음
+              if (placeList.findIndex(({placeId}) => placeId === id) !== -1) {
+                return null;
+              }
+              
+              const position = new kakao.maps.LatLng(y, x);
+              
+              // 마커 설정
+              const marker = new kakao.maps.Marker({map, position});
+              searchedMarkers.push({marker});
+              
+              // 변수명 변경
+              return {
+                placeId: id,
+                placeName: place_name,
+                category: category_name,
+                address: road_address_name || address_name,
+                url: place_url,
+                ...place
+              };
             });
             
-            // 장소가 보이도록 지도 반경 확대
-            bounds.extend(position);
-            
-            // 변수명 변경
-            return {
-              placeId: id,
-              placeName: place_name,
-              category: category_name,
-              address: road_address_name || address_name,
-              url: place_url,
-              ...place
-            };
-          });
-          
-          setPlaceList(searchedPlaces);
-          setMarkers(searchedMarkers);
-          setSelectedIndex(0);
-          
-          // 지도 반경 설정
-          map.setBounds(bounds);
-        },
-        {
-          location: map.getCenter(),
-          sort: 'distance',
-          size: 5,
-          page
-        }
-      )
-      :
-      removeData();
+            setPlaceList(placeList.concat(searchedPlaces.filter(place => place)));
+            const addedMarkers = markers.concat(searchedMarkers)
+              .map(({marker}, index) => {
+                kakao.maps.event.addListener(marker, "click", function () {
+                  setSelectedIndex(index);
+                });
+                return {marker};
+              });
+            setMarkers(addedMarkers);
+          },
+          {
+            location: map.getCenter(),
+            sort: 'distance',
+            size: 5,
+            page
+          }
+        )
+        :
+        removeData();
+    } catch (error) {
+      console.error(error);
+    }
   }, [keyword, page]);
   
   return (
@@ -89,7 +89,11 @@ const Search = ({history, location: {search}, match: {url}}) => {
       />
       <section className="map-box">
         {
-          keyword && <button className="btn-research" onClick={() => setPage(page + 1)}>다음 목록 검색 ({page} 페이지)</button>
+          keyword && (
+            <button className="btn-research" onClick={() => setPage(page >= 45 ? page : page + 1)}>
+              검색 결과 더보기
+            </button>
+          )
         }
         <KakaoMap
           placeList={placeList}
@@ -97,10 +101,10 @@ const Search = ({history, location: {search}, match: {url}}) => {
           selectedIndex={selectedIndex}
         />
         <SearchList
-          viewDetail={viewDetail}
+          startSlide={selectedIndex}
+          setSelectedIndex={setSelectedIndex}
           placeList={placeList}
-          selectedIndex={selectedIndex}
-          setIndex={setSelectedIndex}
+          goToRecord={placeId => history.push(`/main/record/${placeId}`)}
         />
       </section>
     </main>

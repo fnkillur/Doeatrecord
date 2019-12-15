@@ -1,30 +1,19 @@
 import React from "react";
 import moment from "moment";
 import classNames from "classnames";
-import {faCalendarAlt, faCreditCard, faListOl} from "@fortawesome/free-solid-svg-icons";
+import {faCalendarAlt, faCreditCard, faListOl, faStarHalfAlt} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Rating from "react-rating";
 import {convertMoney} from "../_common/utils";
+import StarEmpty from "./StarEmpty";
+import StarFull from "./StarFull";
 import "./Place.scss";
 
-const Place = ({place, viewDetail}) => {
-  
-  const {isModify, placeId, placeName, category, address, url, x, y, visitedDate, menus = [], money} = place;
-  
-  const record = () => {
-    sessionStorage.setItem("place", JSON.stringify({
-      placeId,
-      placeName,
-      category,
-      address,
-      url,
-      x,
-      y
-    }));
-    viewDetail(placeId);
-  };
+const Place = ({place, goToRecord, record}) => {
+  const {isModify, placeName, category, address, url, visitedDate, menus = [], money, score = 0} = place;
   
   return (
-    <article className={classNames("place", {"swipe-card": viewDetail})}>
+    <article className={classNames("place", {"swipe-card": goToRecord})}>
       <div className="place-inner">
         <section className="place-desc place-header">
           <span className="place-title"><a href={url}><strong>{placeName}</strong></a></span>
@@ -34,7 +23,7 @@ const Place = ({place, viewDetail}) => {
           {address}
         </section>
         {
-          viewDetail && (
+          goToRecord && (
             <section className="place-desc place-swipe-card">
               <div><a href={url}>카카오맵에서 확인하기</a></div>
               <button type="button" className="btn btn-detail" onClick={record}>기록하러 가기</button>
@@ -57,6 +46,17 @@ const Place = ({place, viewDetail}) => {
                   <FontAwesomeIcon icon={faCreditCard}/>
                   {convertMoney(money)}원
                 </div>
+              </section>
+              <section className="place-desc score-info">
+                <FontAwesomeIcon icon={faStarHalfAlt}/>
+                <Rating
+                  readonly={true}
+                  className="star-rating"
+                  placeholderRating={score}
+                  emptySymbol={<StarEmpty/>}
+                  placeholderSymbol={<StarFull/>}
+                  fullSymbol={<StarFull/>}
+                />
               </section>
             </>
           )

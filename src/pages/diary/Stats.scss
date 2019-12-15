@@ -8,4 +8,35 @@
       margin: 0 15px;
     }
   }
+
+  .ranked-records {
+    padding: 10px;
+    text-align: left;
+
+    .title {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .title-strong {
+      font-size: 18px;
+    }
+
+    .ranked-item {
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+
+      .ranked-score {
+        margin-left: 10px;
+        line-height: 19px;
+
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+  }
+
 }
