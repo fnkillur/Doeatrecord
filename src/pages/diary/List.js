@@ -83,7 +83,7 @@ const List = ({match: {params: {userId}}, location: {search}, history}) => {
               {
                 (changedYear || changedMonth) ?
                   <div className={classNames("list-changed-date", {"list-changed-year": changedYear})}>
-                    <strong>{changedYear ? `${changedYear.substr(2)}년` : ''} {changedMonth}월</strong>
+                    <strong>{changedYear ? `${changedYear.toString().substr(2)}년` : ''} {changedMonth}월</strong>
                   </div>
                   :
                   null
