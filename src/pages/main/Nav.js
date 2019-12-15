@@ -24,7 +24,7 @@ const Nav = ({close}) => {
             <div className="nav-name">지도에서 보기</div>
           </div>
         </Link>
-        <Link to={`/main/diary/stats/${myId}`} onClick={close}>
+        <Link to={`/main/diary/stats/${myId}/monthly`} onClick={close}>
           <div className="nav-link">
             <FontAwesomeIcon icon={faChartPie}/>
             <div className="nav-name">통계로 보기</div>

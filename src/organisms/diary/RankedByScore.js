@@ -25,7 +25,7 @@ const RankedByScore = ({userId, now}) => {
     return null;
   }
   
-  const scoredRecords = recordsByScore.filter(({score}) => score);
+  const scoredRecords = recordsByScore.filter(({score}) => score > 0);
   if (!scoredRecords.length) {
     return null;
   }
@@ -34,7 +34,7 @@ const RankedByScore = ({userId, now}) => {
     <>
       <hr className="section-divider"/>
       <article className="ranked-records">
-        <div className="title"><strong className="title-strong">평점 높은</strong> 음식점 TOP 3!!!</div>
+        <div className="title"><strong className="title-strong">평점 높게 준</strong> 음식점 TOP 3!!!</div>
         {
           scoredRecords.slice(0, 3)
             .map(({placeName, score}, index) => (
