@@ -12,9 +12,8 @@ const KakaoMap = ({placeList = [], markers = [], selectedIndex = 0}) => {
   
   // 마커와 오버레이 그리기
   useEffect(() => {
-    markers.map(({marker, overlay}) => {
+    markers.map(({marker}) => {
       marker.setMap(map);
-      overlay && overlay.setMap(map);
     });
     return () => {
       markers.map(({marker, overlay}) => {

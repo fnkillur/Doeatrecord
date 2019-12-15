@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useMutation} from "@apollo/react-hooks";
 import gql from "graphql-tag";
-import Emoji from "react-emoji-render";
 import Switch from "react-switch";
 import {KAKAO_API_KEY, KAKAO_GET_USER_API} from "../../_common/const";
 import {getMe} from "../../_common/utils";
@@ -64,9 +63,9 @@ const Login = ({history}) => {
   return (
     <main className="login">
       <span className="login-title">
-        <strong>Do Eat, Record!</strong>
+        <strong>Wechelin!</strong>
       </span>
-      <p className="login-notice">기록을 위해서는 로그인이 필요해요<Emoji text=":)"/></p>
+      <p className="login-notice"><strong>위슐랭</strong>, 우리가 정하는 맛집 점수</p>
       <a id="kakaoLoginContainer" ref={btnEl}/>
       <div className="auto-login">
         <div className="auto-login-title">자동로그인</div>

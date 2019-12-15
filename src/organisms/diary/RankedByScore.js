@@ -43,7 +43,7 @@ const RankedByScore = ({userId, now}) => {
                 <Rating
                   readonly={true}
                   className="ranked-score"
-                  placeholderRating={score}
+                  placeholderRating={Math.floor(score)}
                   emptySymbol={<StarEmpty/>}
                   placeholderSymbol={<StarFull/>}
                   fullSymbol={<StarFull/>}
