@@ -140,7 +140,7 @@ const Map = ({match: {params: {userId}}, location: {search: keyword = ''}}) => {
             label: nickname,
             value: userId
           }))}
-          onChange={selectedList => setFriends(selectedList)}
+          onChange={selectedList => setFriends(selectedList || [])}
         />
       </section>
       <section className="map-box">
