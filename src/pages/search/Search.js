@@ -77,6 +77,16 @@ const Search = ({history, location: {search}, match: {url}}) => {
     }
   }, [keyword, page]);
   
+  // 표시된 장소가 보이도록 지도 반경 확대
+  useEffect(() => {
+    let bounds = new kakao.maps.LatLngBounds();
+    placeList.map(({y, x}) => {
+      const position = new kakao.maps.LatLng(y, x);
+      bounds.extend(position);
+    });
+    placeList.length && map.setBounds(bounds);
+  }, [placeList]);
+  
   return (
     <main className="search">
       <section className="search-title">

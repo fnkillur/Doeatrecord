@@ -23,16 +23,6 @@ const KakaoMap = ({placeList = [], markers = [], selectedIndex = 0}) => {
     }
   }, [markers]);
   
-  // 표시된 장소가 보이도록 지도 반경 확대
-  useEffect(() => {
-    let bounds = map.getBounds();
-    placeList.map(({y, x}) => {
-      const position = new kakao.maps.LatLng(y, x);
-      bounds.extend(position);
-    });
-    map.setBounds(bounds);
-  }, [placeList]);
-  
   // 선택한 마커가 지도의 가운데에 위치하도록 이동
   useEffect(() => {
     const selectedPlace = placeList[selectedIndex];
