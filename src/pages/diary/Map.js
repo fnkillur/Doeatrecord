@@ -125,7 +125,7 @@ const Map = ({match: {params: {userId}}, location: {search: keyword = ''}}) => {
 			const position = new kakao.maps.LatLng(y, x);
 			// 마커 설정
 			const image = {
-				image: new kakao.maps.MarkerImage('../../../assets/friend-map-pin.png', new kakao.maps.Size(40, 45))
+				image: new kakao.maps.MarkerImage('/home/ubuntu/app/Doeatrecord/assets/friend-map-pin.png', new kakao.maps.Size(40, 45))
 			};
 			const marker = new kakao.maps.Marker({map, position, ...(!isMine && image)});
 			
