@@ -125,7 +125,7 @@ const Map = ({match: {params: {userId}}, location: {search: keyword = ''}}) => {
 			const position = new kakao.maps.LatLng(y, x);
 			// 마커 설정
 			const image = {
-				image: new kakao.maps.MarkerImage('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', new kakao.maps.Size(25, 37))
+				image: new kakao.maps.MarkerImage('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markers_sprites2.png', new kakao.maps.Size(40, 45))
 			};
 			const marker = new kakao.maps.Marker({map, position, ...(!isMine && image)});
 			
@@ -163,7 +163,7 @@ const Map = ({match: {params: {userId}}, location: {search: keyword = ''}}) => {
 					styles={{
 						control: styles => ({...styles, width: '340px', color: '#fff', backgroundColor: '#011627'}),
 						option: styles => ({...styles, color: '#fff', backgroundColor: '#011627'}),
-						menu: styles => ({...styles, width: '340px', color: '#fff', backgroundColor: '#011627', zIndex: 1000})
+						menu: styles => ({...styles, width: '340px', color: '#fff', backgroundColor: '#011627', zIndex: 1001})
 					}}
 					options={myInfo && myInfo.myFriends && myInfo.myFriends.map(({userId, nickname}) => ({
 						label: nickname,
