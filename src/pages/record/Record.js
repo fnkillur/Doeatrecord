@@ -90,7 +90,6 @@ const Record = () => {
   
   useEffect(() => {
     data && data.record && setScore(data.record.score || 0);
-    data && data.record && console.log(data.record);
   }, [data]);
   
   if (loading || error) {
