@@ -161,9 +161,9 @@ const Map = ({match: {params: {userId}}, location: {search: keyword = ''}}) => {
 					placeholder="친구를 선택해보세요."
 					closeMenuOnSelect={false}
 					styles={{
-						control: styles => ({...styles, width: '340px', color: '#fff', backgroundColor: '#011627'}),
+						control: styles => ({...styles, width: '300px', color: '#fff', backgroundColor: '#011627'}),
 						option: styles => ({...styles, color: '#fff', backgroundColor: '#011627'}),
-						menu: styles => ({...styles, width: '340px', color: '#fff', backgroundColor: '#011627', zIndex: 1001})
+						menu: styles => ({...styles, width: '300px', color: '#fff', backgroundColor: '#011627', zIndex: 1001})
 					}}
 					options={myInfo && myInfo.myFriends && myInfo.myFriends.map(({userId, nickname}) => ({
 						label: nickname,
