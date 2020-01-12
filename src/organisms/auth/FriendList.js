@@ -49,9 +49,7 @@ const FriendList = ({myId, myLover, keyword, requestMatching}) => {
                 isMyLover ?
                   <Emoji text=":profile-couple-emoji:"/>
                   :
-                  request ?
-                    <span>{request.type === 'couple' ? '커플' : '친구'} 요청 처리 대기 중 ...</span>
-                    :
+                  !request ?
                     <div className="profile-btn-couple">
                       {
                         iAmSolo && heOrSheIsSoloToo && (
@@ -70,6 +68,11 @@ const FriendList = ({myId, myLover, keyword, requestMatching}) => {
                         )
                       }
                     </div>
+                    :
+                    !request.result ?
+                      <span>{request.type === 'couple' ? '커플' : '친구'}요청 대기</span>
+                      :
+                      null
               }
             </div>
           );
