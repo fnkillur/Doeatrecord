@@ -6,8 +6,7 @@ import {Link} from "react-router-dom";
 import Nav from "./Nav";
 import "./Header.scss";
 
-const Header = () => {
-  
+function Header() {
   const [isShowNav, setIsShowNav] = useState(false);
   
   useEffect(() => {
@@ -41,6 +40,6 @@ const Header = () => {
       }
     </header>
   );
-};
+}
 
 export default Header;

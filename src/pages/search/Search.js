@@ -80,9 +80,6 @@ const Search = ({history, location: {search}, match: {url}}) => {
   
   return (
     <main className="search">
-      <section className="search-title">
-        <span>검색하기</span>
-      </section>
       <SearchBar
         keyword={keyword}
         searchKeyword={searchKeyword}

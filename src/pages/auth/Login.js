@@ -14,14 +14,14 @@ const LOGIN = gql`
   }
 `;
 
-const Login = ({history}) => {
-  
+function Login({history}) {
   const me = getMe();
   me && history.push('/main/search');
   
   const [createUser] = useMutation(LOGIN);
   
   const btnEl = useRef(null);
+  
   useEffect(() => {
     Kakao.Auth.createLoginButton({
       container: '#kakaoLoginContainer',
@@ -35,7 +35,7 @@ const Login = ({history}) => {
               myName: nickname,
               token
             });
-  
+            
             if (await createUser({variables: {userId: myId, nickname}})) {
               sessionStorage.setItem('me', me);
               isAuto && localStorage.setItem('me', me);
@@ -65,7 +65,9 @@ const Login = ({history}) => {
       <span className="login-title">
         <strong>Wechelin!</strong>
       </span>
-      <p className="login-notice"><strong>위슐랭</strong>, 우리가 정하는 맛집 점수</p>
+      <p className="login-description">
+        <strong>위슐랭</strong>, 우리가 정하는 맛집 점수
+      </p>
       <a id="kakaoLoginContainer" ref={btnEl}/>
       <div className="auto-login">
         <div className="auto-login-title">자동로그인</div>
@@ -81,6 +83,6 @@ const Login = ({history}) => {
       }
     </main>
   );
-};
+}
 
 export default Login;

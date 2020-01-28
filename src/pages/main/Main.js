@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 import {Redirect, Route} from "react-router-dom";
 import queryString from "query-string";
 import {getMe} from "../../_common/utils";
@@ -10,20 +10,18 @@ import Me from "../auth/Me";
 import Footer from "./Footer";
 import "./Main.scss";
 
-const Main = ({history, match: {url}, location: {pathname, search}}) => {
-  
+function Main({history, match: {url}, location: {pathname, search}}) {
   const me = getMe();
   if (!me) {
     location.href = '/login';
   }
   
   const {myId} = me;
-  
   const searchRecords = (type, keyword) => history.push(`/main/diary/${type}/${myId}${keyword ? `?keyword=${keyword}` : ''}`);
   const {keyword} = queryString.parse(search);
   
   return (
-    <Fragment>
+    <>
       <Header/>
       <Route exact path={`${url}`} render={() => <Redirect to={`${url}/search`}/>}/>
       <Route path={`${url}/search`} component={Search}/>
@@ -36,8 +34,8 @@ const Main = ({history, match: {url}, location: {pathname, search}}) => {
         keyword={keyword}
         searchRecords={searchRecords}
       />
-    </Fragment>
+    </>
   );
-};
+}
 
 export default Main;

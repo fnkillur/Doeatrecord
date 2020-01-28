@@ -15,17 +15,19 @@ const client = new ApolloClient({
   // uri: 'http://localhost:4000/graphql'
 });
 
-const App = () => (
-  <ApolloProvider client={client}>
-    <Router>
-      <Switch>
-        <Route exact path="/" render={() => <Redirect to="/login"/>}/>
-        <Route path="/login" component={Login}/>
-        <Route path="/main" component={Main}/>
-        <Route component={Error}/>
-      </Switch>
-    </Router>
-  </ApolloProvider>
-);
+function App() {
+  return (
+    <ApolloProvider client={client}>
+      <Router>
+        <Switch>
+          <Route exact path="/" render={() => <Redirect to="/login"/>}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/main" component={Main}/>
+          <Route component={Error}/>
+        </Switch>
+      </Router>
+    </ApolloProvider>
+  );
+}
 
 export default hot(module)(App);
