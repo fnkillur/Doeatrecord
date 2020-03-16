@@ -3,7 +3,6 @@ import {gql} from "apollo-boost";
 import {useQuery} from "@apollo/react-hooks";
 import {debounce} from "lodash";
 import queryString from "query-string";
-import classNames from "classnames";
 import {ClipLoader} from "react-spinners";
 import "rc-swipeout/assets/index.css"
 import Emoji from "react-emoji-render";
@@ -23,8 +22,6 @@ const GET_RECORDS = gql`
         url
         address
         visitedDate
-        changedYear
-        changedMonth
         menus
         money
         score
@@ -78,24 +75,15 @@ const List = ({match: {params: {userId}}, location: {search}, history}) => {
     <main className="list" ref={listRef}>
       <div className="list-inner">
         {
-          records.map(({_id, placeId, changedYear, changedMonth, ...rest}) => (
-            <div key={_id}>
-              {
-                (changedYear || changedMonth) ?
-                  <div className={classNames("list-changed-date", {"list-changed-year": changedYear})}>
-                    <strong>{changedYear ? `${changedYear.toString().substr(2)}년` : ''} {changedMonth}월</strong>
-                  </div>
-                  :
-                  null
-              }
-              <SwipeRecord
-                _id={_id}
-                placeId={placeId}
-                place={{_id, placeId, ...rest}}
-                refetch={refetch}
-                goToModify={url => history.push(url)}
-              />
-            </div>
+          records.map(({_id, placeId, ...rest}) => (
+            <SwipeRecord
+              key={_id}
+              _id={_id}
+              placeId={placeId}
+              place={{_id, placeId, ...rest}}
+              refetch={refetch}
+              goToModify={url => history.push(url)}
+            />
           ))
         }
       </div>
