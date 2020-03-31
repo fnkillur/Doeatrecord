@@ -6,6 +6,7 @@ import {hot} from "react-hot-loader";
 import Login from "./pages/auth/Login";
 import Main from "./pages/main/Main";
 import Error from "./components/Error";
+import PersonalInfo from "./pages/PersonalInfo";
 
 window.map = '';
 window.places = new kakao.maps.services.Places();
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/" render={() => <Redirect to="/login"/>}/>
           <Route path="/login" component={Login}/>
           <Route path="/main" component={Main}/>
+          <Route path="/personalInformation" component={PersonalInfo}/>
           <Route component={Error}/>
         </Switch>
       </Router>
